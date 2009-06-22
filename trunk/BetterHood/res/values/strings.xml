@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BetterHood</string>
+    
+    <string name="faqPersonalInfoLink"><u>FAQ: Why do we require this information?</u></string>
+    <string name="faqCommunityCodeLink"><u>FAQ: What is my Community Code?</u></string>
+</resources>
