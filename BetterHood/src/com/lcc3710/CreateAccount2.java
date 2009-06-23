@@ -2,9 +2,7 @@ package com.lcc3710;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 
 public class CreateAccount2 extends Activity {
