@@ -17,7 +17,11 @@ public class Login extends Activity {
         
         buttonLogIn.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-			
+			}
+        });
+        
+        buttonCreateAccount.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
 			}
         });
     }
