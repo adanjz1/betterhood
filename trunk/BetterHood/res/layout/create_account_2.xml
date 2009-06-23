@@ -20,4 +20,11 @@
 		android:layout_centerHorizontal = "true"
 		android:text = "Create an account\nStep 2 of 2"
 	/>
+	
+	<TextView
+		android:layout_width = "fill_parent"
+		android:layout_height = "wrap_content"
+		android:layout_below = "@id/headerCreateAccount"
+		android:text = "@string/createAccountStep2Caption"
+	/>
 </RelativeLayout>
