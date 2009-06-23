@@ -8,11 +8,19 @@
 	<View
 		android:id="@+id/headerCreateAccount"
 		android:layout_width = "fill_parent"
-		android:layout_height = "75dip"
+		android:layout_height = "35dip"
 		android:layout_marginBottom = "6dip"
 		android:layout_alignParentTop = "true"
 		android:background = "#FF909090"
 	/>
+	<TextView
+		android:layout_width = "wrap_content"
+		android:layout_height = "wrap_content"
+		android:layout_alignParentTop = "true"
+		android:layout_centerHorizontal = "true"
+		android:text = "Create an account\nStep 1 of 2"
+	/>
+	
 	<EditText
     	android:id="@+id/editName"
     	android:layout_height = "wrap_content"
@@ -75,25 +83,23 @@
    		android:layout_marginRight = "6dip"
    		android:text = "@string/faqCommunityCodeLink"
    	/>
-   	
-   	<!--
+
    	<View
 		android:id="@+id/viewDivider"
 		android:layout_height = "2dip"
-    	android:layout_width = "200dip"
+    	android:layout_width = "fill_parent"
     	android:layout_marginTop = "6dip"
     	android:layout_marginBottom = "6dip"
     	android:layout_below = "@id/textFAQCommunityCode"
     	android:layout_centerHorizontal = "true"
     	android:background="#FF909090"
 	/>
-	-->
 	
 	<EditText
     	android:id="@+id/editUsername"
     	android:layout_height = "wrap_content"
     	android:layout_width = "225dip"
-    	android:layout_below = "@id/textFAQCommunityCode"
+    	android:layout_below = "@id/viewDivider"
     	android:layout_alignParentRight = "true"
     	android:layout_marginRight = "6dip"
     	android:inputType = "text"
@@ -101,17 +107,26 @@
     <TextView
    		android:layout_height = "wrap_content"
    		android:layout_width = "wrap_content"
-   		android:layout_below = "@id/textFAQCommunityCode"
+   		android:layout_below = "@id/viewDivider"
    		android:layout_toLeftOf = "@id/editName"
    		android:text = "Desired\nUsername:"
    		android:layout_marginRight = "6dip"
+   	/>
+   	<TextView
+   		android:id="@+id/textUsernameAvailability"
+   		android:layout_height = "wrap_content"
+   		android:layout_width = "wrap_content"
+   		android:layout_below = "@id/editUsername"
+   		android:layout_alignParentRight = "true"
+   		android:layout_marginRight = "6dip"
+   		android:text = "Availability: Username is available!"
    	/>	
    	
    	<EditText
     	android:id="@+id/editPassword"
     	android:layout_height = "wrap_content"
     	android:layout_width = "225dip"
-    	android:layout_below = "@id/editUsername"
+    	android:layout_below = "@id/textUsernameAvailability"
     	android:layout_alignParentRight = "true"
     	android:layout_marginRight = "6dip"
     	android:inputType = "textPassword"
@@ -119,7 +134,7 @@
     <TextView
    		android:layout_height = "wrap_content"
    		android:layout_width = "wrap_content"
-   		android:layout_below = "@id/editUsername"
+   		android:layout_below = "@id/textUsernameAvailability"
    		android:layout_toLeftOf = "@id/editAddress"
    		android:text = "Desired\nPassword:"
    		android:layout_marginRight = "6dip"
@@ -145,7 +160,7 @@
    	<View
 		android:id="@+id/viewDivider2"
 		android:layout_height = "2dip"
-    	android:layout_width = "200dip"
+    	android:layout_width = "fill_parent"
     	android:layout_marginTop = "6dip"
     	android:layout_marginBottom = "6dip"
     	android:layout_below = "@id/editPasswordConfirm"
