@@ -22,9 +22,18 @@
 	/>
 	
 	<TextView
+		android:id = "@+id/textStep2Caption"
 		android:layout_width = "fill_parent"
 		android:layout_height = "wrap_content"
 		android:layout_below = "@id/headerCreateAccount"
 		android:text = "@string/createAccountStep2Caption"
+	/>
+	
+	<ListView
+		android:id = "@+id/listIHave"
+		android:choiceMode = "multipleChoice"
+		android:layout_width = "fill_parent"
+		android:layout_height = "wrap_content"
+		android:layout_below = "@id/textStep2Caption"
 	/>
 </RelativeLayout>
