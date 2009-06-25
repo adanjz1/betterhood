@@ -11,6 +11,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".CreateAccount1">
+        </activity>
+        <activity android:name=".CreateAccount2">
+        </activity>
     </application>
     <uses-sdk android:minSdkVersion="3" />
 </manifest> 
