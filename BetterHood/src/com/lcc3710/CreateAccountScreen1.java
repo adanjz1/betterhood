@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class CreateAccount1 extends Activity {
+public class CreateAccountScreen1 extends Activity {
 	private Intent ca1;
 	
 	Button buttonBack;
@@ -16,7 +16,7 @@ public class CreateAccount1 extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     	switch (requestCode) {
-    	case Login.REQ_CREATE_ACCOUNT:
+    	case LoginScreen.REQ_CREATE_ACCOUNT:
     		
     		if (resultCode == RESULT_OK) {
     			setResult(RESULT_OK, ca1);
@@ -50,8 +50,8 @@ public class CreateAccount1 extends Activity {
         /* buttonForward's click listener */
         buttonForward.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-				Intent ca2 = new Intent(view.getContext(), CreateAccount2.class);
-				startActivityForResult(ca2, Login.REQ_CREATE_ACCOUNT);
+				Intent ca2 = new Intent(view.getContext(), CreateAccountScreen2.class);
+				startActivityForResult(ca2, LoginScreen.REQ_CREATE_ACCOUNT);
 			}
         });
     }

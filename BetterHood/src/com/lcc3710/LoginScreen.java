@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class Login extends Activity {
+public class LoginScreen extends Activity {
 	
 	private Button buttonLogIn;
 	private Button buttonCreateAccount;
@@ -17,6 +17,7 @@ public class Login extends Activity {
 	
 	public static final int REQ_LOGIN = 0;
 	public static final int REQ_CREATE_ACCOUNT = 1;
+	public static final int REQ_HOME_SCREEN = 2;
 	
     /** Called when the activity is first created. */
     @Override
@@ -26,6 +27,7 @@ public class Login extends Activity {
     		switch (resultCode) {
     		case RESULT_OK:
     			// login succeeded, on to the main screen
+    			startHomeScreen();
     			break;
     		case RESULT_CANCELED:
     			// login failed, try again
@@ -37,9 +39,11 @@ public class Login extends Activity {
     		switch (resultCode) {
     		case RESULT_OK:
     			//user created account, log him in
+    			startHomeScreen();
     			break;
     		case RESULT_CANCELED:
     			// user clicked back
+    			clearForm();
     			break;
     		}
     		break;
@@ -54,18 +58,21 @@ public class Login extends Activity {
         
         buttonLogIn.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-				//Intent in = new Intent(view.getContext(), CreateAccount1.class);
-				//startActivityForResult(in, 0);
+				
 				String tempUsername = editUsername.getText().toString();
 				String tempPassword = editPassword.getText().toString();
 				
-				clearForm();
+				Intent in = new Intent(view.getContext(), LoginProcess.class);
+				in.putExtra("username", tempUsername);
+				in.putExtra("password", tempPassword);
+				
+				startActivityForResult(in, REQ_LOGIN);
 			}
         });
         
         buttonCreateAccount.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-				Intent ca1 = new Intent(view.getContext(), CreateAccount1.class);
+				Intent ca1 = new Intent(view.getContext(), CreateAccountScreen1.class);
 				startActivityForResult(ca1, REQ_CREATE_ACCOUNT);
 			}
         });
@@ -82,5 +89,10 @@ public class Login extends Activity {
     
     private void clearPasswordField() {
     	editPassword.setText("");
+    }
+    
+    private void startHomeScreen() {
+    	Intent home = new Intent(getBaseContext(), HomeScreen.class);
+    	startActivityForResult(home, REQ_HOME_SCREEN);
     }
 }
