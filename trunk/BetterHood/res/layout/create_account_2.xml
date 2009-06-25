@@ -33,7 +33,25 @@
 		android:id = "@+id/listIHave"
 		android:choiceMode = "multipleChoice"
 		android:layout_width = "fill_parent"
-		android:layout_height = "wrap_content"
+		android:layout_height = "300dip"
 		android:layout_below = "@id/textStep2Caption"
+	/>
+	
+	<Button
+		android:id = "@+id/buttonBack"
+		android:text = "Back to Step 1"
+		android:layout_height = "wrap_content"
+		android:layout_width = "150dip"
+		android:layout_below = "@id/listIHave"
+		android:layout_alignParentLeft = "true"
+	/>
+	<Button
+		android:id = "@+id/buttonForward"
+		android:text = "Finish!"
+		android:layout_height = "wrap_content"
+		android:layout_width = "150dip"
+		android:layout_below = "@id/listIHave"
+		android:layout_toRightOf = "@id/buttonBack"
+		android:layout_alignParentRight = "true"
 	/>
 </RelativeLayout>
