@@ -47,6 +47,16 @@ public class LoginScreen extends Activity {
     			break;
     		}
     		break;
+    	case REQ_HOME_SCREEN:
+    		switch (resultCode) {
+    		case RESULT_OK:
+    			//user logged out
+    			break;
+    		case RESULT_CANCELED:
+    			//user quit
+    			finish();
+    			break;
+    		}
     	}
     }
     public void onCreate(Bundle savedInstanceState) {
@@ -62,11 +72,14 @@ public class LoginScreen extends Activity {
 				String tempUsername = editUsername.getText().toString();
 				String tempPassword = editPassword.getText().toString();
 				
-				Intent in = new Intent(view.getContext(), LoginProcess.class);
-				in.putExtra("username", tempUsername);
-				in.putExtra("password", tempPassword);
+				if ((tempUsername != null) && (tempPassword != null)) {
 				
-				startActivityForResult(in, REQ_LOGIN);
+					Intent inLogIn = new Intent(view.getContext(), LoginProcess.class);
+					inLogIn.putExtra("username", tempUsername);
+					inLogIn.putExtra("password", tempPassword);
+					
+					startActivityForResult(inLogIn, REQ_LOGIN);
+				}
 			}
         });
         
