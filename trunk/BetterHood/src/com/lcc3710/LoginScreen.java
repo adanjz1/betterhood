@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class LoginScreen extends Activity {
 	
@@ -66,19 +67,27 @@ public class LoginScreen extends Activity {
         buttonLogIn = (Button) findViewById(R.id.buttonLogIn);
         buttonCreateAccount = (Button) findViewById(R.id.buttonCreateAccount);
         
+        editUsername = (EditText) findViewById(R.id.editUsername);
+        editPassword = (EditText) findViewById(R.id.editPassword);
+        
+        //auto put some stuff into the fields, for debug
+        editUsername.setText("admin");
+        editPassword.setText("password");
+        
         buttonLogIn.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-				
 				String tempUsername = editUsername.getText().toString();
 				String tempPassword = editPassword.getText().toString();
 				
-				if ((tempUsername != null) && (tempPassword != null)) {
+				if ((tempUsername.length() > 0) && (tempPassword.length() > 0)) {
 				
 					Intent inLogIn = new Intent(view.getContext(), LoginProcess.class);
 					inLogIn.putExtra("username", tempUsername);
 					inLogIn.putExtra("password", tempPassword);
 					
 					startActivityForResult(inLogIn, REQ_LOGIN);
+				} else {
+					Toast.makeText(view.getContext(), "One or more text fields are blank!", 5).show();
 				}
 			}
         });
