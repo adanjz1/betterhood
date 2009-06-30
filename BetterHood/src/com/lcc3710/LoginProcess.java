@@ -3,6 +3,7 @@ package com.lcc3710;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 public class LoginProcess extends Activity {
 	
@@ -30,5 +31,6 @@ public class LoginProcess extends Activity {
         	setResult(RESULT_CANCELED, in);
         	finish();
         }
+
 	}
 }

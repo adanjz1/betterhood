@@ -11,6 +11,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".LoginProcess">
+        </activity>
         <activity android:name=".CreateAccountScreen1"
         		  android:label="@string/title">
         </activity>
@@ -18,7 +20,7 @@
         		  android:label="@string/title">
         </activity>
         <activity android:name=".HomeScreen"
-        		  android:label="@string/titleHome">
+        		  android:label="@string/title">
         </activity>
     </application>
     <uses-sdk android:minSdkVersion="3" />
