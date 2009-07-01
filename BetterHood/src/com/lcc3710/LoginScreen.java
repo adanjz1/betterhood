@@ -16,15 +16,11 @@ public class LoginScreen extends Activity {
 	private EditText editUsername;
 	private EditText editPassword;
 	
-	public static final int REQ_LOGIN = 0;
-	public static final int REQ_CREATE_ACCOUNT = 1;
-	public static final int REQ_HOME_SCREEN = 2;
-	
     /** Called when the activity is first created. */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     	switch (requestCode) { 
-    	case REQ_LOGIN:
+    	case BetterHood.REQ_LOGIN:
     		switch (resultCode) {
     		case RESULT_OK:
     			// login succeeded, on to the main screen
@@ -36,7 +32,7 @@ public class LoginScreen extends Activity {
     			break;
     		}
     		break;
-    	case REQ_CREATE_ACCOUNT:
+    	case BetterHood.REQ_CREATE_ACCOUNT:
     		switch (resultCode) {
     		case RESULT_OK:
     			//user created account, log him in
@@ -44,11 +40,11 @@ public class LoginScreen extends Activity {
     			break;
     		case RESULT_CANCELED:
     			// user clicked back
-    			clearForm();
+    			//clearForm();
     			break;
     		}
     		break;
-    	case REQ_HOME_SCREEN:
+    	case BetterHood.REQ_HOME_SCREEN:
     		switch (resultCode) {
     		case RESULT_OK:
     			//user logged out
@@ -71,8 +67,10 @@ public class LoginScreen extends Activity {
         editPassword = (EditText) findViewById(R.id.editPassword);
         
         //auto put some stuff into the fields, for debug
-        editUsername.setText("admin");
-        editPassword.setText("password");
+        if (BetterHood.DEBUG) {
+        	editUsername.setText("admin");
+        	editPassword.setText("password");
+        }
         
         buttonLogIn.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
@@ -85,7 +83,7 @@ public class LoginScreen extends Activity {
 					inLogIn.putExtra("username", tempUsername);
 					inLogIn.putExtra("password", tempPassword);
 					
-					startActivityForResult(inLogIn, REQ_LOGIN);
+					startActivityForResult(inLogIn, BetterHood.REQ_LOGIN);
 				} else {
 					Toast.makeText(view.getContext(), "One or more text fields are blank!", 5).show();
 				}
@@ -94,8 +92,8 @@ public class LoginScreen extends Activity {
         
         buttonCreateAccount.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-				Intent ca1 = new Intent(view.getContext(), CreateAccountScreen1.class);
-				startActivityForResult(ca1, REQ_CREATE_ACCOUNT);
+				Intent inCreateAccount1 = new Intent(view.getContext(), CreateAccountScreen1.class);
+				startActivityForResult(inCreateAccount1, BetterHood.REQ_CREATE_ACCOUNT);
 			}
         });
     }
@@ -115,6 +113,6 @@ public class LoginScreen extends Activity {
     
     private void startHomeScreen() {
     	Intent home = new Intent(getBaseContext(), HomeScreen.class);
-    	startActivityForResult(home, REQ_HOME_SCREEN);
+    	startActivityForResult(home, BetterHood.REQ_HOME_SCREEN);
     }
 }
