@@ -5,16 +5,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class CreateAccountScreen2 extends Activity {
 	
-	private Intent ca2;
+	private Intent inCreateAccount2;
 	
 	private Button buttonBack;
 	private Button buttonForward;
+	
+	private Bundle previousForm;
 	
     /** Called when the activity is first created. */	
     @Override
@@ -22,7 +26,8 @@ public class CreateAccountScreen2 extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_account_2);
         
-        ca2 = getIntent();
+        inCreateAccount2 = getIntent();
+        previousForm = inCreateAccount2.getExtras();
         
         buttonBack = (Button) findViewById(R.id.buttonBack);
         buttonForward = (Button) findViewById(R.id.buttonForward);
@@ -30,10 +35,17 @@ public class CreateAccountScreen2 extends Activity {
         ListView listIHave = (ListView) findViewById(R.id.listIHave);
         listIHave.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, aszIHave));
         
+        listIHave.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO figure out why the checkboxes dont change when you click them
+				arg1.setPressed(true);
+			}        	
+        });
+        
         buttonBack.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				setResult(RESULT_CANCELED, ca2);
+				setResult(RESULT_CANCELED, inCreateAccount2);
 				finish();
 			}        	
         });
@@ -42,7 +54,7 @@ public class CreateAccountScreen2 extends Activity {
 			public void onClick(View v) {
 				// TODO create account in database
 				// but lets pretend we already succeeded
-				setResult(RESULT_OK, ca2);
+				setResult(RESULT_OK, inCreateAccount2);
 				finish();
 			}        	
         });
