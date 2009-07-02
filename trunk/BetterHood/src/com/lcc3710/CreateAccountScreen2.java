@@ -3,6 +3,7 @@ package com.lcc3710;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -36,10 +37,10 @@ public class CreateAccountScreen2 extends Activity {
         listIHave.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, aszIHave));
         
         listIHave.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
+			public void onItemClick(AdapterView<?> parent, View view, int position,
+					long id) {
 				// TODO figure out why the checkboxes dont change when you click them
-				arg1.setPressed(true);
+				Log.i(BetterHood.TAG_CREATE_ACCOUNT_SCREEN_2, "item " + Integer.toString(position) + " was clicked");
 			}        	
         });
         
@@ -52,6 +53,9 @@ public class CreateAccountScreen2 extends Activity {
         
         buttonForward.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
+				// TODO process checked list
+				// TODO check for errors
+				
 				// TODO create account in database
 				// but lets pretend we already succeeded
 				setResult(RESULT_OK, inCreateAccount2);

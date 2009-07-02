@@ -119,13 +119,13 @@ public class CreateAccountScreen1 extends Activity {
 				
 					// on to the next screen...
 					Intent inCreateAccount2 = new Intent(view.getContext(), CreateAccountScreen2.class);
-					/*
+					
 					inCreateAccount2.putExtra("name", tempName);
 					inCreateAccount2.putExtra("address", tempAddress);
 					inCreateAccount2.putExtra("communityCode", tempCommunityCode);
 					inCreateAccount2.putExtra("username", tempUsername);
 					inCreateAccount2.putExtra("password", tempPassword);
-					*/
+					
 					startActivityForResult(inCreateAccount2, BetterHood.REQ_CREATE_ACCOUNT);
 				}				
 			}
