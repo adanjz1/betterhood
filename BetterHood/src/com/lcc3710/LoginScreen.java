@@ -26,7 +26,6 @@ public class LoginScreen extends Activity {
     		case RESULT_OK:
     			// see if we got a response
     			String response;
-    			boolean loginSuccess;
     			
     			if ((response = data.getExtras().getString(BetterHood.EXTRAS_WEB_RESPONSE)) != null) {
     				if (response.equals("true")) {
