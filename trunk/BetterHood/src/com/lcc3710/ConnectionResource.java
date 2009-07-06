@@ -10,24 +10,55 @@ import java.net.URL;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 public class ConnectionResource extends Activity {
 	/** Called when the activity is first created. */
-	public final static String queryBase = "http://lcc3710.lcc.gatech.edu/better_hood/better_hood_login.php?";
+	private String queryBase;
+	private String query;
+	private Intent intent;
+	private int requestCode;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login_screen);
-		Bundle extras = getIntent().getExtras();
-		String q = "";
+		intent = getIntent();
+		
+		Bundle extras = intent.getExtras();
+		query = "";
+		
 		if (extras != null)
 		{
-			q = extras.getString("query");
+			query = extras.getString(BetterHood.EXTRAS_QUERY);
+			requestCode = extras.getInt(BetterHood.EXTRAS_REQUEST_CODE);
+		} else {
+			//something bad happened
+			intent.putExtra(BetterHood.EXTRAS_ERROR_MESSAGE, "ConnectionResource did not receive a query");
+			setResult(RESULT_CANCELED, intent);
+			finish();
 		}
-		Intent intent = getIntent();
-		String val = textURL(q);
-		intent.putExtra("webResponse", val);
+		
+		switch (requestCode) {
+		case BetterHood.REQ_LOGIN:
+			queryBase = BetterHood.PHP_FILE_LOGIN;
+			break;
+		case BetterHood.REQ_CREATE_ACCOUNT:
+			queryBase = BetterHood.PHP_FILE_CREATE_ACCOUNT;
+			break;
+		case BetterHood.REQ_CREATE_EVENT:
+			queryBase = BetterHood.PHP_FILE_CREATE_EVENT;
+			break;
+		default:
+			intent.putExtra(BetterHood.EXTRAS_ERROR_MESSAGE, "ConnectionResource received an invalid request code");
+			setResult(RESULT_CANCELED, intent);
+			finish();
+		}
+		Log.i(BetterHood.TAG_LOGIN_PROCESS, BetterHood.URL_BASE + queryBase + "?" + query);
+		String val = textURL(query);
+		intent.putExtra(BetterHood.EXTRAS_WEB_RESPONSE, val);
 		setResult(RESULT_OK, intent);
 		finish();
 	}
@@ -38,7 +69,7 @@ public class ConnectionResource extends Activity {
 		int BUFFER_SIZE = 2000;
 		InputStream in = null;
 		try {
-			HttpURLConnection con = (HttpURLConnection) (new URL(queryBase)).openConnection();
+			HttpURLConnection con = (HttpURLConnection) (new URL(BetterHood.URL_BASE + queryBase + "?" + query)).openConnection();
 			con.setRequestMethod("POST");
 			con.setRequestProperty("METHOD", "POST");
 			con.setDoInput(true);

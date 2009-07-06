@@ -26,7 +26,6 @@ public class LoginScreen extends Activity {
     		case RESULT_OK:
     			// see if we got a response
     			String response;
-    			
     			if ((response = data.getExtras().getString(BetterHood.EXTRAS_WEB_RESPONSE)) != null) {
     				if (response.equals("true")) {
     					Toast.makeText(this, "Logged in!", BetterHood.TOAST_TIME);
@@ -103,6 +102,7 @@ public class LoginScreen extends Activity {
 				
 					Intent inLogIn = new Intent(view.getContext(), ConnectionResource.class);
 					inLogIn.putExtra(BetterHood.EXTRAS_QUERY, tempQuery);
+					inLogIn.putExtra(BetterHood.EXTRAS_REQUEST_CODE, BetterHood.REQ_LOGIN);
 					
 					startActivityForResult(inLogIn, BetterHood.REQ_LOGIN);
 				} else {
