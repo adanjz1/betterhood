@@ -55,7 +55,10 @@ public class LoginScreen extends Activity {
     	case BetterHood.REQ_CREATE_ACCOUNT:
     		switch (resultCode) {
     		case RESULT_OK:
-    			//user created account, log him in
+    			// user created account, log him in
+    			Bundle extras = data.getExtras();
+    			// login using the username and password from the ACCOUNT CREATION PROCESS, NOT the EditText fields
+    			doLogin(extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME), extras.getString(BetterHood.EXTRAS_ACCOUNT_PASSWORD));
     			startHomeScreen();
     			break;
     		case RESULT_CANCELED:
@@ -71,7 +74,7 @@ public class LoginScreen extends Activity {
     			break;
     		case RESULT_CANCELED:
     			//user quit
-    			finish();
+    			//finish();
     			break;
     		}
     	}
@@ -95,19 +98,8 @@ public class LoginScreen extends Activity {
         buttonLogIn.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				String tempUsername = editUsername.getText().toString();
-				String tempPassword = editPassword.getText().toString();				
-				String tempQuery = "Name=" + tempUsername + "&Password=" + tempPassword;
-				
-				if ((tempUsername.length() > 0) && (tempPassword.length() > 0)) {
-				
-					Intent inLogIn = new Intent(view.getContext(), ConnectionResource.class);
-					inLogIn.putExtra(BetterHood.EXTRAS_QUERY, tempQuery);
-					inLogIn.putExtra(BetterHood.EXTRAS_REQUEST_CODE, BetterHood.REQ_LOGIN);
-					
-					startActivityForResult(inLogIn, BetterHood.REQ_LOGIN);
-				} else {
-					Toast.makeText(view.getContext(), "One or more text fields are blank!", 5).show();
-				}
+				String tempPassword = editPassword.getText().toString();
+				doLogin(tempUsername, tempPassword);
 			}
         });
         
@@ -117,6 +109,23 @@ public class LoginScreen extends Activity {
 				startActivityForResult(inCreateAccount1, BetterHood.REQ_CREATE_ACCOUNT);
 			}
         });
+    }
+    
+    private void doLogin(String szUsername, String szPassword) {
+    					
+		String tempQuery = "Name=" + szUsername + "&Password=" + szPassword;
+		
+		if ((szUsername.length() > 0) && (szPassword.length() > 0)) {
+		
+			Intent inLogIn = new Intent(this, ConnectionResource.class);
+			inLogIn.putExtra(BetterHood.EXTRAS_QUERY, tempQuery);
+			inLogIn.putExtra(BetterHood.EXTRAS_REQUEST_CODE, BetterHood.REQ_LOGIN);
+			
+			// Launch ConnectionResource with the query and request code in the extras
+			startActivityForResult(inLogIn, BetterHood.REQ_LOGIN);
+		} else {
+			Toast.makeText(this, BetterHood.ERROR_PREFIX + "One or more text fields are blank!", 5).show();
+		}
     }
     
     private void clearForm() {

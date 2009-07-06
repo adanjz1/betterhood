@@ -19,7 +19,7 @@ public class CreateEventScreen1 extends Activity {
 	private Button buttonBack;
 	private Button buttonForward;
 	
-	private Intent inCreateEventScreen1;
+	private Intent intent;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     	switch (requestCode) {
@@ -27,7 +27,7 @@ public class CreateEventScreen1 extends Activity {
     		
     		if (resultCode == RESULT_OK) {
     			// event was created, success!
-    			setResult(RESULT_OK, inCreateEventScreen1);
+    			setResult(RESULT_OK, intent);
     			finish();
     		}
     		
@@ -42,7 +42,7 @@ public class CreateEventScreen1 extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_event_1);
         
-        inCreateEventScreen1 = getIntent();
+        intent = getIntent();
         
 		buttonBack = (Button) findViewById(R.id.buttonBack);
 		buttonForward = (Button) findViewById(R.id.buttonForward);

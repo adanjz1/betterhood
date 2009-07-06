@@ -56,8 +56,12 @@ public class ConnectionResource extends Activity {
 			setResult(RESULT_CANCELED, intent);
 			finish();
 		}
-		Log.i(BetterHood.TAG_LOGIN_PROCESS, BetterHood.URL_BASE + queryBase + "?" + query);
+		
 		String val = textURL(query);
+		
+		Log.i(BetterHood.TAG_LOGIN_PROCESS, "textURL( " + BetterHood.URL_BASE + queryBase + "?" + query + ")");
+		Log.i(BetterHood.TAG_LOGIN_PROCESS, "textURL() returned: " + val);
+		
 		intent.putExtra(BetterHood.EXTRAS_WEB_RESPONSE, val);
 		setResult(RESULT_OK, intent);
 		finish();
