@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+android:id="@+id/linlayoutBase"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+android:orientation="vertical"
+xmlns:android="http://schemas.android.com/apk/res/android"
+>
 
+		<ScrollView
+		android:id="@+id/scrollview"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		>
 <RelativeLayout 
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent" 
@@ -58,10 +71,28 @@
    	/>
    	
    	<EditText
-    	android:id="@+id/editCommunityCode"
+    	android:id="@+id/editEmail"
     	android:layout_height = "wrap_content"
     	android:layout_width = "225dip"
     	android:layout_below = "@id/editAddress"
+    	android:layout_alignParentRight = "true"
+    	android:layout_marginRight = "6dip"
+    	android:inputType = "textEmailAddress"
+    />
+    <TextView
+   		android:layout_height = "wrap_content"
+   		android:layout_width = "wrap_content"
+   		android:layout_below = "@id/editAddress"
+   		android:layout_toLeftOf = "@id/editEmail"
+   		android:text = "E-Mail\nAddress:"
+   		android:layout_marginRight = "6dip"
+   	/>
+   	
+   	<EditText
+    	android:id="@+id/editCommunityCode"
+    	android:layout_height = "wrap_content"
+    	android:layout_width = "225dip"
+    	android:layout_below = "@id/editEmail"
     	android:layout_alignParentRight = "true"
     	android:layout_marginRight = "6dip"
     	android:inputType = "text"
@@ -69,7 +100,7 @@
     <TextView
    		android:layout_height = "wrap_content"
    		android:layout_width = "wrap_content"
-   		android:layout_below = "@id/editAddress"
+   		android:layout_below = "@id/editEmail"
    		android:layout_toLeftOf = "@id/editCommunityCode"
    		android:text = "Community\nCode:"
    		android:layout_marginRight = "6dip"
@@ -113,21 +144,11 @@
    		android:layout_marginRight = "6dip"
    	/>
    	
-   	<TextView
-   		android:id="@+id/textUsernameAvailability"
-   		android:layout_height = "wrap_content"
-   		android:layout_width = "wrap_content"
-   		android:layout_below = "@id/editUsername"
-   		android:layout_alignParentRight = "true"
-   		android:layout_marginRight = "6dip"
-   		android:text = "Username must be at least 6 characters"
-   	/>	
-   	
    	<EditText
     	android:id="@+id/editPassword"
     	android:layout_height = "wrap_content"
     	android:layout_width = "225dip"
-    	android:layout_below = "@id/textUsernameAvailability"
+    	android:layout_below = "@id/editUsername"
     	android:layout_alignParentRight = "true"
     	android:layout_marginRight = "6dip"
     	android:inputType = "textPassword"
@@ -135,7 +156,7 @@
     <TextView
    		android:layout_height = "wrap_content"
    		android:layout_width = "wrap_content"
-   		android:layout_below = "@id/textUsernameAvailability"
+   		android:layout_below = "@id/editUsername"
    		android:layout_toLeftOf = "@id/editAddress"
    		android:text = "Desired\nPassword:"
    		android:layout_marginRight = "6dip"
@@ -186,3 +207,7 @@
 		android:layout_alignParentRight = "true"
 	/>
 </RelativeLayout>
+
+	</ScrollView>
+	
+</LinearLayout>

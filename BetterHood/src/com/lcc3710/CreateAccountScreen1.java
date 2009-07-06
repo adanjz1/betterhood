@@ -12,19 +12,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class CreateAccountScreen1 extends Activity {
-	private Intent inCreateAccount1;
+	private Intent intent;
 	
 	private Button buttonBack;
 	private Button buttonForward;
     
 	private EditText editName;
 	private EditText editAddress;
+	private	EditText editEmail;
 	private EditText editCommunityCode;
 	private EditText editUsername;
 	private EditText editPassword;
 	private EditText editPasswordConfirm;
-    
-	private TextView textUsernameAvailability;
 	
 	private boolean bEditUsernameHasFocus;
    
@@ -38,7 +37,8 @@ public class CreateAccountScreen1 extends Activity {
     	case BetterHood.REQ_CREATE_ACCOUNT:
     		
     		if (resultCode == RESULT_OK) {
-    			setResult(RESULT_OK, inCreateAccount1);
+    			//intent = getIntent();
+    			setResult(RESULT_OK, intent);
     			finish();
     		}
     		
@@ -53,23 +53,23 @@ public class CreateAccountScreen1 extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_account_1);
         
-        inCreateAccount1 = getIntent();
+        intent = getIntent();
         
         buttonBack = (Button) findViewById(R.id.buttonBack);
         buttonForward = (Button) findViewById(R.id.buttonForward);
         
         editName = (EditText) findViewById(R.id.editName);
         editAddress = (EditText) findViewById(R.id.editAddress);
+        editEmail = (EditText) findViewById(R.id.editEmail);
         editCommunityCode = (EditText) findViewById(R.id.editCommunityCode);
         editUsername = (EditText) findViewById(R.id.editUsername);
         editPassword = (EditText) findViewById(R.id.editPassword);
         editPasswordConfirm = (EditText) findViewById(R.id.editPasswordConfirm);
         
-        textUsernameAvailability = (TextView) findViewById(R.id.textUsernameAvailability);
-        
         if (BetterHood.DEBUG) {
-        	editName.setText("George Burdell");
+        	editName.setText("George_Burdell");
         	editAddress.setText("123 Hearthwood Cir");
+        	editEmail.setText("gpb2009@gatech.edu");
         	editCommunityCode.setText("123456");
         	editUsername.setText("gpb2009");
         	editPassword.setText("gatech");
@@ -79,7 +79,7 @@ public class CreateAccountScreen1 extends Activity {
         /* buttonBack's click listener */
         buttonBack.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-				setResult(RESULT_CANCELED, inCreateAccount1);
+				setResult(RESULT_CANCELED, intent);
 				finish();
 			}
         });
@@ -88,11 +88,12 @@ public class CreateAccountScreen1 extends Activity {
         buttonForward.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				
-				String tempName, tempAddress, tempCommunityCode, tempUsername, 
+				String tempName, tempAddress, tempEmail, tempCommunityCode, tempUsername, 
 					tempPassword, tempPasswordConfirm;
 				
 				tempName = editName.getText().toString();
 				tempAddress = editAddress.getText().toString();
+				tempEmail = editEmail.getText().toString();
 				tempCommunityCode = editCommunityCode.getText().toString();
 				tempUsername = editUsername.getText().toString();
 				tempPassword = editPassword.getText().toString();
@@ -120,63 +121,16 @@ public class CreateAccountScreen1 extends Activity {
 					// on to the next screen...
 					Intent inCreateAccount2 = new Intent(view.getContext(), CreateAccountScreen2.class);
 					
-					inCreateAccount2.putExtra("name", tempName);
-					inCreateAccount2.putExtra("address", tempAddress);
-					inCreateAccount2.putExtra("communityCode", tempCommunityCode);
-					inCreateAccount2.putExtra("username", tempUsername);
-					inCreateAccount2.putExtra("password", tempPassword);
+					inCreateAccount2.putExtra(BetterHood.EXTRAS_ACCOUNT_NAME, tempName);
+					inCreateAccount2.putExtra(BetterHood.EXTRAS_ACCOUNT_ADDRESS, tempAddress);
+					inCreateAccount2.putExtra(BetterHood.EXTRAS_ACCOUNT_EMAIL, tempEmail);
+					inCreateAccount2.putExtra(BetterHood.EXTRAS_ACCOUNT_COMMUNITY_CODE, tempCommunityCode);
+					inCreateAccount2.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, tempUsername);
+					inCreateAccount2.putExtra(BetterHood.EXTRAS_ACCOUNT_PASSWORD, tempPassword);
 					
 					startActivityForResult(inCreateAccount2, BetterHood.REQ_CREATE_ACCOUNT);
 				}				
 			}
-        });
-        
-        editUsername.setOnKeyListener(new View.OnKeyListener() {
-			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				boolean result = false;
-				
-				for (int i = 0; i < illegalCharacters.length; i++) {
-					if (keyCode == illegalCharacters[i]) {
-						result = true;
-						break;
-					}
-				}
-				
-				String tempUsername = editUsername.getText().toString().trim();
-				
-				if (tempUsername.length() > 6) {
-					textUsernameAvailability.setText("Username looks good so far...");
-				} else {
-					textUsernameAvailability.setText("Username must be at least 6 characters");
-				}
-				return result;
-			}        	
-        });
-        
-        editUsername.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-			public void onFocusChange(View v, boolean hasFocus) {
-				// TODO figure out why im getting null pointer exceptions here
-				/*
-				if (v.findFocus().getId() == editUsername.getId()) {
-					bEditUsernameHasFocus = true;
-				} else {
-					
-					if (bEditUsernameHasFocus) {						
-						bEditUsernameHasFocus = false;
-						
-						String tempUsername = editUsername.getText().toString();
-						boolean bUsernameIsAvailable = true;
-						
-						// TODO check and see if username has been taken
-						
-						if (bUsernameIsAvailable) {
-							textUsernameAvailability.setText("Username availability: " + tempUsername + " is available!");
-						}
-						
-					}
-					
-				}*/
-			}        	
         });
         
         OnKeyListener buttonKeyListener = new OnKeyListener() {

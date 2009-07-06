@@ -15,14 +15,14 @@ public class CreateEventScreen2 extends Activity {
 	Button buttonBack;
 	Button buttonForward;
 	
-	Intent inCreateEvent2;
+	Intent intent;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_event_2);
         
-        inCreateEvent2 = getIntent();
+        intent = getIntent();
         
         buttonBack = (Button) findViewById(R.id.buttonBack);
         buttonForward = (Button) findViewById(R.id.buttonForward);
@@ -30,7 +30,7 @@ public class CreateEventScreen2 extends Activity {
 		buttonBack.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View view) {
-				setResult(RESULT_CANCELED, inCreateEvent2);
+				setResult(RESULT_CANCELED, intent);
 				finish();
 			}
 		});
@@ -38,7 +38,7 @@ public class CreateEventScreen2 extends Activity {
 		buttonForward.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				// TODO check for errors, then add the event to database etc
-				setResult(RESULT_OK, inCreateEvent2);
+				setResult(RESULT_OK, intent);
 				finish();
 			}
 		});
