@@ -38,7 +38,7 @@ public class CreateAccountScreen1 extends Activity {
     		
     		if (resultCode == RESULT_OK) {
     			//intent = getIntent();
-    			setResult(RESULT_OK, intent);
+    			setResult(RESULT_OK, data);
     			finish();
     		}
     		
@@ -67,7 +67,7 @@ public class CreateAccountScreen1 extends Activity {
         editPasswordConfirm = (EditText) findViewById(R.id.editPasswordConfirm);
         
         if (BetterHood.DEBUG) {
-        	editName.setText("George_Burdell");
+        	editName.setText("George Burdell");
         	editAddress.setText("123 Hearthwood Cir");
         	editEmail.setText("gpb2009@gatech.edu");
         	editCommunityCode.setText("123456");
