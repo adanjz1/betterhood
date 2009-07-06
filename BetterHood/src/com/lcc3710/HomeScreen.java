@@ -12,6 +12,8 @@ public class HomeScreen extends Activity {
 	private Button buttonWant;
 	private Button buttonSettings;
 	
+	private Intent intent;
+	
 	@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     	switch (requestCode) {
@@ -23,7 +25,7 @@ public class HomeScreen extends Activity {
     		}
     		
     		if (resultCode == RESULT_CANCELED) {
-    			//something went wrong in creating the account
+    			//something went wrong in creating the event
     		}
     		
     		break;
@@ -32,6 +34,8 @@ public class HomeScreen extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_screen);
+        
+        intent = getIntent();
         
         buttonWant = (Button) findViewById(R.id.buttonWant);
         buttonSettings = (Button) findViewById(R.id.buttonSettings);
@@ -46,6 +50,9 @@ public class HomeScreen extends Activity {
         buttonSettings.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
 				// TODO settings button doesn't do anything yet
+				// lets pretend its a logout button for now
+				setResult(RESULT_CANCELED, intent);
+				finish();
 				
 			}
         });

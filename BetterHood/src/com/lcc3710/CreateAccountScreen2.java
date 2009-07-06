@@ -57,20 +57,21 @@ public class CreateAccountScreen2 extends Activity {
         
         listIHave = (ListView) findViewById(R.id.listIHave);
         
-        listIHave.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, aszIHave));
-        listIHave.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				// TODO figure out why the checkboxes dont change when you click them
-				Log.i(BetterHood.TAG_CREATE_ACCOUNT_SCREEN_2, "item " + Integer.toString(position) + " was clicked");
-				/*
-				if (view.isPressed()) {
-					view.setPressed(false);
-				} else {
-					view.setPressed(true);
-				}
-				*/
-			}        	
-        });
+        listIHave.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, aszIHave));
+        
+//        listIHave.setOnItemClickListener(new OnItemClickListener() {
+//			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//				// TODO figure out why the checkboxes dont change when you click them
+//				Log.i(BetterHood.TAG_CREATE_ACCOUNT_SCREEN_2, "item " + Integer.toString(position) + " was clicked");
+//				/*
+//				if (view.isPressed()) {
+//					view.setPressed(false);
+//				} else {
+//					view.setPressed(true);
+//				}
+//				*/
+//			}        	
+//        });
         
         buttonBack.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -117,7 +118,7 @@ public class CreateAccountScreen2 extends Activity {
 					for (int i = 0; i < listIHave.getCount(); i++) {
 						iHaveQuery += "0";							
 					}
-					intent.putExtra(BetterHood.EXTRAS_ACCOUNT_IHAVE, "010101");
+					intent.putExtra(BetterHood.EXTRAS_ACCOUNT_IHAVE, iHaveQuery);
 					confirmEmptyList();
 				}
 			}        	

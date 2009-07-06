@@ -1,7 +1,9 @@
 package com.lcc3710;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -20,22 +22,55 @@ public class LoginScreen extends Activity {
     /** Called when the activity is first created. */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	final Bundle tempExtras;
+    	final String tempUsername;
+    	
+    	if (data != null) {
+    		tempExtras = data.getExtras();
+    	} else {
+    		tempExtras = new Bundle();
+    	}
+    	    	
     	switch (requestCode) { 
     	case BetterHood.REQ_LOGIN:
+    		
+    		tempUsername = tempExtras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME);
+    		
+    		AlertDialog.Builder loginAlert = new AlertDialog.Builder(this)
+            .setTitle("Login")
+            .setIcon(R.drawable.icon);    		
+    		
     		switch (resultCode) {
-    		case RESULT_OK:
+    		case RESULT_OK:   		
+    			    			
     			// see if we got a response
     			String response;
     			if ((response = data.getExtras().getString(BetterHood.EXTRAS_WEB_RESPONSE)) != null) {
     				if (response.equals("true")) {
-    					Toast.makeText(this, "Logged in!", BetterHood.TOAST_TIME);
-    	    			startHomeScreen();
+    					loginAlert.setMessage(tempUsername + " has been logged in!");
+    					loginAlert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+    		                public void onClick(DialogInterface dialog, int whichButton) {
+    		                	startHomeScreen();
+    		                }
+    					});
     				} else {
-    					Toast.makeText(this, "Incorrect username/password combination. Try again!", BetterHood.TOAST_TIME).show();
+    					loginAlert.setMessage("Incorrect username/password combination for " + tempUsername + ". Try again!");
+    					loginAlert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+    		                public void onClick(DialogInterface dialog, int whichButton) {
+    		                	//clearPasswordField();
+    		                }
+    					});
     				}
     			} else {
-    				Toast.makeText(this, BetterHood.ERROR_PREFIX + "No server response", BetterHood.TOAST_TIME);
+    				loginAlert.setMessage(BetterHood.ERROR_PREFIX + "No server repsonse recieved.");
+    				loginAlert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+		                public void onClick(DialogInterface dialog, int whichButton) {
+		                	//nothing
+		                }
+					});
     			}
+    			
+    			loginAlert.show();
     			
     			
     			break;
@@ -53,17 +88,58 @@ public class LoginScreen extends Activity {
     		}
     		break;
     	case BetterHood.REQ_CREATE_ACCOUNT:
+    		
+    		tempUsername = tempExtras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME);
+    		
+    		AlertDialog.Builder createAccountAlert = new AlertDialog.Builder(this)
+            .setTitle("Create an account")
+            .setIcon(R.drawable.icon);                 
+    		
     		switch (resultCode) {
     		case RESULT_OK:
     			// user created account, log him in
-    			Bundle extras = data.getExtras();
     			// login using the username and password from the ACCOUNT CREATION PROCESS, NOT the EditText fields
-    			doLogin(extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME), extras.getString(BetterHood.EXTRAS_ACCOUNT_PASSWORD));
-    			startHomeScreen();
+    			    			
+    			createAccountAlert.setMessage("Your account has been created! Do you want to log in now?");
+    			
+    			editUsername.setText(tempExtras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
+    			editPassword.setText(tempExtras.getString(BetterHood.EXTRAS_ACCOUNT_PASSWORD));
+    			
+    			createAccountAlert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                    	doLogin(tempExtras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME), tempExtras.getString(BetterHood.EXTRAS_ACCOUNT_PASSWORD));
+                    }
+    			});
+    			
+    			createAccountAlert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                    	// user doesnt want to log in yet
+                    	clearPasswordField();
+                    }
+    			});
+    			    			
+    			createAccountAlert.show();
+    			
     			break;
     		case RESULT_CANCELED:
     			// user clicked back
     			//clearForm();
+    			String szErrorMessage;
+    			
+    			createAccountAlert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                    	// nothing here i guess...
+                    }
+    			});
+    			
+    			if ((szErrorMessage = data.getExtras().getString(BetterHood.EXTRAS_ERROR_MESSAGE)) != null ) {
+    				createAccountAlert.setMessage("Account creation failed. " + BetterHood.ERROR_PREFIX + szErrorMessage);
+    			} else {
+    				createAccountAlert.setMessage("Account creation failed. " + BetterHood.ERROR_PREFIX + "Unknown error.");
+    			}
+    			
+    			createAccountAlert.show();
+    			
     			break;
     		}
     		break;
@@ -74,6 +150,8 @@ public class LoginScreen extends Activity {
     			break;
     		case RESULT_CANCELED:
     			//user quit
+    			clearPasswordField();
+    			Toast.makeText(this, "User logged out.", BetterHood.TOAST_TIME).show();
     			//finish();
     			break;
     		}
@@ -120,6 +198,7 @@ public class LoginScreen extends Activity {
 			Intent inLogIn = new Intent(this, ConnectionResource.class);
 			inLogIn.putExtra(BetterHood.EXTRAS_QUERY, tempQuery);
 			inLogIn.putExtra(BetterHood.EXTRAS_REQUEST_CODE, BetterHood.REQ_LOGIN);
+			inLogIn.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, szUsername);
 			
 			// Launch ConnectionResource with the query and request code in the extras
 			startActivityForResult(inLogIn, BetterHood.REQ_LOGIN);
