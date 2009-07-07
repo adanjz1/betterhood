@@ -1,25 +1,26 @@
 package com.lcc3710;
 
-
-
-
-
-
 import android.app.Activity;
-import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TabHost;
 
 public class CreateEventScreen1 extends Activity {
     /** Called when the activity is first created. */
 	private Button buttonBack;
 	private Button buttonForward;
 	
+	private AutoCompleteTextView editEventTemplate;
+	
 	private Intent intent;
+	
+	static final String[] aszAvailableEvents = {
+    	"Kids Play-date", "Lawnmowing", "Missing child", "Pool Party", "Potluck"
+    };
+	
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     	switch (requestCode) {
@@ -46,6 +47,17 @@ public class CreateEventScreen1 extends Activity {
         
 		buttonBack = (Button) findViewById(R.id.buttonBack);
 		buttonForward = (Button) findViewById(R.id.buttonForward);
+		
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, aszAvailableEvents);
+		
+		editEventTemplate = (AutoCompleteTextView) findViewById(R.id.editEventTemplate);
+		editEventTemplate.setAdapter(adapter);
+		editEventTemplate.setText("p");
+		editEventTemplate.setThreshold(0);
+		
+		if (!editEventTemplate.isPopupShowing()) {
+			//editEventTemplate.showDropDown();
+		}
 		
 		buttonBack.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {

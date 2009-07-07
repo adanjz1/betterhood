@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.View.OnKeyListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class CreateAccountScreen1 extends Activity {
@@ -23,12 +22,7 @@ public class CreateAccountScreen1 extends Activity {
 	private EditText editCommunityCode;
 	private EditText editUsername;
 	private EditText editPassword;
-	private EditText editPasswordConfirm;
-	
-	private boolean bEditUsernameHasFocus;
-   
-	private static int[] illegalCharacters = { KeyEvent.KEYCODE_SLASH, KeyEvent.KEYCODE_SPACE, KeyEvent.KEYCODE_APOSTROPHE, KeyEvent.KEYCODE_STAR };
-    
+	private EditText editPasswordConfirm;    
     
 	/** Called when the activity is first created. */
     @Override

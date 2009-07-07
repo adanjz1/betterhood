@@ -15,6 +15,9 @@ public class HomeScreen extends Activity {
 	
 	private Intent intent;
 	
+	private String sessionID;
+	private Bundle extras;
+	
 	@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     	switch (requestCode) {
@@ -42,6 +45,10 @@ public class HomeScreen extends Activity {
         buttonSettings = (Button) findViewById(R.id.buttonSettings);
         buttonMap = (Button) findViewById(R.id.buttonMap);
         
+        if ((extras = intent.getExtras()) != null) {
+        	sessionID = extras.getString(BetterHood.EXTRAS_SESSION_ID);
+        }
+        
         buttonWant.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				Intent inWant = new Intent(view.getContext(), CreateEventScreen1.class);
@@ -65,7 +72,6 @@ public class HomeScreen extends Activity {
 				// lets pretend its a logout button for now
 				Intent inMap = new Intent(view.getContext(), MapViewScreen.class);
 				startActivityForResult(inMap, BetterHood.REQ_CREATE_EVENT);
-				
 			}
         });
 	}

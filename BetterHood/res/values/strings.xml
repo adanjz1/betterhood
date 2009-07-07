@@ -6,4 +6,5 @@
     <string name="faqCommunityCodeLink"><u>FAQ: What is my Community Code?</u></string>
     
     <string name="createAccountStep2Caption">This is just some general information to help get you involved in the community.</string>
+	<string name="createEventStep1Caption">Pick an event template from your community database below</string>
 </resources>
