@@ -19,4 +19,14 @@
 		android:layout_height = "wrap_content"
 		android:layout_toRightOf = "@id/buttonWant"
 	/>
+	
+	<Button 
+		android:id="@+id/buttonMap"
+		android:text = "Map"
+		android:layout_width = "100dip"
+		android:layout_height = "wrap_content"
+		android:layout_toRightOf = "@id/buttonSettings"
+	/>
+
+
 </RelativeLayout>
