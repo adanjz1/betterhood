@@ -2,10 +2,10 @@ package com.lcc3710;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,13 +44,15 @@ public class LoginScreen extends Activity {
     		case RESULT_OK:   		
     			    			
     			// see if we got a response
-    			String response;
+    			final String response;
     			if ((response = data.getExtras().getString(BetterHood.EXTRAS_WEB_RESPONSE)) != null) {
-    				if (response.equals("true")) {
+    				Log.i(BetterHood.TAG_LOGIN_PROCESS, "Login response: " + response);
+
+    				if (!response.equals("false")) {
     					loginAlert.setMessage(tempUsername + " has been logged in!");
     					loginAlert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
     		                public void onClick(DialogInterface dialog, int whichButton) {
-    		                	startHomeScreen();
+    		                	startHomeScreen(response);
     		                }
     					});
     				} else {
@@ -89,59 +91,63 @@ public class LoginScreen extends Activity {
     		break;
     	case BetterHood.REQ_CREATE_ACCOUNT:
     		
-    		tempUsername = tempExtras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME);
-    		
-    		AlertDialog.Builder createAccountAlert = new AlertDialog.Builder(this)
-            .setTitle("Create an account")
-            .setIcon(R.drawable.icon);                 
-    		
-    		switch (resultCode) {
-    		case RESULT_OK:
-    			// user created account, log him in
-    			// login using the username and password from the ACCOUNT CREATION PROCESS, NOT the EditText fields
-    			    			
-    			createAccountAlert.setMessage("Your account has been created! Do you want to log in now?");
-    			
-    			editUsername.setText(tempExtras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
-    			editPassword.setText(tempExtras.getString(BetterHood.EXTRAS_ACCOUNT_PASSWORD));
-    			
-    			createAccountAlert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                    	doLogin(tempExtras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME), tempExtras.getString(BetterHood.EXTRAS_ACCOUNT_PASSWORD));
-                    }
-    			});
-    			
-    			createAccountAlert.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                    	// user doesnt want to log in yet
-                    	clearPasswordField();
-                    }
-    			});
-    			    			
-    			createAccountAlert.show();
-    			
-    			break;
-    		case RESULT_CANCELED:
-    			// user clicked back
-    			//clearForm();
-    			String szErrorMessage;
-    			
-    			createAccountAlert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                    	// nothing here i guess...
-                    }
-    			});
-    			
-    			if ((szErrorMessage = data.getExtras().getString(BetterHood.EXTRAS_ERROR_MESSAGE)) != null ) {
-    				createAccountAlert.setMessage("Account creation failed. " + BetterHood.ERROR_PREFIX + szErrorMessage);
-    			} else {
-    				createAccountAlert.setMessage("Account creation failed. " + BetterHood.ERROR_PREFIX + "Unknown error.");
-    			}
-    			
-    			createAccountAlert.show();
-    			
-    			break;
+    		if ((tempUsername = tempExtras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME)) != null) {
+    			AlertDialog.Builder createAccountAlert = new AlertDialog.Builder(this)
+                .setTitle("Create an account")
+                .setIcon(R.drawable.icon);                 
+        		
+        		switch (resultCode) {
+        		case RESULT_OK:
+        			// user created account, log him in
+        			// login using the username and password from the ACCOUNT CREATION PROCESS, NOT the EditText fields
+        			    			
+        			createAccountAlert.setMessage("Your account has been created! Do you want to log in now?");
+        			
+        			editUsername.setText(tempExtras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
+        			editPassword.setText(tempExtras.getString(BetterHood.EXTRAS_ACCOUNT_PASSWORD));
+        			
+        			createAccountAlert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                        	doLogin(tempExtras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME), tempExtras.getString(BetterHood.EXTRAS_ACCOUNT_PASSWORD));
+                        }
+        			});
+        			
+        			createAccountAlert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                        	// user doesnt want to log in yet
+                        	clearPasswordField();
+                        }
+        			});
+        			    			
+        			createAccountAlert.show();
+        			
+        			break;
+        		case RESULT_CANCELED:
+        			// user clicked back
+        			//clearForm();
+        			String szErrorMessage;
+        			
+        			createAccountAlert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                        	// nothing here i guess...
+                        }
+        			});
+        			
+        			if ((szErrorMessage = data.getExtras().getString(BetterHood.EXTRAS_ERROR_MESSAGE)) != null ) {
+        				createAccountAlert.setMessage("Account creation failed. " + BetterHood.ERROR_PREFIX + szErrorMessage);
+        			} else {
+        				createAccountAlert.setMessage("Account creation failed. " + BetterHood.ERROR_PREFIX + "Unknown error.");
+        			}
+        			
+        			createAccountAlert.show();
+        			
+        			break;
+        		}
+    		} else {
+    			// we probably exiting with the 'back' button, so no extras are saved
+    			clearForm();
     		}
+    		
     		break;
     	case BetterHood.REQ_HOME_SCREEN:
     		switch (resultCode) {
@@ -220,8 +226,9 @@ public class LoginScreen extends Activity {
     	editPassword.setText("");
     }
     
-    private void startHomeScreen() {
+    private void startHomeScreen(String sessionID) {
     	Intent home = new Intent(getBaseContext(), HomeScreen.class);
+    	home.putExtra(BetterHood.EXTRAS_SESSION_ID, sessionID);
     	startActivityForResult(home, BetterHood.REQ_HOME_SCREEN);
     }
 }

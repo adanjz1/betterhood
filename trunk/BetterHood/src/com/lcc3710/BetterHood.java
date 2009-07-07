@@ -18,6 +18,7 @@ public class BetterHood {
 	public static final String EXTRAS_WEB_RESPONSE = "webResponse";
 	public static final String EXTRAS_ERROR_MESSAGE = "error";
 	public static final String EXTRAS_REQUEST_CODE = "requestCode";
+	public static final String EXTRAS_SESSION_ID = "sessionID";
 	
 	public static final String EXTRAS_ACCOUNT_NAME = "name";
 	public static final String EXTRAS_ACCOUNT_ADDRESS = "address";

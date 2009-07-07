@@ -1,63 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<AbsoluteLayout
-android:id="@+id/widget0"
-android:layout_width="fill_parent"
-android:layout_height="fill_parent"
-xmlns:android="http://schemas.android.com/apk/res/android"
->
-<EditText
-android:id="@+id/widget28"
-android:layout_width="265px"
-android:layout_height="wrap_content"
-android:text="Enter Name"
-android:textSize="18sp"
-android:layout_x="26px"
-android:layout_y="77px"
->
-</EditText>
-<CheckBox
-android:id="@+id/widget29"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="Pool Party"
-android:layout_x="27px"
-android:layout_y="146px"
->
-</CheckBox>
-<CheckBox
-android:id="@+id/widget30"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="Pot Luck"
-android:layout_x="27px"
-android:layout_y="190px"
->
-</CheckBox>
-<CheckBox
-android:id="@+id/widget31"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="Possums"
-android:layout_x="28px"
-android:layout_y="232px"
->
-</CheckBox>
-<Button
-android:id="@+id/buttonBack"
-android:layout_width="90px"
-android:layout_height="wrap_content"
-android:text="Cancel"
-android:layout_x="25px"
-android:layout_y="325px"
->
-</Button>
-<Button
-android:id="@+id/buttonForward"
-android:layout_width="98px"
-android:layout_height="wrap_content"
-android:text="Step Two"
-android:layout_x="197px"
-android:layout_y="325px"
->
-</Button>
-</AbsoluteLayout>
+
+<RelativeLayout 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" 
+	android:layout_height="fill_parent"
+	>	
+	<View
+		android:id="@+id/headerCreateEvent"
+		android:layout_width = "fill_parent"
+		android:layout_height = "35dip"
+		android:layout_marginBottom = "6dip"
+		android:layout_alignParentTop = "true"
+		android:background = "#FF909090"
+	/>
+	<TextView
+		android:layout_width = "wrap_content"
+		android:layout_height = "wrap_content"
+		android:layout_alignParentTop = "true"
+		android:layout_centerHorizontal = "true"
+		android:text = "Create an event\nStep 1 of 2"
+	/>
+	
+	<TextView
+		android:id = "@+id/textStep1Caption"
+		android:layout_width = "fill_parent"
+		android:layout_height = "wrap_content"
+		android:layout_below = "@id/headerCreateEvent"
+		android:text = "@string/createEventStep1Caption"
+	/>
+	
+	<AutoCompleteTextView
+		android:id = "@+id/editEventTemplate"
+		android:layout_width = "fill_parent"
+		android:layout_height = "wrap_content"
+		android:layout_below = "@id/textStep1Caption"
+	/>
+	
+	<Button
+		android:id = "@+id/buttonBack"
+		android:text = "Back to Step 1"
+		android:layout_height = "wrap_content"
+		android:layout_width = "150dip"
+		android:layout_below = "@id/listIHave"
+		android:layout_alignParentLeft = "true"
+		android:layout_alignParentBottom = "true"
+	/>
+	<Button
+		android:id = "@+id/buttonForward"
+		android:text = "Finish!"
+		android:layout_height = "wrap_content"
+		android:layout_width = "150dip"
+		android:layout_below = "@id/listIHave"
+		android:layout_toRightOf = "@id/buttonBack"
+		android:layout_alignParentRight = "true"
+		android:layout_alignParentBottom = "true"
+	/>
+</RelativeLayout>
