@@ -11,6 +11,7 @@ import android.widget.Toast;
 public class HomeScreen extends Activity {
 	private Button buttonWant;
 	private Button buttonSettings;
+	private Button buttonMap;
 	
 	private Intent intent;
 	
@@ -39,6 +40,7 @@ public class HomeScreen extends Activity {
         
         buttonWant = (Button) findViewById(R.id.buttonWant);
         buttonSettings = (Button) findViewById(R.id.buttonSettings);
+        buttonMap = (Button) findViewById(R.id.buttonMap);
         
         buttonWant.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
@@ -53,6 +55,16 @@ public class HomeScreen extends Activity {
 				// lets pretend its a logout button for now
 				setResult(RESULT_CANCELED, intent);
 				finish();
+				
+			}
+        });
+        
+        buttonMap.setOnClickListener(new OnClickListener() {
+			public void onClick(View view) {
+				// TODO settings button doesn't do anything yet
+				// lets pretend its a logout button for now
+				Intent inMap = new Intent(view.getContext(), MapViewScreen.class);
+				startActivityForResult(inMap, BetterHood.REQ_CREATE_EVENT);
 				
 			}
         });
