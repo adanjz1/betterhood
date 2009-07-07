@@ -1,6 +1,5 @@
 package com.lcc3710;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,10 +7,15 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class HomeScreen extends Activity {
+import com.google.android.maps.MapActivity;
+import com.google.android.maps.MapView;
+
+public class HomeScreen extends MapActivity {
 	private Button buttonWant;
 	private Button buttonSettings;
 	private Button buttonMap;
+	
+	private MapView mapView;
 	
 	private Intent intent;
 	
@@ -43,11 +47,13 @@ public class HomeScreen extends Activity {
         
         buttonWant = (Button) findViewById(R.id.buttonWant);
         buttonSettings = (Button) findViewById(R.id.buttonSettings);
-        buttonMap = (Button) findViewById(R.id.buttonMap);
+        
+        mapView = (MapView) findViewById(R.id.mapview);
         
         if ((extras = intent.getExtras()) != null) {
         	sessionID = extras.getString(BetterHood.EXTRAS_SESSION_ID);
         }
+     
         
         buttonWant.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
@@ -66,14 +72,10 @@ public class HomeScreen extends Activity {
 			}
         });
         
-        buttonMap.setOnClickListener(new OnClickListener() {
-			public void onClick(View view) {
-				// TODO settings button doesn't do anything yet
-				// lets pretend its a logout button for now
-				Intent inMap = new Intent(view.getContext(), MapViewScreen.class);
-				startActivityForResult(inMap, BetterHood.REQ_CREATE_EVENT);
-			}
-        });
+	}
+	
+	protected boolean isRouteDisplayed() {
+	    return false;
 	}
 
 }
