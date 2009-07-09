@@ -25,7 +25,7 @@ public class CreateAccountScreen1 extends Activity {
 	private EditText editPasswordConfirm;    
     
 	/** Called when the activity is first created. */
-    @Override
+ 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     	switch (requestCode) {
     	case BetterHood.REQ_CREATE_ACCOUNT:

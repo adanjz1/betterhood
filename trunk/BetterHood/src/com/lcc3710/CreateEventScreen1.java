@@ -21,7 +21,7 @@ public class CreateEventScreen1 extends Activity {
     	"Carpool", "Kids Play-date", "Lawnmowing", "Missing child", "Pool Party", "Potluck"
     };
 	
-    @Override
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     	switch (requestCode) {
     	case BetterHood.REQ_CREATE_EVENT:
