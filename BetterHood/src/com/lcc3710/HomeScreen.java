@@ -1,19 +1,33 @@
 package com.lcc3710;
 
+import java.util.Iterator;
+import java.util.List;
+
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
+import com.google.android.maps.MyLocationOverlay;
 
 public class HomeScreen extends MapActivity {
 	private Button buttonWant;
 	private Button buttonSettings;
 	private Button buttonMap;
+	private MyLocationOverlay myLocOverlay;
+	private LocationManager locManager;
+	private LocationListener locListener;
+
 	
 	private MapView mapView;
 	
@@ -43,12 +57,20 @@ public class HomeScreen extends MapActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_screen);
         
+       // LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE); 
+   //     Location location = locationManager.getCurrentLocation("gps");
+        
+       
+        initMap();
+        initLocationManager();
+
+
+        
         intent = getIntent();
         
         buttonWant = (Button) findViewById(R.id.buttonWant);
         buttonSettings = (Button) findViewById(R.id.buttonSettings);
         
-        mapView = (MapView) findViewById(R.id.mapview);
         
         if ((extras = intent.getExtras()) != null) {
         	sessionID = extras.getString(BetterHood.EXTRAS_SESSION_ID);
@@ -71,8 +93,82 @@ public class HomeScreen extends MapActivity {
 				
 			}
         });
-        
+      
 	}
+	
+	private void initMap() {
+		mapView = (MapView) findViewById(R.id.mapview);
+ 
+		View zoomView = mapView.getZoomControls();
+		LinearLayout myzoom = (LinearLayout) findViewById(R.id.myzoom);
+		myzoom.addView(zoomView);
+		mapView.displayZoomControls(true);
+ 
+	}
+ 
+	/**
+	 * Initialises the MyLocationOverlay and adds it to the overlays of the map
+	 */
+	private void initMyLocation() {
+		myLocOverlay = new MyLocationOverlay(this, mapView);
+		myLocOverlay.enableMyLocation();
+		mapView.getOverlays().add(myLocOverlay);
+ 
+	}
+	
+	private void initLocationManager() {
+		locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+ 
+		locListener = new LocationListener() {
+ 
+			public void onLocationChanged(Location newLocation) {
+				createAndShowCustomOverlay(newLocation);
+			}
+ 
+			public void onProviderDisabled(String arg0) {
+			}
+ 
+			public void onProviderEnabled(String arg0) {
+			}
+ 
+			public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
+			}
+		};
+		locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
+				locListener);
+ 
+	}
+ 
+	protected void createAndShowCustomOverlay(Location newLocation) {
+		List overlays = mapView.getOverlays();
+ 
+		// first remove old overlay
+		if (overlays.size() > 0) {
+			for (Iterator iterator = overlays.iterator(); iterator
+					.hasNext();) {
+				iterator.next();
+				iterator.remove();
+			}
+		}
+ 
+		// transform the location to a geopoint
+		GeoPoint geopoint = new GeoPoint(
+				(int) (newLocation.getLatitude() * 1E6), (int) (newLocation
+						.getLongitude() * 1E6));
+ 
+		// Create new Overlay
+		CustomOverlay overlay = new CustomOverlay(geopoint);
+ 
+		mapView.getOverlays().add(overlay);
+ 
+		// move to location
+		mapView.getController().animateTo(geopoint);
+ 
+		// redraw map
+		mapView.postInvalidate();
+	}
+
+
 	
 	protected boolean isRouteDisplayed() {
 	    return false;

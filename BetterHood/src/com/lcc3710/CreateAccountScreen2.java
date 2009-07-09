@@ -25,7 +25,7 @@ public class CreateAccountScreen2 extends Activity {
 	private Bundle extras;
 	
     /** Called when the activity is first created. */	
-    @Override
+  
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     	if (resultCode == RESULT_OK) {
     		setResult(RESULT_OK, intent);

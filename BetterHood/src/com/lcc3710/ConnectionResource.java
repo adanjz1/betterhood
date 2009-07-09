@@ -19,7 +19,7 @@ public class ConnectionResource extends Activity {
 	private Intent intent;
 	private int requestCode;
 	
-	@Override
+
 	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
