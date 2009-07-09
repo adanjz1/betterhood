@@ -18,7 +18,7 @@ public class CreateEventScreen1 extends Activity {
 	private Intent intent;
 	
 	static final String[] aszAvailableEvents = {
-    	"Kids Play-date", "Lawnmowing", "Missing child", "Pool Party", "Potluck"
+    	"Carpool", "Kids Play-date", "Lawnmowing", "Missing child", "Pool Party", "Potluck"
     };
 	
     @Override
@@ -61,6 +61,7 @@ public class CreateEventScreen1 extends Activity {
 		
 		buttonBack.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
+				setResult(RESULT_CANCELED, intent);
 				finish();
 			}
 		});
@@ -68,6 +69,8 @@ public class CreateEventScreen1 extends Activity {
 		buttonForward.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				// TODO check for errors and pack up extras
+				String tempEventTemplate = editEventTemplate.getText().toString();
+				//if (adapter.)
 				Intent myIntent = new Intent(view.getContext(), CreateEventScreen2.class);
 				startActivityForResult(myIntent, BetterHood.REQ_CREATE_EVENT);
 			}
