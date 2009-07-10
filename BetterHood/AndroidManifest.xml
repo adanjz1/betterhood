@@ -32,6 +32,8 @@
         </activity>
         <activity android:name=".ConnectionResource">
         </activity>
+        <activity android:name=".PopUp">
+        </activity>
     </application>
     <uses-sdk android:minSdkVersion="3" />
     <uses-permission xmlns:android="http://schemas.android.com/apk/res/android" android:name="android.permission.INTERNET"></uses-permission>
