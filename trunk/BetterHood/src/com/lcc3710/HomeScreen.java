@@ -3,12 +3,14 @@ package com.lcc3710;
 import java.util.Iterator;
 import java.util.List;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -98,6 +100,8 @@ public class HomeScreen extends MapActivity {
 	
 	private void initMap() {
 		mapView = (MapView) findViewById(R.id.mapview);
+		mapView.setEnabled(true);
+		mapView.setClickable(true);
  
 		View zoomView = mapView.getZoomControls();
 		LinearLayout myzoom = (LinearLayout) findViewById(R.id.myzoom);
@@ -158,6 +162,8 @@ public class HomeScreen extends MapActivity {
  
 		// Create new Overlay
 		CustomOverlay overlay = new CustomOverlay(geopoint);
+		
+		
  
 		mapView.getOverlays().add(overlay);
  
@@ -166,12 +172,23 @@ public class HomeScreen extends MapActivity {
  
 		// redraw map
 		mapView.postInvalidate();
-	}
+		
+		//if(overlay.tapped == true){
+			//PopUp popup = new PopUp("This is your current location"); 
+    		//popup.makeWindow();
+        //} 
+		
+		}
+	
+
 
 
 	
 	protected boolean isRouteDisplayed() {
 	    return false;
 	}
-
+	
+	
 }
+
+
