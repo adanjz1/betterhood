@@ -1,5 +1,6 @@
 package com.lcc3710;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -29,6 +30,11 @@ public class HomeScreen extends MapActivity {
 	private MyLocationOverlay myLocOverlay;
 	private LocationManager locManager;
 	private LocationListener locListener;
+	private EventOverlay overlay;
+	
+	
+    //  Known latitude/longitude coordinates that we'll be using.
+    private List<MapLocation> mapLocations;
 
 	
 	private MapView mapView;
@@ -56,6 +62,7 @@ public class HomeScreen extends MapActivity {
     	}
     }
 	public void onCreate(Bundle savedInstanceState) {
+		
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_screen);
         
@@ -65,7 +72,11 @@ public class HomeScreen extends MapActivity {
        
         initMap();
         initLocationManager();
+        overlay = new EventOverlay(this);
+		mapView.getOverlays().add(overlay);
 
+    	mapView.getController().setZoom(14);
+    	mapView.getController().setCenter(getMapLocations().get(0).getPoint());
 
         
         intent = getIntent();
@@ -179,6 +190,16 @@ public class HomeScreen extends MapActivity {
         //} 
 		
 		}
+	public List<MapLocation> getMapLocations() {
+		if (mapLocations == null) {
+			mapLocations = new ArrayList<MapLocation>();
+			mapLocations.add(new MapLocation("Yard Sale",33.782105,-84.402443));
+			mapLocations.add(new MapLocation("Party",33.764706,-84.392652));
+			mapLocations.add(new MapLocation("Party",33.778179,-84.398848 ));
+			mapLocations.add(new MapLocation("Lawn Service", 33.765206, -84.396927));
+		}
+		return mapLocations;
+	}
 	
 
 
