@@ -26,7 +26,7 @@ import com.google.android.maps.MyLocationOverlay;
 public class HomeScreen extends MapActivity {
 	private Button buttonWant;
 	private Button buttonSettings;
-	private Button buttonMap;
+	
 	private MyLocationOverlay myLocOverlay;
 	private LocationManager locManager;
 	private LocationListener locListener;
@@ -106,11 +106,11 @@ public class HomeScreen extends MapActivity {
         
         buttonSettings.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
-				// TODO settings button doesn't do anything yet
-				// lets pretend its a logout button for now
-				setResult(RESULT_CANCELED, intent);
-				finish();
-				
+				if (sessionID != null) {
+					Intent inSettings = new Intent(view.getContext(), SettingsScreen.class);
+					inSettings.putExtra(BetterHood.EXTRAS_SESSION_ID, sessionID);
+					startActivityForResult(inSettings, BetterHood.REQ_SETTINGS_SCREEN);
+				}
 			}
         });
       
@@ -122,6 +122,7 @@ public class HomeScreen extends MapActivity {
 		mapView.setClickable(true);
  
 		View zoomView = mapView.getZoomControls();
+		
 		LinearLayout myzoom = (LinearLayout) findViewById(R.id.myzoom);
 		myzoom.addView(zoomView);
 		mapView.displayZoomControls(true);
