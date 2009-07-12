@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+android:id="@+id/linlayoutBase"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+android:orientation="vertical"
+xmlns:android="http://schemas.android.com/apk/res/android"
+>
+
+		<ScrollView
+		android:id="@+id/scrollview"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		>
+<RelativeLayout 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" 
+	android:layout_height="fill_parent"
+	>	
+	<View
+		android:id="@+id/headerCreateAccount"
+		android:layout_width = "fill_parent"
+		android:layout_height = "35dip"
+		android:layout_marginBottom = "6dip"
+		android:layout_alignParentTop = "true"
+		android:background = "#FF909090"
+	/>
+	<TextView
+		android:layout_width = "wrap_content"
+		android:layout_height = "wrap_content"
+		android:layout_alignParentTop = "true"
+		android:layout_centerHorizontal = "true"
+		android:text = "Create an account\nStep 1 of 2"
+	/>
+	
+	<EditText
+    	android:id="@+id/editName"
+    	android:layout_height = "wrap_content"
+    	android:layout_width = "225dip"
+    	android:layout_below = "@id/headerCreateAccount"
+    	android:layout_alignParentRight = "true"
+    	android:layout_marginRight = "6dip"
+    	android:inputType = "textPersonName"
+    />
+    <TextView
+   		android:layout_height = "wrap_content"
+   		android:layout_width = "wrap_content"
+   		android:layout_below = "@id/headerCreateAccount"
+   		android:layout_toLeftOf = "@id/editName"
+   		android:text = "Real Name:"
+   		android:layout_marginRight = "6dip"
+   	/>	
+   	
+   	<EditText
+    	android:id="@+id/editAddress"
+    	android:layout_height = "wrap_content"
+    	android:layout_width = "225dip"
+    	android:layout_below = "@id/editName"
+    	android:layout_alignParentRight = "true"
+    	android:layout_marginRight = "6dip"
+    	android:inputType = "textPostalAddress"
+    />
+    <TextView
+   		android:layout_height = "wrap_content"
+   		android:layout_width = "wrap_content"
+   		android:layout_below = "@id/editName"
+   		android:layout_toLeftOf = "@id/editAddress"
+   		android:text = "Street\nAddress:"
+   		android:layout_marginRight = "6dip"
+   	/>
+   	
+   	<EditText
+    	android:id="@+id/editZipCode"
+    	android:layout_height = "wrap_content"
+    	android:layout_width = "225dip"
+    	android:layout_below = "@id/editAddress"
+    	android:layout_alignParentRight = "true"
+    	android:layout_marginRight = "6dip"
+    	android:inputType = "number"
+    />
+    <TextView
+   		android:layout_height = "wrap_content"
+   		android:layout_width = "wrap_content"
+   		android:layout_below = "@id/editAddress"
+   		android:layout_toLeftOf = "@id/editZipCode"
+   		android:text = "Zip Code:"
+   		android:layout_marginRight = "6dip"
+   	/>
+   	
+   	<EditText
+    	android:id="@+id/editEmail"
+    	android:layout_height = "wrap_content"
+    	android:layout_width = "225dip"
+    	android:layout_below = "@id/editZipCode"
+    	android:layout_alignParentRight = "true"
+    	android:layout_marginRight = "6dip"
+    	android:inputType = "textEmailAddress"
+    />
+    <TextView
+   		android:layout_height = "wrap_content"
+   		android:layout_width = "wrap_content"
+   		android:layout_below = "@id/editZipCode"
+   		android:layout_toLeftOf = "@id/editEmail"
+   		android:text = "E-Mail\nAddress:"
+   		android:layout_marginRight = "6dip"
+   	/>
+   	
+   	<EditText
+    	android:id="@+id/editCommunityCode"
+    	android:layout_height = "wrap_content"
+    	android:layout_width = "225dip"
+    	android:layout_below = "@id/editEmail"
+    	android:layout_alignParentRight = "true"
+    	android:layout_marginRight = "6dip"
+    	android:inputType = "text"
+    />
+    <TextView
+   		android:layout_height = "wrap_content"
+   		android:layout_width = "wrap_content"
+   		android:layout_below = "@id/editEmail"
+   		android:layout_toLeftOf = "@id/editCommunityCode"
+   		android:text = "Community\nCode:"
+   		android:layout_marginRight = "6dip"
+   	/>
+   	<TextView
+   		android:id="@+id/textFAQCommunityCode"
+   		android:layout_height = "wrap_content"
+   		android:layout_width = "wrap_content"
+   		android:layout_below = "@id/editCommunityCode"
+   		android:layout_alignParentRight = "true"
+   		android:layout_marginRight = "6dip"
+   		android:text = "@string/faqCommunityCodeLink"
+   	/>
+
+   	<View
+		android:id="@+id/viewDivider"
+		android:layout_height = "2dip"
+    	android:layout_width = "fill_parent"
+    	android:layout_marginTop = "6dip"
+    	android:layout_marginBottom = "6dip"
+    	android:layout_below = "@id/textFAQCommunityCode"
+    	android:layout_centerHorizontal = "true"
+    	android:background="#FF909090"
+	/>
+	
+	<EditText
+    	android:id="@+id/editUsername"
+    	android:layout_height = "wrap_content"
+    	android:layout_width = "225dip"
+    	android:layout_below = "@id/viewDivider"
+    	android:layout_alignParentRight = "true"
+    	android:layout_marginRight = "6dip"
+    	android:inputType = "text"
+    />
+    <TextView
+   		android:layout_height = "wrap_content"
+   		android:layout_width = "wrap_content"
+   		android:layout_below = "@id/viewDivider"
+   		android:layout_toLeftOf = "@id/editName"
+   		android:text = "Desired\nUsername:"
+   		android:layout_marginRight = "6dip"
+   	/>
+   	
+   	<EditText
+    	android:id="@+id/editPassword"
+    	android:layout_height = "wrap_content"
+    	android:layout_width = "225dip"
+    	android:layout_below = "@id/editUsername"
+    	android:layout_alignParentRight = "true"
+    	android:layout_marginRight = "6dip"
+    	android:inputType = "textPassword"
+    />
+    <TextView
+   		android:layout_height = "wrap_content"
+   		android:layout_width = "wrap_content"
+   		android:layout_below = "@id/editUsername"
+   		android:layout_toLeftOf = "@id/editAddress"
+   		android:text = "Desired\nPassword:"
+   		android:layout_marginRight = "6dip"
+   	/>
+   	
+   	<EditText
+    	android:id="@+id/editPasswordConfirm"
+    	android:layout_height = "wrap_content"
+    	android:layout_width = "225dip"
+    	android:layout_below = "@id/editPassword"
+    	android:layout_alignParentRight = "true"
+    	android:layout_marginRight = "6dip"
+    	android:inputType = "textPassword"
+    />
+    <TextView
+   		android:layout_height = "wrap_content"
+   		android:layout_width = "wrap_content"
+   		android:layout_below = "@id/editPassword"
+   		android:layout_toLeftOf = "@id/editPasswordConfirm"
+   		android:text = "Confirm\nPassword:"
+   		android:layout_marginRight = "6dip"
+   	/>
+   	<View
+		android:id="@+id/viewDivider2"
+		android:layout_height = "2dip"
+    	android:layout_width = "fill_parent"
+    	android:layout_marginTop = "6dip"
+    	android:layout_marginBottom = "6dip"
+    	android:layout_below = "@id/editPasswordConfirm"
+    	android:layout_centerHorizontal = "true"
+    	android:background = "#FF909090"
+	/>
+	<Button
+		android:id = "@+id/buttonBack"
+		android:text = "Back to Login"
+		android:layout_height = "wrap_content"
+		android:layout_width = "150dip"
+		android:layout_below = "@id/viewDivider2"
+		android:layout_alignParentLeft = "true"
+	/>
+	<Button
+		android:id = "@+id/buttonForward"
+		android:text = "On to Step 2!"
+		android:layout_height = "wrap_content"
+		android:layout_width = "150dip"
+		android:layout_below = "@id/viewDivider2"
+		android:layout_toRightOf = "@id/buttonBack"
+		android:layout_alignParentRight = "true"
+	/>
+</RelativeLayout>
+
+	</ScrollView>
+	
+</LinearLayout>

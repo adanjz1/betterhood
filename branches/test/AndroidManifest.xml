@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="com.lcc3710"
+      android:versionCode="1"
+      android:versionName="1.0">
+    <application android:icon="@drawable/icon" android:label="@string/title">
+        <uses-library android:name="com.google.android.maps" />
+        <activity android:name=".LoginScreen"
+                  android:label="@string/title">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".CreateAccountScreen1"
+        		  android:label="@string/title">
+        </activity>
+        <activity android:name=".CreateAccountScreen2"
+        		  android:label="@string/title">
+        </activity>
+        <activity android:name=".HomeScreen"
+        		  android:label="@string/title">
+        </activity>
+        <activity android:name=".CreateEventScreen1"
+        		  android:label="@string/title">
+        </activity>
+        <activity android:name=".CreateEventScreen2"
+        		  android:label="@string/title">
+        </activity>
+        <activity android:name=".ConnectionResource">
+        </activity>
+    </application>
+    <uses-sdk android:minSdkVersion="3" />
+    <uses-permission xmlns:android="http://schemas.android.com/apk/res/android" android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
+</manifest> 

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title">Better Hood</string>
+    
+    <string name="faqPersonalInfoLink"><u>FAQ: Why do we require this information?</u></string>
+    <string name="faqCommunityCodeLink"><u>FAQ: What is my Community Code?</u></string>
+    
+    <string name="createAccountStep2Caption">This is just some general information to help get you involved in the community.</string>
+	
+	<string name="createEventStep1Caption">Pick an event template from your community database below.</string>
+	<string name="createEventStep2Caption">Fill out the event information below.</string>
+</resources>

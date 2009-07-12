@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" 
+	android:layout_height="fill_parent"
+	>	
+	<View
+		android:id="@+id/headerCreateEvent"
+		android:layout_width = "fill_parent"
+		android:layout_height = "35dip"
+		android:layout_marginBottom = "6dip"
+		android:layout_alignParentTop = "true"
+		android:background = "#FF909090"
+	/>
+	<TextView
+		android:layout_width = "wrap_content"
+		android:layout_height = "wrap_content"
+		android:layout_alignParentTop = "true"
+		android:layout_centerHorizontal = "true"
+		android:text = "Create an event\nStep 1 of 2"
+	/>
+	
+	<TextView
+		android:id = "@+id/textStep1Caption"
+		android:layout_width = "fill_parent"
+		android:layout_height = "wrap_content"
+		android:layout_below = "@id/headerCreateEvent"
+		android:text = "@string/createEventStep1Caption"
+	/>
+	
+	<AutoCompleteTextView
+		android:id = "@+id/editEventTemplate"
+		android:layout_width = "fill_parent"
+		android:layout_height = "wrap_content"
+		android:layout_below = "@id/textStep1Caption"
+		android:inputType = "text"
+	/>
+	
+	<Button
+		android:id = "@+id/buttonBack"
+		android:text = "Back to Home"
+		android:layout_height = "wrap_content"
+		android:layout_width = "150dip"
+		android:layout_below = "@id/listIHave"
+		android:layout_alignParentLeft = "true"
+		android:layout_alignParentBottom = "true"
+	/>
+	<Button
+		android:id = "@+id/buttonForward"
+		android:text = "On to Step 2!"
+		android:layout_height = "wrap_content"
+		android:layout_width = "150dip"
+		android:layout_below = "@id/listIHave"
+		android:layout_toRightOf = "@id/buttonBack"
+		android:layout_alignParentRight = "true"
+		android:layout_alignParentBottom = "true"
+	/>
+</RelativeLayout>
