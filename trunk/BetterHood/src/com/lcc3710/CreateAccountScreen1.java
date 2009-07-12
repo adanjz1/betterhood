@@ -18,6 +18,7 @@ public class CreateAccountScreen1 extends Activity {
     
 	private EditText editName;
 	private EditText editAddress;
+	private EditText editZipCode;
 	private	EditText editEmail;
 	private EditText editCommunityCode;
 	private EditText editUsername;
@@ -25,7 +26,7 @@ public class CreateAccountScreen1 extends Activity {
 	private EditText editPasswordConfirm;    
     
 	/** Called when the activity is first created. */
- 
+	@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     	switch (requestCode) {
     	case BetterHood.REQ_CREATE_ACCOUNT:
@@ -43,6 +44,7 @@ public class CreateAccountScreen1 extends Activity {
     		break;
     	}
     }
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_account_1);
@@ -54,6 +56,7 @@ public class CreateAccountScreen1 extends Activity {
         
         editName = (EditText) findViewById(R.id.editName);
         editAddress = (EditText) findViewById(R.id.editAddress);
+        editZipCode = (EditText) findViewById(R.id.editZipCode);
         editEmail = (EditText) findViewById(R.id.editEmail);
         editCommunityCode = (EditText) findViewById(R.id.editCommunityCode);
         editUsername = (EditText) findViewById(R.id.editUsername);
@@ -63,6 +66,7 @@ public class CreateAccountScreen1 extends Activity {
         if (BetterHood.DEBUG) {
         	editName.setText("George Burdell");
         	editAddress.setText("123 Hearthwood Cir");
+        	editZipCode.setText("30305");
         	editEmail.setText("gpb2009@gatech.edu");
         	editCommunityCode.setText("123456");
         	editUsername.setText("gpb2009");
@@ -82,24 +86,25 @@ public class CreateAccountScreen1 extends Activity {
         buttonForward.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				
-				String tempName, tempAddress, tempEmail, tempCommunityCode, tempUsername, 
-					tempPassword, tempPasswordConfirm;
+				String tempName, tempFirstName, tempLastName, tempAddress, tempZipCode, 
+					tempEmail, tempCommunityCode, tempUsername, tempPassword, tempPasswordConfirm;
 				
 				tempName = editName.getText().toString();
 				tempAddress = editAddress.getText().toString();
+				tempZipCode = editZipCode.getText().toString();
 				tempEmail = editEmail.getText().toString();
 				tempCommunityCode = editCommunityCode.getText().toString();
 				tempUsername = editUsername.getText().toString();
 				tempPassword = editPassword.getText().toString();
 				tempPasswordConfirm = editPasswordConfirm.getText().toString();
 				
-				//check for errors on the form
-				// TODO more robust error checking on the form, this is pretty horrible
-				
+				//check for errors on the form				
 				if (tempName.length() == 0) {
 					Toast.makeText(view.getContext(), "Error: " + "'Name' cannot be left blank.", BetterHood.TOAST_TIME).show();
 				} else if (tempAddress.length() == 0){
 					Toast.makeText(view.getContext(), "Error: " + "'Address' cannot be left blank.", BetterHood.TOAST_TIME).show();
+				} else if (tempZipCode.length() == 0){
+					Toast.makeText(view.getContext(), "Error: " + "'Zip Code' cannot be left blank.", BetterHood.TOAST_TIME).show();
 				} else if (tempCommunityCode.length() == 0){
 					Toast.makeText(view.getContext(), "Error: " + "'Community Code' cannot be left blank.", BetterHood.TOAST_TIME).show();
 				} else if (tempUsername.length() == 0){
@@ -111,12 +116,17 @@ public class CreateAccountScreen1 extends Activity {
 				} else if (!tempPassword.equals(tempPasswordConfirm)){
 					Toast.makeText(view.getContext(), "Error: " + "'Password' must be the same as 'Password Confirm'", BetterHood.TOAST_TIME).show();
 				} else {	
-				
+					
+					int nameDivider = tempName.indexOf(" ");
+					tempFirstName = tempName.substring(0, nameDivider);
+					tempLastName = tempName.substring(nameDivider);
 					// on to the next screen...
 					Intent inCreateAccount2 = new Intent(view.getContext(), CreateAccountScreen2.class);
 					
-					inCreateAccount2.putExtra(BetterHood.EXTRAS_ACCOUNT_NAME, tempName);
+					inCreateAccount2.putExtra(BetterHood.EXTRAS_ACCOUNT_FIRST_NAME, tempFirstName);
+					inCreateAccount2.putExtra(BetterHood.EXTRAS_ACCOUNT_LAST_NAME, tempLastName);
 					inCreateAccount2.putExtra(BetterHood.EXTRAS_ACCOUNT_ADDRESS, tempAddress);
+					inCreateAccount2.putExtra(BetterHood.EXTRAS_ACCOUNT_ZIPCODE, tempZipCode);
 					inCreateAccount2.putExtra(BetterHood.EXTRAS_ACCOUNT_EMAIL, tempEmail);
 					inCreateAccount2.putExtra(BetterHood.EXTRAS_ACCOUNT_COMMUNITY_CODE, tempCommunityCode);
 					inCreateAccount2.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, tempUsername);

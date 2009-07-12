@@ -71,10 +71,28 @@ xmlns:android="http://schemas.android.com/apk/res/android"
    	/>
    	
    	<EditText
-    	android:id="@+id/editEmail"
+    	android:id="@+id/editZipCode"
     	android:layout_height = "wrap_content"
     	android:layout_width = "225dip"
     	android:layout_below = "@id/editAddress"
+    	android:layout_alignParentRight = "true"
+    	android:layout_marginRight = "6dip"
+    	android:inputType = "number"
+    />
+    <TextView
+   		android:layout_height = "wrap_content"
+   		android:layout_width = "wrap_content"
+   		android:layout_below = "@id/editAddress"
+   		android:layout_toLeftOf = "@id/editZipCode"
+   		android:text = "Zip Code:"
+   		android:layout_marginRight = "6dip"
+   	/>
+   	
+   	<EditText
+    	android:id="@+id/editEmail"
+    	android:layout_height = "wrap_content"
+    	android:layout_width = "225dip"
+    	android:layout_below = "@id/editZipCode"
     	android:layout_alignParentRight = "true"
     	android:layout_marginRight = "6dip"
     	android:inputType = "textEmailAddress"
@@ -82,7 +100,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
     <TextView
    		android:layout_height = "wrap_content"
    		android:layout_width = "wrap_content"
-   		android:layout_below = "@id/editAddress"
+   		android:layout_below = "@id/editZipCode"
    		android:layout_toLeftOf = "@id/editEmail"
    		android:text = "E-Mail\nAddress:"
    		android:layout_marginRight = "6dip"
