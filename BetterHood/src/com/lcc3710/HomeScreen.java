@@ -42,6 +42,8 @@ public class HomeScreen extends MapActivity {
 	private Intent intent;
 	
 	private String sessionID;
+	private String username;
+	
 	private Bundle extras;
 	
 	@Override
@@ -87,12 +89,17 @@ public class HomeScreen extends MapActivity {
         
         if ((extras = intent.getExtras()) != null) {
         	sessionID = extras.getString(BetterHood.EXTRAS_SESSION_ID);
+        	username = extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME);
         }
      
         
         buttonWant.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				Intent inWant = new Intent(view.getContext(), CreateEventScreen1.class);
+				
+				inWant.putExtra(BetterHood.EXTRAS_SESSION_ID, sessionID);
+				inWant.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, username);
+				
 				startActivityForResult(inWant, BetterHood.REQ_CREATE_EVENT);
 			}
         });

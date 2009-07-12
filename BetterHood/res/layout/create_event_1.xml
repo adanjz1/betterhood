@@ -34,11 +34,12 @@
 		android:layout_width = "fill_parent"
 		android:layout_height = "wrap_content"
 		android:layout_below = "@id/textStep1Caption"
+		android:inputType = "text"
 	/>
 	
 	<Button
 		android:id = "@+id/buttonBack"
-		android:text = "Back to Step 1"
+		android:text = "Back to Home"
 		android:layout_height = "wrap_content"
 		android:layout_width = "150dip"
 		android:layout_below = "@id/listIHave"
@@ -47,7 +48,7 @@
 	/>
 	<Button
 		android:id = "@+id/buttonForward"
-		android:text = "Finish!"
+		android:text = "On to Step 2!"
 		android:layout_height = "wrap_content"
 		android:layout_width = "150dip"
 		android:layout_below = "@id/listIHave"

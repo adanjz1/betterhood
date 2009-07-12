@@ -25,7 +25,7 @@ public class CreateAccountScreen2 extends Activity {
 	private Bundle extras;
 	
     /** Called when the activity is first created. */	
-  
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     	if (resultCode == RESULT_OK) {
     		setResult(RESULT_OK, intent);
@@ -42,6 +42,7 @@ public class CreateAccountScreen2 extends Activity {
 			}
     	}
     }
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_account_2);
@@ -144,11 +145,15 @@ public class CreateAccountScreen2 extends Activity {
     private void doAccountCreation() {
     	extras = intent.getExtras();
     	
-    	String tempQuery = "Name=" + extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME) + "&Password="
-    		+ extras.getString(BetterHood.EXTRAS_ACCOUNT_PASSWORD) + "&Email="
-			+ extras.getString(BetterHood.EXTRAS_ACCOUNT_EMAIL) + "&About="
-			+ extras.getString(BetterHood.EXTRAS_ACCOUNT_COMMUNITY_CODE) + "&Skills="
-			+ extras.getString(BetterHood.EXTRAS_ACCOUNT_IHAVE);
+    	String tempQuery = "Name=" + extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME) 
+    		+ "&Password=" + extras.getString(BetterHood.EXTRAS_ACCOUNT_PASSWORD) 
+    		+ "&Email=" + extras.getString(BetterHood.EXTRAS_ACCOUNT_EMAIL) 
+    		+ "&CommunityCode=" + extras.getString(BetterHood.EXTRAS_ACCOUNT_COMMUNITY_CODE) 
+    		+ "&Skills=" + extras.getString(BetterHood.EXTRAS_ACCOUNT_IHAVE)
+    		+ "&FirstName=" + extras.getString(BetterHood.EXTRAS_ACCOUNT_FIRST_NAME)
+    		+ "&LastName=" + extras.getString(BetterHood.EXTRAS_ACCOUNT_LAST_NAME)
+    		+ "&StreetAddress=" + extras.getString(BetterHood.EXTRAS_ACCOUNT_ADDRESS)
+    		+ "&ZipCode=" + extras.getString(BetterHood.EXTRAS_ACCOUNT_ZIPCODE);
 	
 		intent.putExtra(BetterHood.EXTRAS_QUERY, tempQuery);
 		intent.putExtra(BetterHood.EXTRAS_REQUEST_CODE, BetterHood.REQ_CREATE_ACCOUNT);

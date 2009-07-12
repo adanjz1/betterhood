@@ -58,8 +58,8 @@ public class ConnectionResource extends Activity {
 		
 		String val = textURL(query);
 		
-		Log.i(BetterHood.TAG_LOGIN_PROCESS, "textURL( " + BetterHood.URL_BASE + queryBase + "?" + query + ")");
-		Log.i(BetterHood.TAG_LOGIN_PROCESS, "textURL() returned: " + val);
+		Log.i(BetterHood.TAG_CONNECTION_RESOURCE, "textURL( " + BetterHood.URL_BASE + queryBase + "?" + query + ")");
+		Log.i(BetterHood.TAG_CONNECTION_RESOURCE, "textURL() returned: " + val);
 		
 		intent.putExtra(BetterHood.EXTRAS_WEB_RESPONSE, val);
 		setResult(RESULT_OK, intent);
@@ -90,7 +90,6 @@ public class ConnectionResource extends Activity {
 			}
 			in = con.getInputStream();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 			return e1.toString();
 		}
@@ -110,7 +109,6 @@ public class ConnectionResource extends Activity {
 			}
 			in.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return "FAILED";
 		}

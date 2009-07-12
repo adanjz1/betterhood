@@ -3,10 +3,12 @@ package com.lcc3710;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class CreateEventScreen1 extends Activity {
     /** Called when the activity is first created. */
@@ -14,6 +16,8 @@ public class CreateEventScreen1 extends Activity {
 	private Button buttonForward;
 	
 	private AutoCompleteTextView editEventTemplate;
+	
+	private ArrayAdapter<String> adapter;
 	
 	private Intent intent;
 	
@@ -28,7 +32,7 @@ public class CreateEventScreen1 extends Activity {
     		
     		if (resultCode == RESULT_OK) {
     			// event was created, success!
-    			setResult(RESULT_OK, intent);
+    			setResult(RESULT_OK, data);
     			finish();
     		}
     		
@@ -39,6 +43,7 @@ public class CreateEventScreen1 extends Activity {
     		break;
     	}
     }
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_event_1);
@@ -48,14 +53,14 @@ public class CreateEventScreen1 extends Activity {
 		buttonBack = (Button) findViewById(R.id.buttonBack);
 		buttonForward = (Button) findViewById(R.id.buttonForward);
 		
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, aszAvailableEvents);
+		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, aszAvailableEvents);
 		
 		editEventTemplate = (AutoCompleteTextView) findViewById(R.id.editEventTemplate);
 		editEventTemplate.setAdapter(adapter);
-		editEventTemplate.setText("p");
 		editEventTemplate.setThreshold(0);
 		
 		if (!editEventTemplate.isPopupShowing()) {
+			editEventTemplate.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_P));
 			//editEventTemplate.showDropDown();
 		}
 		
@@ -68,11 +73,29 @@ public class CreateEventScreen1 extends Activity {
 		
 		buttonForward.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-				// TODO check for errors and pack up extras
+				
 				String tempEventTemplate = editEventTemplate.getText().toString();
-				//if (adapter.)
-				Intent myIntent = new Intent(view.getContext(), CreateEventScreen2.class);
-				startActivityForResult(myIntent, BetterHood.REQ_CREATE_EVENT);
+				boolean userInputIsValid = false;
+				int idx = 0;
+				int count = adapter.getCount();
+				
+				// search thru templates and see if input is one of them
+				while ((!userInputIsValid) && (idx < count)) {
+					if (tempEventTemplate.equalsIgnoreCase(adapter.getItem(idx))) {
+						tempEventTemplate = adapter.getItem(idx);
+						userInputIsValid = true;
+					}
+					idx++;
+				}
+				
+				if (userInputIsValid) {					
+					intent.setClass(view.getContext(), CreateEventScreen2.class);
+					intent.putExtra(BetterHood.EXTRAS_EVENT_TEMPLATE_NAME, tempEventTemplate);
+					startActivityForResult(intent, BetterHood.REQ_CREATE_EVENT);
+				} else {
+					// fail
+					Toast.makeText(view.getContext(), "The event template you entered is not in your community's database! Please try again.", BetterHood.TOAST_TIME).show();
+				}
 			}
 		});
     }
