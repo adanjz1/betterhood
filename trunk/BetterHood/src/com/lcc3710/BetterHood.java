@@ -47,6 +47,12 @@ public class BetterHood {
 	public static final String PHP_FILE_CREATE_EVENT = "create_event.php";
 	public static final String PHP_FILE_CHECK_USERNAME = "check_username.php";
 	
+	// templates
+	public static final String TEMPLATE_CARPOOL = "Carpool";
+	public static final String TEMPLATE_MISSING_CHILD = "Missing Child";
+	public static final String TEMPLATE_POOL_PARTY = "Pool Party";
+	public static final String TEMPLATE_POTLUCK = "Potluck";
+	
 	public static final int TOAST_TIME = 5;
 	
 	public static final boolean DEBUG = true;
