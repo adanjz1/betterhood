@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<LinearLayout
+android:id="@+id/linlayoutBase"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+android:orientation="vertical"
+xmlns:android="http://schemas.android.com/apk/res/android"
+>
+
+		<ScrollView
+		android:id="@+id/scrollview"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		>
+
 <RelativeLayout 
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent" 
-	android:layout_height="fill_parent"
+	android:layout_height="wrap_content"
 	>	
 	<View
 		android:id="@+id/headerCreateEvent"
@@ -62,7 +77,7 @@
    		android:id="@+id/buttonPickLocation"
    		android:text = "Pick a location"
    		android:layout_height = "wrap_content"
-   		android:layout_width = "150dip"
+   		android:layout_width = "160dip"
    		android:layout_below = "@id/editEventName"
    		android:layout_alignParentRight = "true"
    	/>
@@ -71,13 +86,13 @@
    		android:id="@+id/buttonPickDate"
    		android:text = "Pick a day/time"
    		android:layout_height = "wrap_content"
-   		android:layout_width = "150dip"
+   		android:layout_width = "160dip"
    		android:layout_below = "@id/editEventName"
-   		android:layout_toLeftOf = "@id/buttonPickLocation"
+   		android:layout_alignParentLeft = "true"
    	/>
    	
    	<EditText
-    	android:id="@+id/editEventMessage"
+    	android:id="@+id/editCost"
     	android:layout_height = "wrap_content"
     	android:layout_width = "225dip"
     	android:layout_below = "@id/buttonPickLocation"
@@ -89,16 +104,40 @@
    		android:layout_height = "wrap_content"
    		android:layout_width = "wrap_content"
    		android:layout_below = "@id/buttonPickLocation"
-   		android:layout_toLeftOf = "@id/editEventMessage"
-   		android:text = "Optional\nMessage:"
+   		android:layout_toLeftOf = "@id/editCost"
+   		android:text = "Cost ($):"
    		android:layout_marginRight = "6dip"
    	/>
    	
-   	<Button
+   	<EditText
+    	android:id="@+id/editEventMessage"
+    	android:layout_height = "100dip"
+    	android:layout_width = "225dip"
+    	android:layout_below = "@id/editCost"
+    	android:layout_alignParentRight = "true"
+    	android:layout_marginRight = "6dip"
+    	android:inputType = "text"
+    />
+    <TextView
+   		android:layout_height = "wrap_content"
+   		android:layout_width = "wrap_content"
+   		android:layout_below = "@id/buttonPickLocation"
+   		android:layout_toLeftOf = "@id/editCost"
+   		android:text = "Optional\nMessage:"
+   		android:layout_marginRight = "6dip"
+   	/>
+</RelativeLayout>
+</ScrollView>
+<RelativeLayout 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" 
+	android:layout_height="50dip"
+	>	
+<Button
 		android:id = "@+id/buttonBack"
 		android:text = "Back to Templates"
 		android:layout_height = "wrap_content"
-		android:layout_width = "150dip"
+		android:layout_width = "160dip"
 		android:layout_alignParentLeft = "true"
 		android:layout_alignParentBottom = "true"
 	/>
@@ -106,9 +145,9 @@
 		android:id = "@+id/buttonForward"
 		android:text = "Add Event!"
 		android:layout_height = "wrap_content"
-		android:layout_width = "150dip"
-		android:layout_toRightOf = "@id/buttonBack"
+		android:layout_width = "160dip"
 		android:layout_alignParentRight = "true"
 		android:layout_alignParentBottom = "true"
 	/>
 </RelativeLayout>
+</LinearLayout>
