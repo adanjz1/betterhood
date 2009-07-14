@@ -162,11 +162,21 @@ xmlns:android="http://schemas.android.com/apk/res/android"
    		android:layout_marginRight = "6dip"
    	/>
    	
+   	<TextView
+   		android:id="@+id/textUsernameAvailability"
+   		android:layout_height = "wrap_content"
+   		android:layout_width = "wrap_content"
+   		android:layout_alignParentRight = "true"
+   		android:layout_below="@id/editUsername"
+   		android:text = ""
+   		android:layout_marginRight = "6dip"
+   	/>
+   	
    	<EditText
     	android:id="@+id/editPassword"
     	android:layout_height = "wrap_content"
     	android:layout_width = "225dip"
-    	android:layout_below = "@id/editUsername"
+    	android:layout_below = "@id/textUsernameAvailability"
     	android:layout_alignParentRight = "true"
     	android:layout_marginRight = "6dip"
     	android:inputType = "textPassword"
@@ -174,7 +184,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
     <TextView
    		android:layout_height = "wrap_content"
    		android:layout_width = "wrap_content"
-   		android:layout_below = "@id/editUsername"
+   		android:layout_below = "@id/textUsernameAvailability"
    		android:layout_toLeftOf = "@id/editAddress"
    		android:text = "Desired\nPassword:"
    		android:layout_marginRight = "6dip"

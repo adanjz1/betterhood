@@ -153,7 +153,8 @@ public class CreateAccountScreen2 extends Activity {
     		+ "&FirstName=" + extras.getString(BetterHood.EXTRAS_ACCOUNT_FIRST_NAME)
     		+ "&LastName=" + extras.getString(BetterHood.EXTRAS_ACCOUNT_LAST_NAME)
     		+ "&StreetAddress=" + extras.getString(BetterHood.EXTRAS_ACCOUNT_ADDRESS)
-    		+ "&ZipCode=" + extras.getString(BetterHood.EXTRAS_ACCOUNT_ZIPCODE);
+    		+ "&ZipCode=" + extras.getString(BetterHood.EXTRAS_ACCOUNT_ZIPCODE)
+    		+ "&About=" + "";
 	
 		intent.putExtra(BetterHood.EXTRAS_QUERY, tempQuery);
 		intent.putExtra(BetterHood.EXTRAS_REQUEST_CODE, BetterHood.REQ_CREATE_ACCOUNT);
