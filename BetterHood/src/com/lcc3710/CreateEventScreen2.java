@@ -15,8 +15,11 @@ public class CreateEventScreen2 extends Activity {
     /** Called when the activity is first created. */
 	private Button buttonBack;
 	private Button buttonForward;
+	private Button buttonPickLocation;
+	private Button buttonPickDate;
 	
 	private EditText editEventName;
+	private EditText editEventMessage;
 	
 	private Intent intent;
 	
@@ -70,14 +73,36 @@ public class CreateEventScreen2 extends Activity {
     
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.create_event_2);
         
         intent = getIntent();
+        Bundle extras = intent.getExtras();
+        
+        String szTemplateName;
+        int iLayoutFile = 0;
+            
+        if ((szTemplateName = extras.getString(BetterHood.EXTRAS_EVENT_TEMPLATE_NAME)) != null) {
+        	if (szTemplateName.equals(BetterHood.TEMPLATE_CARPOOL)) {
+        		iLayoutFile = R.layout.template_carpool;
+        	} else if (szTemplateName.equals(BetterHood.TEMPLATE_MISSING_CHILD)) {
+        		iLayoutFile = R.layout.template_missing_child;
+        	} else if (szTemplateName.equals(BetterHood.TEMPLATE_POOL_PARTY)) {
+        		iLayoutFile = R.layout.template_pool_party;
+        	} else if (szTemplateName.equals(BetterHood.TEMPLATE_POTLUCK)) {
+        		iLayoutFile = R.layout.template_potluck;
+        	}
+        	setContentView(iLayoutFile);
+        } else {
+        	setContentView(R.layout.create_event_2);
+        }
+        
         
         buttonBack = (Button) findViewById(R.id.buttonBack);
         buttonForward = (Button) findViewById(R.id.buttonForward);
+        buttonPickLocation = (Button) findViewById(R.id.buttonPickLocation);
+        buttonPickDate = (Button) findViewById(R.id.buttonPickDate);
 		
         editEventName = (EditText) findViewById(R.id.editEventName);
+        editEventMessage = (EditText) findViewById(R.id.editEventMessage);
         
 		buttonBack.setOnClickListener(new View.OnClickListener() {
 

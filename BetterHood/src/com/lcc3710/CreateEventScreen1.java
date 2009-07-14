@@ -22,7 +22,8 @@ public class CreateEventScreen1 extends Activity {
 	private Intent intent;
 	
 	static final String[] aszAvailableEvents = {
-    	"Carpool", "Kids Play-date", "Lawnmowing", "Missing child", "Pool Party", "Potluck"
+    	BetterHood.TEMPLATE_CARPOOL, BetterHood.TEMPLATE_MISSING_CHILD, BetterHood.TEMPLATE_POOL_PARTY,
+    	BetterHood.TEMPLATE_POTLUCK
     };
 	
 
