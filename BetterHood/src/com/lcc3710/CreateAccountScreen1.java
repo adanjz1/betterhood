@@ -3,11 +3,14 @@ package com.lcc3710;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
 import android.view.View.OnKeyListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class CreateAccountScreen1 extends Activity {
@@ -23,12 +26,18 @@ public class CreateAccountScreen1 extends Activity {
 	private EditText editCommunityCode;
 	private EditText editUsername;
 	private EditText editPassword;
-	private EditText editPasswordConfirm;    
+	private EditText editPasswordConfirm;  
+	
+	private TextView textUsernameAvailability;
+	
+	private boolean bUsernameAvailable;
     
 	/** Called when the activity is first created. */
 	@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    	switch (requestCode) {
+		Bundle extras = data.getExtras();
+		
+		switch (requestCode) {
     	case BetterHood.REQ_CREATE_ACCOUNT:
     		
     		if (resultCode == RESULT_OK) {
@@ -42,6 +51,29 @@ public class CreateAccountScreen1 extends Activity {
     		}
     		
     		break;
+    	case BetterHood.REQ_CHECK_USERNAME_AVAILABILITY:
+    		if (resultCode == RESULT_OK) {
+    			String szWebResponse;
+    			
+    			if ((szWebResponse = extras.getString(BetterHood.EXTRAS_WEB_RESPONSE)) != null) {
+    				Log.i(BetterHood.TAG_CREATE_ACCOUNT_SCREEN_1, "Username availability response: " + szWebResponse);
+    				if (szWebResponse.equals("true")) {
+    					// username is available
+    					bUsernameAvailable = true;
+    					textUsernameAvailability.setText("Username '" + extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME) + "' is available!");
+    				} else {
+    					// username is not available
+    					bUsernameAvailable = false;
+    					textUsernameAvailability.setText("Username '" + extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME) + "' is NOT available.");
+    				}
+    			} else {
+    				// no web response
+    			}
+    			
+    		}
+    		if (resultCode == RESULT_CANCELED) {
+    			// somethign went wrong
+    		}
     	}
     }
 	@Override
@@ -63,6 +95,8 @@ public class CreateAccountScreen1 extends Activity {
         editPassword = (EditText) findViewById(R.id.editPassword);
         editPasswordConfirm = (EditText) findViewById(R.id.editPasswordConfirm);
         
+        textUsernameAvailability = (TextView) findViewById(R.id.textUsernameAvailability);
+        
         if (BetterHood.DEBUG) {
         	editName.setText("George Burdell");
         	editAddress.setText("123 Hearthwood Cir");
@@ -73,6 +107,23 @@ public class CreateAccountScreen1 extends Activity {
         	editPassword.setText("gatech");
         	editPasswordConfirm.setText("gatech");
         }
+        
+        bUsernameAvailable = false;
+        
+        editUsername.setOnFocusChangeListener(new OnFocusChangeListener() {
+			public void onFocusChange(View v, boolean hasFocus) {
+				// TODO Auto-generated method stub
+				String tempUsername = editUsername.getText().toString();
+				String tempQuery = "Name=" + tempUsername;
+				Intent inCheckUsername = new Intent(v.getContext(), ConnectionResource.class);
+				
+				inCheckUsername.putExtra(BetterHood.EXTRAS_QUERY, tempQuery);
+				inCheckUsername.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, tempUsername);
+				inCheckUsername.putExtra(BetterHood.EXTRAS_REQUEST_CODE, BetterHood.REQ_CHECK_USERNAME_AVAILABILITY);
+				
+				startActivityForResult(inCheckUsername, BetterHood.REQ_CHECK_USERNAME_AVAILABILITY);
+			}        	
+        });
         
         /* buttonBack's click listener */
         buttonBack.setOnClickListener(new View.OnClickListener() {
@@ -115,6 +166,8 @@ public class CreateAccountScreen1 extends Activity {
 					Toast.makeText(view.getContext(), "Error: " + "'Password Confirm' cannot be left blank.", BetterHood.TOAST_TIME).show();
 				} else if (!tempPassword.equals(tempPasswordConfirm)){
 					Toast.makeText(view.getContext(), "Error: " + "'Password' must be the same as 'Password Confirm'", BetterHood.TOAST_TIME).show();
+				} else if (!bUsernameAvailable) {
+					Toast.makeText(view.getContext(), "Error: " + "Username must be available to create an account.", BetterHood.TOAST_TIME).show();
 				} else {	
 					
 					int nameDivider = tempName.indexOf(" ");

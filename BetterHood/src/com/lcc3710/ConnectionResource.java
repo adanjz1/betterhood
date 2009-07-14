@@ -50,6 +50,9 @@ public class ConnectionResource extends Activity {
 		case BetterHood.REQ_CREATE_EVENT:
 			queryBase = BetterHood.PHP_FILE_CREATE_EVENT;
 			break;
+		case BetterHood.REQ_CHECK_USERNAME_AVAILABILITY:
+			queryBase = BetterHood.PHP_FILE_CHECK_USERNAME;
+			break;
 		default:
 			intent.putExtra(BetterHood.EXTRAS_ERROR_MESSAGE, "ConnectionResource received an invalid request code");
 			setResult(RESULT_CANCELED, intent);

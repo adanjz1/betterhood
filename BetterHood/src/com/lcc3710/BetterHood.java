@@ -7,6 +7,7 @@ public class BetterHood {
 	public static final int REQ_HOME_SCREEN = 2;
 	public static final int REQ_CREATE_EVENT = 3;
 	public static final int REQ_SETTINGS_SCREEN = 4;
+	public static final int REQ_CHECK_USERNAME_AVAILABILITY = 5;
 	
 	//debug tags
 	public static final String TAG_LOGIN_SCREEN = "bh_login_screen";
@@ -14,6 +15,8 @@ public class BetterHood {
 	public static final String TAG_CREATE_ACCOUNT_SCREEN_2 = "bh_create_account_2";
 	public static final String TAG_LOGIN_PROCESS = "bh_login_process";
 	public static final String TAG_CONNECTION_RESOURCE = "bh_connection_resource";
+	public static final String TAG_CREATE_EVENT_SCREEN_1 = "bh_create_event_1";
+	public static final String TAG_CREATE_EVENT_SCREEN_2 = "bh_create_event_2";
 	
 	// extras tags
 	public static final String EXTRAS_QUERY = "query";
@@ -39,9 +42,10 @@ public class BetterHood {
 		
 	// PHP files and their location
 	public static final String URL_BASE = "http://lcc3710.lcc.gatech.edu/better_hood/";
-	public static final String PHP_FILE_LOGIN = "better_hood_login.php";
-	public static final String PHP_FILE_CREATE_ACCOUNT = "better_hood_addUser.php";
-	public static final String PHP_FILE_CREATE_EVENT = "better_hood_create_event.php";
+	public static final String PHP_FILE_LOGIN = "user_login.php";
+	public static final String PHP_FILE_CREATE_ACCOUNT = "add_user.php";
+	public static final String PHP_FILE_CREATE_EVENT = "create_event.php";
+	public static final String PHP_FILE_CHECK_USERNAME = "check_username.php";
 	
 	public static final int TOAST_TIME = 5;
 	

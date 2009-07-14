@@ -33,7 +33,7 @@ public class CreateEventScreen2 extends Activity {
     		String szWebResponse;
     		
     		if ((szWebResponse = extras.getString(BetterHood.EXTRAS_WEB_RESPONSE)) != null) {
-				Log.i(BetterHood.TAG_CREATE_ACCOUNT_SCREEN_2, "Create Event response: " + szWebResponse);
+				Log.i(BetterHood.TAG_CREATE_EVENT_SCREEN_2, "Create Event response: " + szWebResponse);
 				
 				// valid?
 				if (!(szWebResponse.length() > 0)) {
@@ -112,7 +112,7 @@ public class CreateEventScreen2 extends Activity {
     	String tempQuery = "Event_Name=" + extras.getString(BetterHood.EXTRAS_EVENT_NAME)
     		+ "&Event_Cost=" + "1234" 
     		+ "&Event_Location=" + "12345"
-    		+ "&Session=" + tempSessionID;
+    		+ "&sid=" + tempSessionID;
     	
     	intent.putExtra(BetterHood.EXTRAS_QUERY, tempQuery);
 		intent.putExtra(BetterHood.EXTRAS_REQUEST_CODE, BetterHood.REQ_CREATE_EVENT);
