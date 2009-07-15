@@ -11,6 +11,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,6 +33,8 @@ public class HomeScreen extends MapActivity {
 	private LocationListener locListener;
 	private EventOverlay overlay;
 	
+	private EventList eventList;
+	
 	
     //  Known latitude/longitude coordinates that we'll be using.
     private List<MapLocation> mapLocations;
@@ -48,6 +51,12 @@ public class HomeScreen extends MapActivity {
 	
 	@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		Bundle extras;
+		
+		if ((extras = data.getExtras()) == null) {
+			Log.i(BetterHood.TAG_HOME_SCREEN, BetterHood.ERROR_PREFIX + "onActivityResult recieved a null extras bundle!");
+		}
+		
     	switch (requestCode) {
     	case BetterHood.REQ_CREATE_EVENT:
     		
@@ -58,6 +67,26 @@ public class HomeScreen extends MapActivity {
     		
     		if (resultCode == RESULT_CANCELED) {
     			//something went wrong in creating the event
+    		}
+    		
+    		break;
+    	case BetterHood.REQ_POPULATE_EVENT_LIST:
+    		if (resultCode == RESULT_OK) {
+    			// event list populated, we better find out whats in the extras
+    			if (extras != null) {
+    				String szWebResponse;
+    				if ((szWebResponse = extras.getString(BetterHood.EXTRAS_WEB_RESPONSE)) != null) {
+    					Log.i(BetterHood.TAG_HOME_SCREEN, "EventList.populate() returned response: " + szWebResponse);
+    				} else {
+    					if ((szWebResponse = extras.getString(BetterHood.EXTRAS_ERROR_MESSAGE)) != null) {
+    						Log.i(BetterHood.TAG_HOME_SCREEN, BetterHood.ERROR_PREFIX + "EventList.populate() returned no response!");
+    					}
+    				}
+    			}
+    		}
+    		
+    		if (resultCode == RESULT_CANCELED) {
+    			//something went wrong in populating the event list
     		}
     		
     		break;
@@ -90,11 +119,16 @@ public class HomeScreen extends MapActivity {
         if ((extras = intent.getExtras()) != null) {
         	sessionID = extras.getString(BetterHood.EXTRAS_SESSION_ID);
         	username = extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME);
+        } else {
+        	//big fat error
         }
+        
+        eventList = new EventList(sessionID);
+        eventList.queryDatabase(this);
      
         
         buttonWant.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View view) {
+			public void onClick(View view) {					
 				Intent inWant = new Intent(view.getContext(), CreateEventScreen1.class);
 				
 				inWant.putExtra(BetterHood.EXTRAS_SESSION_ID, sessionID);
