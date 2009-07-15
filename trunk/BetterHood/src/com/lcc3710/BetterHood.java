@@ -8,6 +8,7 @@ public class BetterHood {
 	public static final int REQ_CREATE_EVENT = 3;
 	public static final int REQ_SETTINGS_SCREEN = 4;
 	public static final int REQ_CHECK_USERNAME_AVAILABILITY = 5;
+	public static final int REQ_POPULATE_EVENT_LIST = 6;
 	
 	//debug tags
 	public static final String TAG_LOGIN_SCREEN = "bh_login_screen";
@@ -17,6 +18,7 @@ public class BetterHood {
 	public static final String TAG_CONNECTION_RESOURCE = "bh_connection_resource";
 	public static final String TAG_CREATE_EVENT_SCREEN_1 = "bh_create_event_1";
 	public static final String TAG_CREATE_EVENT_SCREEN_2 = "bh_create_event_2";
+	public static final String TAG_HOME_SCREEN = "bh_home_screen";
 	
 	// extras tags
 	public static final String EXTRAS_QUERY = "query";
@@ -46,6 +48,7 @@ public class BetterHood {
 	public static final String PHP_FILE_CREATE_ACCOUNT = "add_user.php";
 	public static final String PHP_FILE_CREATE_EVENT = "create_event.php";
 	public static final String PHP_FILE_CHECK_USERNAME = "check_username.php";
+	public static final String PHP_FILE_POPULATE_EVENT_LIST = "populate_event_list.php";
 	
 	// templates
 	public static final String TEMPLATE_CARPOOL = "Carpool";

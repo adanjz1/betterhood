@@ -1,14 +1,21 @@
 package com.lcc3710;
 
+import java.util.Calendar;
+
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 public class CreateEventScreen2 extends Activity {
@@ -22,6 +29,16 @@ public class CreateEventScreen2 extends Activity {
 	private EditText editEventMessage;
 	
 	private Intent intent;
+	
+	private int iDay;
+	private int iMonth;
+	private int iYear;
+	private int iMinute;
+	private int iHour;
+	
+	static final int DATE_DIALOG_ID = 0;
+	static final int TIME_DIALOG_ID = 1;
+	static final int LOCATION_DIALOG_ID = 2;
 	
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -104,6 +121,26 @@ public class CreateEventScreen2 extends Activity {
         editEventName = (EditText) findViewById(R.id.editEventName);
         editEventMessage = (EditText) findViewById(R.id.editEventMessage);
         
+        final Calendar c = Calendar.getInstance();
+		
+        iYear = c.get(Calendar.YEAR);
+        iMonth = c.get(Calendar.MONTH);
+        iDay = c.get(Calendar.DAY_OF_MONTH);
+        iHour = c.get(Calendar.HOUR_OF_DAY);
+        iMinute = c.get(Calendar.MINUTE);
+        
+        buttonPickDate.setOnClickListener(new View.OnClickListener() {
+        	public void onClick(View view) {
+        		showDialog(DATE_DIALOG_ID);
+        	}
+        });
+        
+        buttonPickLocation.setOnClickListener(new View.OnClickListener() {
+        	public void onClick(View view) {
+        		showDialog(LOCATION_DIALOG_ID);
+        	}
+        });
+        
 		buttonBack.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View view) {
@@ -129,14 +166,77 @@ public class CreateEventScreen2 extends Activity {
 		});
     }
     
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        switch (id) {
+        case DATE_DIALOG_ID:
+            return new DatePickerDialog(this,
+                        mDateSetListener,
+                        iYear, iMonth, iDay);
+        case TIME_DIALOG_ID:
+        	return new TimePickerDialog(this,
+        				mTimeSetListener,
+        				iHour,
+        				iMinute,
+        				false);
+        case LOCATION_DIALOG_ID:
+        	// TODO location picker dialog
+        	return new DatePickerDialog(this,
+                    mDateSetListener,
+                    iYear, iMonth, iDay);
+        }
+        return null;
+    }
+    
+    private DatePickerDialog.OnDateSetListener mDateSetListener =
+        new DatePickerDialog.OnDateSetListener() {
+
+            public void onDateSet(DatePicker view, int year, 
+                                  int monthOfYear, int dayOfMonth) {
+                iYear = year;
+                iMonth = monthOfYear;
+                iDay = dayOfMonth;
+                
+                showDialog(TIME_DIALOG_ID);
+            }
+        };
+    private TimePickerDialog.OnTimeSetListener mTimeSetListener = 
+    	new TimePickerDialog.OnTimeSetListener() {
+			public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+				iMinute = minute;
+				iHour = hourOfDay;
+				int tempHour = iHour;
+				
+				String tempMinute = Integer.toString(iMinute);
+				if (iMinute < 10) { 
+					tempMinute = "0" + tempMinute;
+				}
+				
+				String ampm = "AM";
+				
+				if (iHour > 12) {
+					tempHour = 24 - iHour;
+					ampm = "PM";
+				}
+				
+				buttonPickDate.setText("On " 
+						+ Integer.toString(iMonth) + "/" 
+						+ Integer.toString(iDay) + "/" 
+						+ Integer.toString(iYear) + " at " 
+						+ Integer.toString(tempHour) + ":" 
+						+ tempMinute + " "
+						+ ampm);
+			}
+    	};
+    
     private void doEventCreation() {
     	Bundle extras = intent.getExtras();
     	
     	String tempSessionID = extras.getString(BetterHood.EXTRAS_SESSION_ID);
     	
     	String tempQuery = "Event_Name=" + extras.getString(BetterHood.EXTRAS_EVENT_NAME)
-    		+ "&Event_Cost=" + "1234" 
-    		+ "&Event_Location=" + "12345"
+    		+ "&Event_Cost=" + "10" 
+    		+ "&Event_Location=" + "123456"
     		+ "&sid=" + tempSessionID;
     	
     	intent.putExtra(BetterHood.EXTRAS_QUERY, tempQuery);
