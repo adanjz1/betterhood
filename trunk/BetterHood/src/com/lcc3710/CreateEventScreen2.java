@@ -27,8 +27,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.google.android.maps.GeoPoint;
-
 public class CreateEventScreen2 extends Activity {
     /** Called when the activity is first created. */
 	private Button buttonBack;
@@ -185,31 +183,55 @@ public class CreateEventScreen2 extends Activity {
 		
 		buttonForward.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {				
-				String tempEventName, tempEventAddress, tempEventCost, tempEventDate,
-				tempEventLocation, tempEventMessage, tempEventTime;
+				String tempEventName, tempEventAddressStreet, tempEventAddressCity, tempEventContactEmail, tempEventCost,
+				tempEventDate, tempEventLocationName, tempEventLatitude, tempEventLongitude, tempEventMessage, tempEventPhoneNumber, 
+				tempEventStartTime, tempEventEndTime;
 				
 				tempEventName = editEventName.getText().toString();
-				tempEventAddress = szEventAddress;
+				
+				if (szEventAddress != null) {
+					int commaIdx = szEventAddress.indexOf(",");
+					int commaIdx2 = szEventAddress.indexOf(",", commaIdx);
+					tempEventAddressStreet = szEventAddress.substring(0, commaIdx);
+					tempEventAddressCity = szEventAddress.substring(commaIdx, commaIdx2);
+				} else {
+					tempEventAddressStreet = null;
+					tempEventAddressCity = null;
+				}
 				tempEventCost = editEventCost.getText().toString();
 				tempEventDate = Integer.toString(iMonth) + Integer.toString(iDay) + Integer.toString(iYear);
 				if (lEventLocation != null) {
-					tempEventLocation = Double.toString(lEventLocation.getLatitude()) + "," + Double.toString(lEventLocation.getLongitude());
+					tempEventLatitude = Double.toString(lEventLocation.getLatitude());
+					tempEventLongitude = Double.toString(lEventLocation.getLongitude());
 				} else {
-					tempEventLocation = null;
+					tempEventLatitude = null;
+					tempEventLongitude = null;
 				}
+				tempEventLocationName = "";
 				tempEventMessage = editEventMessage.getText().toString();
-				tempEventTime = Integer.toString(iHour) + ":" + Integer.toString(iMinute);
+				tempEventStartTime = Integer.toString(iHour) + ":" + Integer.toString(iMinute);
+				
+				// TEMPORARY CRAP
+				tempEventEndTime = "";
+				tempEventPhoneNumber = "";
+				tempEventContactEmail = "";
 				
 				if (tempEventName.length() == 0) {
 					Toast.makeText(view.getContext(), "Error: " + "'Event Name' cannot be left blank.", BetterHood.TOAST_TIME).show();
 				} else {					
 					intent.putExtra(BetterHood.EXTRAS_EVENT_NAME, tempEventName);
-					intent.putExtra(BetterHood.EXTRAS_EVENT_ADDRESS, tempEventAddress);
+					intent.putExtra(BetterHood.EXTRAS_EVENT_ADDRESS_STREET, tempEventAddressStreet);
+					intent.putExtra(BetterHood.EXTRAS_EVENT_ADDRESS_CITY, tempEventAddressCity);
+					intent.putExtra(BetterHood.EXTRAS_EVENT_CONTACT_EMAIL, tempEventContactEmail);
 					intent.putExtra(BetterHood.EXTRAS_EVENT_COST, tempEventCost);
 					intent.putExtra(BetterHood.EXTRAS_EVENT_DATE, tempEventDate);
-					intent.putExtra(BetterHood.EXTRAS_EVENT_LOCATION, tempEventLocation);
+					intent.putExtra(BetterHood.EXTRAS_EVENT_LOCATION_LATITUDE, tempEventLatitude);
+					intent.putExtra(BetterHood.EXTRAS_EVENT_LOCATION_LONGITUDE, tempEventLongitude);
+					intent.putExtra(BetterHood.EXTRAS_EVENT_LOCATION_NAME, tempEventLocationName);
+					intent.putExtra(BetterHood.EXTRAS_EVENT_PHONE_NUMBER, tempEventPhoneNumber);
 					intent.putExtra(BetterHood.EXTRAS_EVENT_MESSAGE, tempEventMessage);
-					intent.putExtra(BetterHood.EXTRAS_EVENT_TIME, tempEventTime);
+					intent.putExtra(BetterHood.EXTRAS_EVENT_START_TIME, tempEventStartTime);
+					intent.putExtra(BetterHood.EXTRAS_EVENT_END_TIME, tempEventEndTime);
 					doEventCreation();
 				}
 				
@@ -334,15 +356,7 @@ public class CreateEventScreen2 extends Activity {
     	try {
 			List<Address> a = geocoder.getFromLocation(l.getLatitude(), l.getLongitude(), 3);
 			if (a.size() > 0) {
-				String szAddress = "";
-				String szBuffer;
-				int i = 0;
-				/*
-				while ((szBuffer = a.get(0).getAddressLine(i)) != null) {
-					szAddress += szBuffer + "\n";
-				}
-				*/
-				szAddress = a.get(0).getAddressLine(0) + "\n" + a.get(0).getAddressLine(1);
+				String szAddress = a.get(0).getAddressLine(0) + "\n" + a.get(0).getAddressLine(1);
 				return szAddress;
 			}
 		} catch (IOException e) {
@@ -395,13 +409,6 @@ public class CreateEventScreen2 extends Activity {
     private void doEventCreation() {
     	Bundle extras = intent.getExtras();
     	
-    	String tempSessionID = extras.getString(BetterHood.EXTRAS_SESSION_ID);
-    	
-//    	String tempQuery = "Event_Name=" + extras.getString(BetterHood.EXTRAS_EVENT_NAME)
-//    		+ "&Event_Cost=" + "10" 
-//    		+ "&Event_Location=" + )
-//    		+ "&sid=" + tempSessionID;
-    	
     	String tempQuery = "";
     	String token;
     		
@@ -410,8 +417,14 @@ public class CreateEventScreen2 extends Activity {
     		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_TEMPLATE_NAME)) != null) {
     			tempQuery += "&Event_Type=" + token;
     		}
-    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_ADDRESS)) != null) {
-    			tempQuery += "&Event_Address_Street=" + token;
+    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_ADDRESS_STREET)) != null) {
+    			tempQuery += "&Event_Location_Address_Street=" + token;
+    		}
+    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_ADDRESS_CITY)) != null) {
+    			tempQuery += "&Event_Location_Address_City=" + token;
+    		}
+    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_CONTACT_EMAIL)) != null) {
+    			tempQuery += "&Event_Contact_Email=" + token;
     		}
     		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_COST)) != null) {
     			tempQuery += "&Event_Cost=" + token;
@@ -419,14 +432,26 @@ public class CreateEventScreen2 extends Activity {
     		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_DATE)) != null) {
     			tempQuery += "&Event_Start_Date=" + token;
     		}
-    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_LOCATION)) != null) {
-    			tempQuery += "&Event_Location=" + token;
+    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_LOCATION_LATITUDE)) != null) {
+    			tempQuery += "&Event_Location_Latitude=" + token;
+    		}
+    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_LOCATION_LONGITUDE)) != null) {
+    			tempQuery += "&Event_Location_Longitude=" + token;
+    		}
+    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_LOCATION_NAME)) != null) {
+    			tempQuery += "&Event_Location_Name=" + token;
     		}
     		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_MESSAGE)) != null) {
     			tempQuery += "&Event_Description=" + token;
     		}
-    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_TIME)) != null) {
+    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_PHONE_NUMBER)) != null) {
+    			tempQuery += "&Event_Phone_Number=" + token;
+    		}
+    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_START_TIME)) != null) {
     			tempQuery += "&Event_Start_Time=" + token;
+    		}
+    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_END_TIME)) != null) {
+    			tempQuery += "&Event_End_Time=" + token;
     		}
     		if ((token = extras.getString(BetterHood.EXTRAS_SESSION_ID)) != null) {
     			tempQuery += "&sid=" + token;
