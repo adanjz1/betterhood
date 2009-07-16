@@ -1,6 +1,9 @@
 package com.lcc3710;
 
+import java.io.IOException;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -9,14 +12,22 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.google.android.maps.GeoPoint;
 
 public class CreateEventScreen2 extends Activity {
     /** Called when the activity is first created. */
@@ -26,7 +37,20 @@ public class CreateEventScreen2 extends Activity {
 	private Button buttonPickDate;
 	
 	private EditText editEventName;
+	private EditText editEventCost;
 	private EditText editEventMessage;
+	
+	// location dialog picker members
+	private Dialog dialogLocationPicker;
+	
+	private EditText editAddress;
+	private TextView textCurrentLocation;
+	
+	private CheckBox checkBoxAddressLocation;
+	private CheckBox checkBoxCurrentLocation;
+	
+	private Button buttonDialogBack;
+	private Button buttonDialogForward;
 	
 	private Intent intent;
 	
@@ -35,6 +59,9 @@ public class CreateEventScreen2 extends Activity {
 	private int iYear;
 	private int iMinute;
 	private int iHour;
+	
+	private String szEventAddress;
+	private Location lEventLocation;
 	
 	static final int DATE_DIALOG_ID = 0;
 	static final int TIME_DIALOG_ID = 1;
@@ -112,6 +139,10 @@ public class CreateEventScreen2 extends Activity {
         	setContentView(R.layout.create_event_2);
         }
         
+        Location t;
+        if ((t = (Location) extras.get(BetterHood.EXTRAS_CURRENT_LOCATION)) != null) {
+        	lEventLocation = t;
+        }
         
         buttonBack = (Button) findViewById(R.id.buttonBack);
         buttonForward = (Button) findViewById(R.id.buttonForward);
@@ -119,6 +150,7 @@ public class CreateEventScreen2 extends Activity {
         buttonPickDate = (Button) findViewById(R.id.buttonPickDate);
 		
         editEventName = (EditText) findViewById(R.id.editEventName);
+        editEventCost = (EditText) findViewById(R.id.editEventCost);
         editEventMessage = (EditText) findViewById(R.id.editEventMessage);
         
         final Calendar c = Calendar.getInstance();
@@ -180,12 +212,114 @@ public class CreateEventScreen2 extends Activity {
         				iMinute,
         				false);
         case LOCATION_DIALOG_ID:
-        	// TODO location picker dialog
-        	return new DatePickerDialog(this,
-                    mDateSetListener,
-                    iYear, iMonth, iDay);
+        	return buildLocationPickerDialog();
         }
         return null;
+    }
+    
+    // LOCATION PICKER DIALOG
+    private Dialog buildLocationPickerDialog() {
+    	dialogLocationPicker = new Dialog(this);
+    	
+    	dialogLocationPicker.setContentView(R.layout.location_picker);
+    	dialogLocationPicker.getWindow().setLayout(300, 300);
+    	
+    	buttonDialogBack = (Button) dialogLocationPicker.findViewById(R.id.buttonBack);
+    	buttonDialogForward = (Button) dialogLocationPicker.findViewById(R.id.buttonForward);
+    	
+    	editAddress = (EditText) dialogLocationPicker.findViewById(R.id.editAddress);
+    	textCurrentLocation = (TextView) dialogLocationPicker.findViewById(R.id.textCurrentLocation);
+    	
+    	checkBoxAddressLocation = (CheckBox) dialogLocationPicker.findViewById(R.id.checkBoxAddressLocation);
+    	checkBoxCurrentLocation = (CheckBox) dialogLocationPicker.findViewById(R.id.checkBoxCurrentLocation);
+    	
+    	checkBoxCurrentLocation.setChecked(true);
+    	
+    	CompoundButton.OnCheckedChangeListener checkBoxListener = new CompoundButton.OnCheckedChangeListener() {
+			public void onCheckedChanged(CompoundButton buttonView,
+					boolean isChecked) {
+				switch (buttonView.getId()) {
+				case R.id.checkBoxAddressLocation:
+					if (isChecked) {
+						checkBoxCurrentLocation.setChecked(false);
+						buttonDialogForward.setEnabled(true);
+					} else if (!checkBoxCurrentLocation.isChecked()) {
+						buttonDialogForward.setEnabled(false);
+					}
+					break;
+				case R.id.checkBoxCurrentLocation:
+					if (isChecked) {
+						checkBoxAddressLocation.setChecked(false);
+						buttonDialogForward.setEnabled(true);
+					}  else if (!checkBoxCurrentLocation.isChecked()) {
+						buttonDialogForward.setEnabled(false);
+					}
+					break;
+				}
+			}
+    	};
+    	
+    	checkBoxAddressLocation.setOnCheckedChangeListener(checkBoxListener);
+    	checkBoxCurrentLocation.setOnCheckedChangeListener(checkBoxListener);
+    	
+    	View.OnClickListener buttonListener = new View.OnClickListener() {
+			public void onClick(View v) {
+				switch (v.getId()) {
+				case R.id.buttonBack:
+					dialogLocationPicker.dismiss();
+					break;
+				case R.id.buttonForward:
+					if (v.isEnabled()) {
+						if (checkBoxAddressLocation.isChecked()) {
+							szEventAddress = editAddress.getText().toString();
+							buttonPickLocation.setText(szEventAddress);
+						}
+						if (checkBoxCurrentLocation.isChecked()) {
+							if (lEventLocation != null) {
+								//buttonPickLocation.setText(geoPointToAddress());
+								buttonPickLocation.setText(locationToAddress(lEventLocation));
+							}
+						}
+					}
+					dialogLocationPicker.dismiss();
+					break;
+				}
+			}
+    	};
+    	
+    	buttonDialogBack.setOnClickListener(buttonListener);
+    	buttonDialogForward.setOnClickListener(buttonListener);
+    	
+    	
+    	if (lEventLocation != null) {
+    		//textCurrentLocation.setText("Current location:\n" + geoPointToAddress(mEventLocation.getPoint()));
+    		//textCurrentLocation.setText("Current Location:\n" + Double.toString(lEventLocation.getLatitude()) + ",\n" + Double.toString(lEventLocation.getLongitude()));
+    		textCurrentLocation.setText("Current Location:\n" + locationToAddress(lEventLocation));
+    	}
+    	
+    	return dialogLocationPicker;
+    }
+    
+    private String locationToAddress(Location l) {
+    	Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+    	try {
+			List<Address> a = geocoder.getFromLocation(l.getLatitude(), l.getLongitude(), 3);
+			if (a.size() > 0) {
+				String szAddress = "";
+				String szBuffer;
+				int i = 0;
+				/*
+				while ((szBuffer = a.get(0).getAddressLine(i)) != null) {
+					szAddress += szBuffer + "\n";
+				}
+				*/
+				szAddress = a.get(0).getAddressLine(0) + "\n" + a.get(0).getAddressLine(1);
+				return szAddress;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
     }
     
     private DatePickerDialog.OnDateSetListener mDateSetListener =
@@ -215,7 +349,7 @@ public class CreateEventScreen2 extends Activity {
 				String ampm = "AM";
 				
 				if (iHour > 12) {
-					tempHour = 24 - iHour;
+					tempHour = iHour - 12;
 					ampm = "PM";
 				}
 				
@@ -236,7 +370,7 @@ public class CreateEventScreen2 extends Activity {
     	
     	String tempQuery = "Event_Name=" + extras.getString(BetterHood.EXTRAS_EVENT_NAME)
     		+ "&Event_Cost=" + "10" 
-    		+ "&Event_Location=" + "123456"
+    		+ "&Event_Location=" + Double.toString(lEventLocation.getLatitude()) + "," + Double.toString(lEventLocation.getLongitude())
     		+ "&sid=" + tempSessionID;
     	
     	intent.putExtra(BetterHood.EXTRAS_QUERY, tempQuery);

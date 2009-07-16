@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" 
+	android:layout_height="fill_parent"
+	>	
+	<View
+		android:id="@+id/headerPickLocation"
+		android:layout_width = "fill_parent"
+		android:layout_height = "35dip"
+		android:layout_marginBottom = "6dip"
+		android:layout_marginTop = "0dip"
+		android:layout_alignParentTop = "true"
+		android:background = "#FF909090"
+	/>
+	<TextView
+		android:layout_width = "wrap_content"
+		android:layout_height = "wrap_content"
+		android:layout_alignParentTop = "true"
+		android:layout_centerHorizontal = "true"
+		android:text = "Enter an address below or use your current GPS location"
+		android:gravity = "center"
+	/>
+	
+	<CheckBox
+   		android:id="@+id/checkBoxAddressLocation"
+   		android:layout_width = "wrap_content"
+   		android:layout_height = "wrap_content"
+   		android:layout_below = "@id/headerPickLocation"
+   		android:layout_marginLeft = "5dip"
+   		android:layout_alignParentLeft = "true"
+   	/>
+	<EditText
+    	android:id="@+id/editAddress"
+    	android:layout_height = "wrap_content"
+    	android:layout_width = "fill_parent"
+    	android:layout_below = "@id/headerPickLocation"
+    	android:layout_toRightOf = "@id/checkBoxAddressLocation"
+    	android:layout_marginLeft = "5dip"
+    	android:layout_marginRight = "5dip"
+    	android:text = "Street Address"
+    	android:inputType = "textPostalAddress"
+    />
+   	
+   	<View
+		android:id="@+id/viewDivider"
+		android:layout_height = "2dip"
+    	android:layout_width = "fill_parent"
+    	android:layout_marginTop = "6dip"
+    	android:layout_marginBottom = "6dip"
+    	android:layout_below = "@id/checkBoxAddressLocation"
+    	android:layout_centerHorizontal = "true"
+    	android:background="#FF909090"
+	/>
+	
+	<CheckBox
+   		android:id="@+id/checkBoxCurrentLocation"
+   		android:layout_width = "wrap_content"
+   		android:layout_height = "wrap_content"
+   		android:layout_below = "@id/viewDivider"
+   		android:layout_marginLeft = "5dip"
+   		android:layout_alignParentLeft = "true"
+   	/>
+	<TextView
+		android:id="@+id/textCurrentLocation"
+		android:layout_width = "fill_parent"
+		android:layout_height = "wrap_content"
+		android:layout_below = "@id/viewDivider"
+		android:layout_marginLeft = "5dip"
+		android:layout_toRightOf = "@id/checkBoxCurrentLocation"
+		android:text = "Current Location:\n123 Homeboy Palace,\nAtlanta, GA 30303"
+	/>
+	
+	<Button
+		android:id = "@+id/buttonBack"
+		android:text = "Cancel"
+		android:layout_height = "wrap_content"
+		android:layout_width = "100dip"
+		android:layout_alignParentLeft = "true"
+		android:layout_alignParentBottom = "true"
+	/>
+	<Button
+		android:id = "@+id/buttonForward"
+		android:text = "OK"
+		android:layout_height = "wrap_content"
+		android:layout_width = "100dip"
+		android:layout_toRightOf = "@id/buttonBack"
+		android:layout_alignParentRight = "true"
+		android:layout_alignParentBottom = "true"
+	/>
+</RelativeLayout>

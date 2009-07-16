@@ -35,6 +35,8 @@ public class HomeScreen extends MapActivity {
 	
 	private EventList eventList;
 	
+	private Location lastKnownLocation;
+	
 	
     //  Known latitude/longitude coordinates that we'll be using.
     private List<MapLocation> mapLocations;
@@ -132,6 +134,7 @@ public class HomeScreen extends MapActivity {
 				Intent inWant = new Intent(view.getContext(), CreateEventScreen1.class);
 				
 				inWant.putExtra(BetterHood.EXTRAS_SESSION_ID, sessionID);
+				inWant.putExtra(BetterHood.EXTRAS_CURRENT_LOCATION, lastKnownLocation);
 				inWant.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, username);
 				
 				startActivityForResult(inWant, BetterHood.REQ_CREATE_EVENT);
@@ -179,6 +182,7 @@ public class HomeScreen extends MapActivity {
 		locListener = new LocationListener() {
  
 			public void onLocationChanged(Location newLocation) {
+				lastKnownLocation = newLocation;
 				createAndShowCustomOverlay(newLocation);
 			}
  
