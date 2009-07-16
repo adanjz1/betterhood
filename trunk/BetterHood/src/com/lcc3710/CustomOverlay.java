@@ -65,10 +65,10 @@ public class CustomOverlay extends Overlay {
 	public boolean onTouchEvent(MotionEvent event, MapView mapView) 
     {   
         //---when user lifts his finger---
-    	if (event.getAction() == 1) {        
-    		PopUp popup = new PopUp("This is your current location"); 
-    		popup.makeWindow();
-    	}
+    	//if (event.getAction() == 1) {        
+    	//	PopUp popup = new PopUp("This is your current location"); 
+    		//popup.makeWindow();
+    	//}
     	//window = new PopupWindow(this.getViewInflate().inflate(R.layout.main1,null,null),0,0); 
     	
         return false;

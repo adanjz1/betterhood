@@ -49,9 +49,10 @@ public class EventOverlay extends Overlay {
 			//  Next test whether a new popup should be displayed
 			selectedMapLocation = getHitMapLocation(mapView,p);
 			if ( isRemovePriorPopup || selectedMapLocation != null) {
-				mapView.invalidate();
+				//mapView.invalidate();
 			}		
-			
+			if(selectedMapLocation != null){
+			dialogIsHit = true;
 			if(dialogIsHit){
 				alert2 = new AlertDialog.Builder(homeScreen)
 	            .setTitle(selectedMapLocation.getType())
@@ -61,11 +62,16 @@ public class EventOverlay extends Overlay {
 	                            //Put your code in here for a positive response
 	                    }
 	            });
-				
-				alert2.show();
-				
 				dialogIsHit = false;
+				alert2.show();
 			}
+			}
+			
+				
+				
+			
+			
+			
 			
 			//  Lastly return true if we handled this onTap()
 			return selectedMapLocation != null;
@@ -148,13 +154,16 @@ public class EventOverlay extends Overlay {
 	    private void drawInfoWindow(Canvas canvas, MapView	mapView, boolean shadow) {
 	    	
 	    	if ( selectedMapLocation != null) {
+	    		Point selDestinationOffset = new Point();
+				mapView.getProjection().toPixels(selectedMapLocation.getPoint(), selDestinationOffset);
+			
+					
+				
 	    		if ( shadow) {
-	    			//  Skip painting a shadow in this tutorial
+	    			
 	    		} else {
 					//  First determine the screen coordinates of the selected MapLocation
-					Point selDestinationOffset = new Point();
-					mapView.getProjection().toPixels(selectedMapLocation.getPoint(), selDestinationOffset);
-					dialogIsHit = true;
+					
 
 			    	//  Setup the info window with the right size & location
 					/* int INFO_WINDOW_WIDTH = 125;
