@@ -217,4 +217,9 @@ public class EventOverlay extends Overlay {
 			}
 			return textPaint;
 		}
-	}
+		
+		public String type(){
+			return "eventOverlay";
+		}
+		}
+	
