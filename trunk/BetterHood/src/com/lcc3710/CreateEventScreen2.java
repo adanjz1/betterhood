@@ -142,6 +142,8 @@ public class CreateEventScreen2 extends Activity {
         Location t;
         if ((t = (Location) extras.get(BetterHood.EXTRAS_CURRENT_LOCATION)) != null) {
         	lEventLocation = t;
+        } else {
+        	lEventLocation = null;
         }
         
         buttonBack = (Button) findViewById(R.id.buttonBack);
@@ -183,19 +185,42 @@ public class CreateEventScreen2 extends Activity {
 		
 		buttonForward.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {				
-				String tempEventName;
+				String tempEventName, tempEventAddress, tempEventCost, tempEventDate,
+				tempEventLocation, tempEventMessage, tempEventTime;
 				
 				tempEventName = editEventName.getText().toString();
+				tempEventAddress = szEventAddress;
+				tempEventCost = editEventCost.getText().toString();
+				tempEventDate = Integer.toString(iMonth) + Integer.toString(iDay) + Integer.toString(iYear);
+				if (lEventLocation != null) {
+					tempEventLocation = Double.toString(lEventLocation.getLatitude()) + "," + Double.toString(lEventLocation.getLongitude());
+				} else {
+					tempEventLocation = null;
+				}
+				tempEventMessage = editEventMessage.getText().toString();
+				tempEventTime = Integer.toString(iHour) + ":" + Integer.toString(iMinute);
 				
 				if (tempEventName.length() == 0) {
 					Toast.makeText(view.getContext(), "Error: " + "'Event Name' cannot be left blank.", BetterHood.TOAST_TIME).show();
 				} else {					
 					intent.putExtra(BetterHood.EXTRAS_EVENT_NAME, tempEventName);
+					intent.putExtra(BetterHood.EXTRAS_EVENT_ADDRESS, tempEventAddress);
+					intent.putExtra(BetterHood.EXTRAS_EVENT_COST, tempEventCost);
+					intent.putExtra(BetterHood.EXTRAS_EVENT_DATE, tempEventDate);
+					intent.putExtra(BetterHood.EXTRAS_EVENT_LOCATION, tempEventLocation);
+					intent.putExtra(BetterHood.EXTRAS_EVENT_MESSAGE, tempEventMessage);
+					intent.putExtra(BetterHood.EXTRAS_EVENT_TIME, tempEventTime);
 					doEventCreation();
 				}
 				
 			}
 		});
+		
+		if (BetterHood.DEBUG) {
+			editEventName.setText("Event Name");
+			editEventMessage.setText("helloworld!");
+			editEventCost.setText("1.00");
+		}
     }
     
     @Override
@@ -297,6 +322,10 @@ public class CreateEventScreen2 extends Activity {
     		textCurrentLocation.setText("Current Location:\n" + locationToAddress(lEventLocation));
     	}
     	
+    	if (BetterHood.DEBUG) {
+    		editAddress.setText("451 Heartcircle Pl, Atlanta, GA 30303");
+    	}
+    	
     	return dialogLocationPicker;
     }
     
@@ -368,17 +397,52 @@ public class CreateEventScreen2 extends Activity {
     	
     	String tempSessionID = extras.getString(BetterHood.EXTRAS_SESSION_ID);
     	
-    	String tempQuery = "Event_Name=" + extras.getString(BetterHood.EXTRAS_EVENT_NAME)
-    		+ "&Event_Cost=" + "10" 
-    		+ "&Event_Location=" + Double.toString(lEventLocation.getLatitude()) + "," + Double.toString(lEventLocation.getLongitude())
-    		+ "&sid=" + tempSessionID;
+//    	String tempQuery = "Event_Name=" + extras.getString(BetterHood.EXTRAS_EVENT_NAME)
+//    		+ "&Event_Cost=" + "10" 
+//    		+ "&Event_Location=" + )
+//    		+ "&sid=" + tempSessionID;
     	
-    	intent.putExtra(BetterHood.EXTRAS_QUERY, tempQuery);
-		intent.putExtra(BetterHood.EXTRAS_REQUEST_CODE, BetterHood.REQ_CREATE_EVENT);
-	
-		// Launch ConnectionResource with the query and request code in the extras
-		intent.setClass(this, ConnectionResource.class);
-		
-		startActivityForResult(intent, BetterHood.REQ_CREATE_EVENT);
+    	String tempQuery = "";
+    	String token;
+    		
+    	if ((token = extras.getString(BetterHood.EXTRAS_EVENT_NAME)) != null) {
+    		tempQuery += "Event_Name=" + token;
+    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_TEMPLATE_NAME)) != null) {
+    			tempQuery += "&Event_Type=" + token;
+    		}
+    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_ADDRESS)) != null) {
+    			tempQuery += "&Event_Address_Street=" + token;
+    		}
+    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_COST)) != null) {
+    			tempQuery += "&Event_Cost=" + token;
+    		}
+    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_DATE)) != null) {
+    			tempQuery += "&Event_Start_Date=" + token;
+    		}
+    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_LOCATION)) != null) {
+    			tempQuery += "&Event_Location=" + token;
+    		}
+    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_MESSAGE)) != null) {
+    			tempQuery += "&Event_Description=" + token;
+    		}
+    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_TIME)) != null) {
+    			tempQuery += "&Event_Start_Time=" + token;
+    		}
+    		if ((token = extras.getString(BetterHood.EXTRAS_SESSION_ID)) != null) {
+    			tempQuery += "&sid=" + token;
+    			
+    			intent.putExtra(BetterHood.EXTRAS_QUERY, tempQuery);
+    			intent.putExtra(BetterHood.EXTRAS_REQUEST_CODE, BetterHood.REQ_CREATE_EVENT);
+    		
+    			// Launch ConnectionResource with the query and request code in the extras
+    			intent.setClass(this, ConnectionResource.class);
+    			
+    			startActivityForResult(intent, BetterHood.REQ_CREATE_EVENT);
+    		} else {
+    			Log.i(BetterHood.TAG_CREATE_EVENT_SCREEN_2, BetterHood.ERROR_PREFIX + "Session ID not found.");
+    		}
+    	}
+    	
+    	
     }
 }
