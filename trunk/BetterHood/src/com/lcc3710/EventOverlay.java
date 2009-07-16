@@ -2,6 +2,8 @@ package com.lcc3710;
 
 import java.util.Iterator;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -19,6 +21,9 @@ public class EventOverlay extends Overlay {
 	 private Bitmap bubbleIcon, shadowIcon;
 	    
 	    private HomeScreen homeScreen;
+	    public boolean locationHit;
+	    boolean dialogIsHit = false;
+	    AlertDialog.Builder alert2;
 	    
 		private Paint	innerPaint, borderPaint, textPaint;
 	    
@@ -29,9 +34,10 @@ public class EventOverlay extends Overlay {
 		public EventOverlay(HomeScreen	map) {
 			
 			this.homeScreen = map;
+			shadowIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.shadow);
+			bubbleIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.party);
 			
-			bubbleIcon = BitmapFactory.decodeResource(map.getResources(),R.drawable.balloon);
-			shadowIcon = BitmapFactory.decodeResource(map.getResources(),R.drawable.shadow);
+			
 		}
 		
 		@Override
@@ -46,6 +52,21 @@ public class EventOverlay extends Overlay {
 				mapView.invalidate();
 			}		
 			
+			if(dialogIsHit){
+				alert2 = new AlertDialog.Builder(homeScreen)
+	            .setTitle(selectedMapLocation.getType())
+	            .setMessage("Do you want to save this activity?")
+	            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+	                    public void onClick(DialogInterface dialog, int whichButton) {
+	                            //Put your code in here for a positive response
+	                    }
+	            });
+				
+				alert2.show();
+				
+				dialogIsHit = false;
+			}
+			
 			//  Lastly return true if we handled this onTap()
 			return selectedMapLocation != null;
 		}
@@ -54,12 +75,13 @@ public class EventOverlay extends Overlay {
 	    	
 	   		drawMapLocations(canvas, mapView, shadow);
 	   		drawInfoWindow(canvas, mapView, shadow);
+	   		
 	    }
 
 	    /**
 	     * Test whether an information balloon should be displayed or a prior balloon hidden.
 	     */
-	    private MapLocation getHitMapLocation(MapView	mapView, GeoPoint	tapPoint) {
+	    private MapLocation getHitMapLocation(MapView	mapView, GeoPoint tapPoint) {
 	    	
 	    	//  Track which MapLocation was hit...if any
 	    	MapLocation hitMapLocation = null;
@@ -99,11 +121,25 @@ public class EventOverlay extends Overlay {
 	    	while(iterator.hasNext()) {	   
 	    		MapLocation location = iterator.next();
 	    		mapView.getProjection().toPixels(location.getPoint(), screenCoords);
-				
+	    		
 		    	if (shadow) {
 		    		//  Only offset the shadow in the y-axis as the shadow is angled so the base is at x=0; 
 		    		canvas.drawBitmap(shadowIcon, screenCoords.x, screenCoords.y - shadowIcon.getHeight(),null);
 		    	} else {
+		    		if(location.getType() == "services"){
+		     			bubbleIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.services);
+		    			shadowIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.shadow);
+		     		
+		     		}
+		     		if(location.getType() == "party"){
+		     			bubbleIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.party);
+		    			shadowIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.shadow);
+		     		
+		     		}
+		     		if(location.getType() == "rent"){
+		     			bubbleIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.rent);
+		     			shadowIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.shadow);
+		     		}
 	    			canvas.drawBitmap(bubbleIcon, screenCoords.x - bubbleIcon.getWidth()/2, screenCoords.y - bubbleIcon.getHeight(),null);
 		    	}
 	    	}
@@ -118,9 +154,10 @@ public class EventOverlay extends Overlay {
 					//  First determine the screen coordinates of the selected MapLocation
 					Point selDestinationOffset = new Point();
 					mapView.getProjection().toPixels(selectedMapLocation.getPoint(), selDestinationOffset);
-			    	
+					dialogIsHit = true;
+
 			    	//  Setup the info window with the right size & location
-					int INFO_WINDOW_WIDTH = 125;
+					/* int INFO_WINDOW_WIDTH = 125;
 					int INFO_WINDOW_HEIGHT = 25;
 					RectF infoWindowRect = new RectF(0,0,INFO_WINDOW_WIDTH,INFO_WINDOW_HEIGHT);				
 					int infoWindowOffsetX = selDestinationOffset.x-INFO_WINDOW_WIDTH/2;
@@ -137,6 +174,8 @@ public class EventOverlay extends Overlay {
 					int TEXT_OFFSET_X = 10;
 					int TEXT_OFFSET_Y = 15;
 					canvas.drawText(selectedMapLocation.getName(),infoWindowOffsetX+TEXT_OFFSET_X,infoWindowOffsetY+TEXT_OFFSET_Y,getTextPaint());
+					locationHit = true;*/
+					
 				}
 	    	}
 	    }

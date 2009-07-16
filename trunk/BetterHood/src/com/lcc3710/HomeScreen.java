@@ -235,11 +235,12 @@ public class HomeScreen extends MapActivity {
 	public List<MapLocation> getMapLocations() {
 		if (mapLocations == null) {
 			mapLocations = new ArrayList<MapLocation>();
-			mapLocations.add(new MapLocation("Yard Sale",33.782105,-84.402443));
-			mapLocations.add(new MapLocation("Party",33.764706,-84.392652));
-			mapLocations.add(new MapLocation("Party",33.778179,-84.398848 ));
-			mapLocations.add(new MapLocation("Lawn Service", 33.765206, -84.396927));
+			mapLocations.add(new MapLocation("Yard Sale",33.782105,-84.402443, "services"));
+			mapLocations.add(new MapLocation("House for Rent",33.764706,-84.392652, "rent"));
+			mapLocations.add(new MapLocation("Party",33.778179,-84.398848, "party" ));
+			mapLocations.add(new MapLocation("Lawn Service", 33.765206, -84.396927, "services"));
 		}
+
 		return mapLocations;
 	}
 	
