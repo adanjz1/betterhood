@@ -39,6 +39,8 @@ public class BetterHood {
 	
 	public static final String EXTRAS_EVENT_TEMPLATE_NAME = "templateName";
 	public static final String EXTRAS_EVENT_NAME = "eventName";
+	
+	public static final String EXTRAS_CURRENT_LOCATION = "currentLocation";
 		
 	public static final String ERROR_PREFIX = "Error: ";
 		

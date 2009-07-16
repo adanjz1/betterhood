@@ -175,8 +175,8 @@ public class LoginScreen extends Activity {
         
         //auto put some stuff into the fields, for debug
         if (BetterHood.DEBUG) {
-        	editUsername.setText("Cat");
-        	editPassword.setText("Cat");
+        	editUsername.setText("admin");
+        	editPassword.setText("password");
         }
         
         buttonLogIn.setOnClickListener(new View.OnClickListener() {
