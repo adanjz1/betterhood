@@ -17,9 +17,11 @@ import com.google.android.maps.Projection;
  
 public class CustomOverlay extends Overlay {
  
-	private static final int CIRCLERADIUS = 2;
+	
+	
 	public PopupWindow window;
 	private TextView text;
+	private static final int CIRCLERADIUS = 2;
  
 	private GeoPoint geopoint;
  
@@ -73,4 +75,11 @@ public class CustomOverlay extends Overlay {
     	
         return false;
     }        
-}
+    
+    public String type(){
+    	return "myLocation";
+    }
+
+
+	
+    }

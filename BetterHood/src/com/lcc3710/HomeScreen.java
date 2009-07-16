@@ -223,6 +223,8 @@ public class HomeScreen extends MapActivity {
 		
  
 		mapView.getOverlays().add(overlay);
+		EventOverlay myEvents = new EventOverlay(this);
+		mapView.getOverlays().add(myEvents);
  
 		// move to location
 		mapView.getController().animateTo(geopoint);
