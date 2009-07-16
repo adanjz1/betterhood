@@ -61,7 +61,9 @@ public class CreateEventScreen1 extends Activity {
 		editEventTemplate.setThreshold(0);
 		
 		if (!editEventTemplate.isPopupShowing()) {
-			editEventTemplate.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_P));
+			if (BetterHood.DEBUG) {
+				editEventTemplate.setText("pool party");
+			}
 			//editEventTemplate.showDropDown();
 		}
 		
