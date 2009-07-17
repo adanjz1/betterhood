@@ -27,16 +27,11 @@ import com.google.android.maps.MyLocationOverlay;
 public class HomeScreen extends MapActivity {
 	private Button buttonWant;
 	private Button buttonSettings;
-
-	private static final String TAG = "MyActivity"; 
 	
 	private MyLocationOverlay myLocOverlay;
 	private LocationManager locManager;
 	private LocationListener locListener;
 	private EventOverlay overlay;
-	String delims = "[^%]+";
-	String[] partyTokens;
-
 	
 	private EventList eventList;
 	
@@ -84,10 +79,6 @@ public class HomeScreen extends MapActivity {
     				String szWebResponse;
     				if ((szWebResponse = extras.getString(BetterHood.EXTRAS_WEB_RESPONSE)) != null) {
     					Log.i(BetterHood.TAG_HOME_SCREEN, "EventList.populate() returned response: " + szWebResponse);
-    					partyTokens = szWebResponse.split(delims);
-    					for(int i=0;i< partyTokens.length ;i++){
-    					    Log.d(TAG, partyTokens[i]);
-    					    }
     				} else {
     					if ((szWebResponse = extras.getString(BetterHood.EXTRAS_ERROR_MESSAGE)) != null) {
     						Log.i(BetterHood.TAG_HOME_SCREEN, BetterHood.ERROR_PREFIX + "EventList.populate() returned no response!");
@@ -250,10 +241,10 @@ public class HomeScreen extends MapActivity {
 	public List<MapLocation> getMapLocations() {
 		if (mapLocations == null) {
 			mapLocations = new ArrayList<MapLocation>();
-			mapLocations.add(new MapLocation("Yard Sale",33.782105,-84.402443, "services", "We are having a yard sale"," saturday 11:30"));
-			mapLocations.add(new MapLocation("House for Rent",33.764706,-84.392652, "rent","I need to rent my house out", "until may 4th"));
-			mapLocations.add(new MapLocation("Party",33.778179,-84.398848, "party" , "we are having a party for steves birthday", "7:20 saturday"));
-			mapLocations.add(new MapLocation("Lawn Service", 33.765206, -84.396927, "services", " I need my yard mowed and will pay 20$","today"));
+			mapLocations.add(new MapLocation("Yard Sale",33.782105,-84.402443, "services"));
+			mapLocations.add(new MapLocation("House for Rent",33.764706,-84.392652, "rent"));
+			mapLocations.add(new MapLocation("Party",33.778179,-84.398848, "party" ));
+			mapLocations.add(new MapLocation("Lawn Service", 33.765206, -84.396927, "services"));
 		}
 
 		return mapLocations;
