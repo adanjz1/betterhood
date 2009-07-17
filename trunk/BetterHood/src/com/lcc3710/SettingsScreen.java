@@ -51,6 +51,8 @@ public class SettingsScreen extends Activity {
         
         listIHave.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, aszIHave));
         
+        
+        
         buttonBack.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				setResult(RESULT_CANCELED, intent);

@@ -3,6 +3,7 @@ package com.lcc3710;
 import java.util.Iterator;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +12,12 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.RectF;
 import android.graphics.Paint.Style;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
@@ -21,9 +28,18 @@ public class EventOverlay extends Overlay {
 	 private Bitmap bubbleIcon, shadowIcon;
 	    
 	    private HomeScreen homeScreen;
+	    private EditText editAddress;
+		private TextView textCurrentLocation, location, description, time;
+		
+		private CheckBox checkBoxAddressLocation;
+		private CheckBox checkBoxCurrentLocation;
+		
+		private Button buttonDialogBack;
+		private Button buttonDialogForward;
 	    public boolean locationHit;
 	    boolean dialogIsHit = false;
 	    AlertDialog.Builder alert2;
+	    Dialog eventDialog;
 	    
 		private Paint	innerPaint, borderPaint, textPaint;
 	    
@@ -54,7 +70,7 @@ public class EventOverlay extends Overlay {
 			if(selectedMapLocation != null){
 			dialogIsHit = true;
 			if(dialogIsHit){
-				alert2 = new AlertDialog.Builder(homeScreen)
+				/*alert2 = new AlertDialog.Builder(homeScreen)
 	            .setTitle(selectedMapLocation.getType())
 	            .setMessage("Do you want to save this activity?")
 	            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -63,7 +79,10 @@ public class EventOverlay extends Overlay {
 	                    }
 	            });
 				dialogIsHit = false;
-				alert2.show();
+				alert2.show();*/
+				
+				Dialog myEvent = buildLocationPickerDialog();
+				myEvent.show();
 			}
 			}
 			
@@ -95,6 +114,7 @@ public class EventOverlay extends Overlay {
 	    	RectF hitTestRecr = new RectF();
 			Point screenCoords = new Point();
 	    	Iterator<MapLocation> iterator = homeScreen.getMapLocations().iterator();
+	    	
 	    	while(iterator.hasNext()) {
 	    		MapLocation testLocation = iterator.next();
 	    		
@@ -149,6 +169,98 @@ public class EventOverlay extends Overlay {
 	    			canvas.drawBitmap(bubbleIcon, screenCoords.x - bubbleIcon.getWidth()/2, screenCoords.y - bubbleIcon.getHeight(),null);
 		    	}
 	    	}
+	    }
+	    
+	    private Dialog buildLocationPickerDialog() {
+	    	eventDialog = new Dialog(this.homeScreen);
+	    	
+	    	eventDialog.setContentView(R.layout.event_screen);
+	    	eventDialog.getWindow().setLayout(300, 400);
+	    	
+	    	buttonDialogBack = (Button) eventDialog.findViewById(R.id.buttonBack);
+	    	buttonDialogForward = (Button) eventDialog.findViewById(R.id.buttonForward);
+	    	
+	    	editAddress = (EditText) eventDialog.findViewById(R.id.editComment);
+	    	textCurrentLocation = (TextView) eventDialog.findViewById(R.id.eventName);
+	    	textCurrentLocation.setText(selectedMapLocation.getName());
+	    	location = (TextView) eventDialog.findViewById(R.id.location);
+	    	description = (TextView) eventDialog.findViewById(R.id.description);
+	    	description.setText(selectedMapLocation.getDescription());
+	    	time = (TextView) eventDialog.findViewById(R.id.time);
+	    	time.setText(selectedMapLocation.getTime());
+	    	
+	    	checkBoxAddressLocation = (CheckBox) eventDialog.findViewById(R.id.checkBoxAttending);
+	    	//checkBoxCurrentLocation = (CheckBox) eventDialog.findViewById(R.id.checkBoxCurrentLocation);
+	    	
+	    	checkBoxAddressLocation.setChecked(true);
+	    	
+	    	CompoundButton.OnCheckedChangeListener checkBoxListener = new CompoundButton.OnCheckedChangeListener() {
+				public void onCheckedChanged(CompoundButton buttonView,
+						boolean isChecked) {
+					switch (buttonView.getId()) {
+					case R.id.checkBoxAddressLocation:
+						if (isChecked) {
+							checkBoxCurrentLocation.setChecked(false);
+							buttonDialogForward.setEnabled(true);
+						} //else if (!checkBoxCurrentLocation.isChecked()) {
+							//buttonDialogForward.setEnabled(false);
+						//}
+						break;
+					/*case R.id.checkBoxCurrentLocation:
+						if (isChecked) {
+							checkBoxAddressLocation.setChecked(false);
+							buttonDialogForward.setEnabled(true);
+						}  else if (!checkBoxCurrentLocation.isChecked()) {
+							buttonDialogForward.setEnabled(false);
+						}
+						break;*/
+					} 
+				}
+	    	};
+	    	
+	    	checkBoxAddressLocation.setOnCheckedChangeListener(checkBoxListener);
+	    	//checkBoxCurrentLocation.setOnCheckedChangeListener(checkBoxListener);
+	    	
+	    	View.OnClickListener buttonListener = new View.OnClickListener() {
+				public void onClick(View v) {
+					switch (v.getId()) {
+					case R.id.buttonBack:
+						eventDialog.dismiss();
+						break;
+					case R.id.buttonForward:
+						if (v.isEnabled()) {
+							if (checkBoxAddressLocation.isChecked()) {
+								//szEventAddress = editAddress.getText().toString();
+							//	buttonPickLocation.setText(szEventAddress);
+							}
+							if (checkBoxCurrentLocation.isChecked()) {
+							//	if (lEventLocation != null) {
+									//buttonPickLocation.setText(geoPointToAddress());
+								//	buttonPickLocation.setText(locationToAddress(lEventLocation));
+								//}
+							}
+						}
+						eventDialog.dismiss();
+						break;
+					}
+				}
+	    	};
+	    	
+	    	buttonDialogBack.setOnClickListener(buttonListener);
+	    	buttonDialogForward.setOnClickListener(buttonListener);
+	    	
+	    	
+	    	//if (lEventLocation != null) {
+	    		//textCurrentLocation.setText("Current location:\n" + geoPointToAddress(mEventLocation.getPoint()));
+	    		//textCurrentLocation.setText("Current Location:\n" + Double.toString(lEventLocation.getLatitude()) + ",\n" + Double.toString(lEventLocation.getLongitude()));
+	    	//	textCurrentLocation.setText("Current Location:\n" + locationToAddress(lEventLocation));
+	    	//}
+	    	
+	    	if (BetterHood.DEBUG) {
+	    		editAddress.setText("451 Heartcircle Pl, Atlanta, GA 30303");
+	    	}
+	    	
+	    	return eventDialog;
 	    }
 
 	    private void drawInfoWindow(Canvas canvas, MapView	mapView, boolean shadow) {
