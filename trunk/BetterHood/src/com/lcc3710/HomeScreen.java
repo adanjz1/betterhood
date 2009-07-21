@@ -28,12 +28,12 @@ public class HomeScreen extends MapActivity {
 	private Button buttonSettings;
 	GeoPoint geopoint = null;
 
-	private static final String TAG = "MyActivity"; 
+	private static final String TAG = BetterHood.TAG_HOME_SCREEN; 
 	
 	private MyLocationOverlay myLocOverlay;
 	private LocationManager locManager;
 	private LocationListener locListener;
-	ArrayList<Event> eventArrayList = new ArrayList<Event>();
+	ArrayList<Event> eventArrayList;
 
 	private EventOverlay overlay;
 	String delims = "\\^";
@@ -48,6 +48,7 @@ public class HomeScreen extends MapActivity {
     //  Known latitude/longitude coordinates that we'll be using.
     private List<MapLocation> mapLocations;
 
+    private int lastRequestCode;
 	
 	private MapView mapView;
 	
@@ -61,6 +62,7 @@ public class HomeScreen extends MapActivity {
 	@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		Bundle extras;
+		lastRequestCode = requestCode;
 		
 		if ((extras = data.getExtras()) == null) {
 			Log.i(BetterHood.TAG_HOME_SCREEN, BetterHood.ERROR_PREFIX + "onActivityResult recieved a null extras bundle!");
@@ -77,7 +79,14 @@ public class HomeScreen extends MapActivity {
     		if (resultCode == RESULT_CANCELED) {
     			//something went wrong in creating the event
     		}
-    		
+    		break;
+    	case BetterHood.REQ_SETTINGS_SCREEN:
+    		if (resultCode == RESULT_OK) {
+    			//successfully updated settings
+    		}
+    		if (resultCode == RESULT_CANCELED) {
+    			// somethign went wrong in settings
+    		}
     		break;
     	case BetterHood.REQ_POPULATE_EVENT_LIST:
     		if (resultCode == RESULT_OK) {
@@ -85,127 +94,120 @@ public class HomeScreen extends MapActivity {
     			if (extras != null) {
     				String szWebResponse;
     				if ((szWebResponse = extras.getString(BetterHood.EXTRAS_WEB_RESPONSE)) != null) {
-    					Log.d(BetterHood.TAG_HOME_SCREEN, "EventList.populate() returned response: " + szWebResponse + "blehh");
+    					Log.i(BetterHood.TAG_HOME_SCREEN, "EventList.populate() returned response: " + szWebResponse);
+    					
+    					eventArrayList = new ArrayList<Event>();
     					partyTokens = szWebResponse.split(delims);
-    					//Log.d(BetterHood.T)
-    					//Log.d(BetterHood.TAG_HOME_SCREEN, "this be the new string" + partyTokens.toString());
+
     					int itemsCount = 0;
-    					String eventName = null,eventPhone = null, eventID = null,eventLongitude = null, eventLatitude = null, eventDate = null, eventLocation = "dsafsda", eventDescription = "", eventType = "";
-    					for(int i=0;i< partyTokens.length ;i++){
+    					String[] name;
+    					
+    					Event newEvent = new Event();
+    					
+    					for (int i = 0; i < partyTokens.length; i++) {
     						
+    						// EVENT_NAME
     						if(partyTokens[i].startsWith("|")){
-    							String[] name = partyTokens[i].split("\\|");
-    							if(name[0]!= null){
-    								Log.i(TAG, "name = " + name[1]);
-    								eventName = name[1];
-    							}
-    							
-    						}
-    						else if(partyTokens[i].startsWith("-")){
-    							String[] name = partyTokens[i].split("-");
-    							if(name[0]!= null){
-    								Log.i(TAG, "type = " + name[1]);
-    								eventType = name[1];
-    							}
-    							
-    						}
-    						else if(partyTokens[i].startsWith("~")){
-    							String[] name = partyTokens[i].split("~");
-    								if(name[1]!= null){
-    								Log.i(TAG, "host = " + name[1]);
-    							}
-    							
-    						}
-    						else if(partyTokens[i].startsWith("+")){
-    							String[] name = partyTokens[i].split("\\+");
-    							if(name[0]!= null){
-    								Log.i(TAG, "description = " + name[1]);
-    								eventDescription = name[1];
-    							}
-    							
-    						}
-    						else if(partyTokens[i].startsWith(")")){
-    							String[] name = partyTokens[i].split("\\)") ;
-    							if(name[0]!= null){
-    								Log.i(TAG, "location = " + name[1]);
-    								eventDate = name[1];
-    							}
-    							
-    						}
-    						else if(partyTokens[i].startsWith("%")){
-    							String[] name = partyTokens[i].split("\\%") ;
-    							if(name[0]!= null){
-    								Log.i(TAG, "email = " + name[1]);
-    								eventDate = name[1];
-    							}
-    							
-    						}
-    						else if(partyTokens[i].startsWith("&")){
-    							String[] name = partyTokens[i].split("\\&") ;
-    							if(name[0]!= null){
-    								Log.i(TAG, "phone = " + name[1]);
-    								eventDate = name[1];
-    							}
-    							
-    						}
-    						else if(partyTokens[i].startsWith("_")){
-    							String[] name = partyTokens[i].split("\\_") ;
-    							if(name[0]!= null){
-    								Log.i(TAG, "date = " + name[1]);
-    								eventDate = name[1];
-    							}
-    							
-    						}
-    						else if(partyTokens[i].startsWith("(")){
-    							String[] name = partyTokens[i].split("\\(");
+    							name = partyTokens[i].split("\\|");
     							if(name[0] != null){
-    							Log.i(TAG, "latitude = " + name[1]);
-    							eventLatitude = name[1];
+    								//Log.i(TAG, "name = " + name[1]);
+    								newEvent.setAttribute(AttributeList.EVENT_NAME, name[1]);
     							}
     							
     						}
-    						else if(partyTokens[i].startsWith("*")){
-    							String[] name = partyTokens[i].split("\\*");
-    							if(name[0]!= null){
-    								Log.i(TAG, "Longitude = " + name[1]);
-    								eventLongitude = name[1];
+    						// EVENT_TYPE
+    						else if(partyTokens[i].startsWith("-")){
+    							name = partyTokens[i].split("-");
+    							if(name[0] != null){
+    								//Log.i(TAG, "type = " + name[1]);
+    								newEvent.setAttribute(AttributeList.EVENT_TYPE, name[1]);
     							}
     							
+    						}
+    						// EVENT_HOST
+    						else if(partyTokens[i].startsWith("~")){
+    							name = partyTokens[i].split("~");
+    								if(name[1] != null){
+    								//Log.i(TAG, "host = " + name[1]);
+    								newEvent.setAttribute(AttributeList.EVENT_HOST, name[1]);
+    							}
+    							
+    						}
+    						// EVENT_DESCRIPTION
+    						else if(partyTokens[i].startsWith("+")){
+    							name = partyTokens[i].split("\\+");
+    							if(name[0] != null){
+    								//Log.i(TAG, "description = " + name[1]);
+    								newEvent.setAttribute(AttributeList.EVENT_DESCRIPTION, name[1]);
+    							}
+    							
+    						}
+    						// EVENT_ADDRESS
+    						else if(partyTokens[i].startsWith(")")){
+    							name = partyTokens[i].split("\\)") ;
+    							if(name[0] != null){
+    								//Log.i(TAG, "address = " + name[1]);
+    								newEvent.setAttribute(AttributeList.EVENT_LOCATION_ADDRESS, name[1]);
+    							}
+    							
+    						}
+    						// EVENT_LATITUDE
+    						else if(partyTokens[i].startsWith("(")){
+    							name = partyTokens[i].split("\\(");
+    							if(name[0] != null){
+    								//Log.i(TAG, "latitude = " + name[1]);
+    								newEvent.setAttribute(AttributeList.EVENT_LOCATION_LATITUDE, name[1]);
+    							}
+    						}
+    						// EVENT_LONGITUDE
+    						else if(partyTokens[i].startsWith("*")){
+    							name = partyTokens[i].split("\\*");
+    							if(name[0]!= null){
+    								//Log.i(TAG, "longitude = " + name[1]);
+    								newEvent.setAttribute(AttributeList.EVENT_LOCATION_LONGITUDE, name[1]);
+    							}
+    							
+    						}
+    						// EVENT_START_DATE
+    						else if (partyTokens[i].startsWith("_")) {
+    							name = partyTokens[i].split("_");
+    							if (name[0] != null) {
+    								//Log.i(TAG, "start date = " + name[1]);
+    								newEvent.setAttribute(AttributeList.EVENT_START_DATE, name[1]);
+    							}
+    						}
+    						// EVENT_PHONE_NUMBER
+    						else if (partyTokens[i].startsWith("&")) {
+    							name = partyTokens[i].split("&");
+    							if (name[0] != null) {
+    								//Log.i(TAG, "phone number = " + name[1]);
+    								newEvent.setAttribute(AttributeList.EVENT_PHONE_NUMBER, name[1]);
+    							}
+    						}
+    						// EVENT_CONTACT_EMAIL
+    						else if (partyTokens[i].startsWith("%")) {
+    							name = partyTokens[i].split("%");
+    							if (name[0] != null) {
+    								//Log.i(TAG, "contact email = " + name[1]);
+    								newEvent.setAttribute(AttributeList.EVENT_CONTACT_EMAIL, name[1]);
+    							}
     						}
     						else if(partyTokens[i].startsWith("&")){
     							
     						}
-    					    Log.d(BetterHood.TAG_HOME_SCREEN, i + " string " + partyTokens[i]);
+    					    //Log.i(BetterHood.TAG_HOME_SCREEN, i + " string " + partyTokens[i]);
     					
     						itemsCount++;
-    						if(itemsCount >= 10){
-    							Event newEvent = new Event();
-    							
-    							newEvent.setAttribute(AttributeList.EVENT_ADDRESS, eventLocation);
-    							Log.i(TAG,"WHATTTTTTTTTTT" +  newEvent.getAttribute(AttributeList.EVENT_ADDRESS));
-    							newEvent.setAttribute(AttributeList.EVENT_DESCRIPTION, eventDescription);
-    							newEvent.setAttribute(AttributeList.EVENT_TYPE, eventType);
-    							newEvent.setAttribute(AttributeList.EVENT_NAME, eventName);
-    							newEvent.setAttribute(AttributeList.EVENT_DATE, eventDate);
-    							newEvent.setAttribute(AttributeList.EVENT_EMAIL, eventType);
-    							newEvent.setAttribute(AttributeList.EVENT_PHONE_NUMBER, eventPhone);
-    							newEvent.setAttribute(AttributeList.EVENT_LATITUDE, eventLatitude);
-    							newEvent.setAttribute(AttributeList.EVENT_LONGITUDE, eventLongitude);
-    							//newEvent.setAttribute(AttributeList.EVENT_ADDRESS, eventLocation);
+    						if(itemsCount >= 10){  
+    							Log.i(BetterHood.TAG_EVENT_LIST, "Adding event #" + Integer.toString(eventArrayList.size()+1) + ": " + newEvent.getAttribute(AttributeList.EVENT_NAME));
     							eventArrayList.add(newEvent);
     							itemsCount = 0;
-    							
+    							newEvent = new Event();
     						}
     						
     					}
-    					for(int i = 0; i < eventArrayList.size(); i++){
-    						Event e = new Event();
-    						e = eventArrayList.get(i);
-    						Log.i(TAG, "name even arraylist am i right??  " + e.getAttribute(AttributeList.EVENT_DESCRIPTION));
-    						Log.i(TAG, "name even arraylist am i name??  " + e.getAttribute(AttributeList.EVENT_NAME));
-    						Log.i(TAG, "name even arraylist am i type??  " + e.getAttribute(AttributeList.EVENT_TYPE));
-						//	eventArrayList[i].getAttribute(EVENT_NAME);
-						}
+    					// update eventList with the results
+    					eventList.populate(eventArrayList);
     				} else {
     					if ((szWebResponse = extras.getString(BetterHood.EXTRAS_ERROR_MESSAGE)) != null) {
     						Log.i(BetterHood.TAG_HOME_SCREEN, BetterHood.ERROR_PREFIX + "EventList.populate() returned no response!");
@@ -278,6 +280,18 @@ public class HomeScreen extends MapActivity {
 			}
         });
       
+	}
+	
+	// called when HomeScreen is shown to user after being paused
+	protected void onResume() {
+		super.onResume();
+		//intent = getIntent();
+		if (lastRequestCode > 2) {
+			if (lastRequestCode != BetterHood.REQ_POPULATE_EVENT_LIST) {
+				eventList = new EventList(sessionID);
+				eventList.queryDatabase(this);
+			}
+		}
 	}
 	
 	private void initMap() {
