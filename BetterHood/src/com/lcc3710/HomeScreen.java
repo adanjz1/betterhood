@@ -90,7 +90,7 @@ public class HomeScreen extends MapActivity {
     					//Log.d(BetterHood.T)
     					//Log.d(BetterHood.TAG_HOME_SCREEN, "this be the new string" + partyTokens.toString());
     					int itemsCount = 0;
-    					String eventName = null, eventLocation = "dsafsda", eventDescription = "", eventType = "";
+    					String eventName = null,eventPhone = null, eventID = null,eventLongitude = null, eventLatitude = null, eventDate = null, eventLocation = "dsafsda", eventDescription = "", eventType = "";
     					for(int i=0;i< partyTokens.length ;i++){
     						
     						if(partyTokens[i].startsWith("|")){
@@ -127,21 +127,48 @@ public class HomeScreen extends MapActivity {
     						else if(partyTokens[i].startsWith(")")){
     							String[] name = partyTokens[i].split("\\)") ;
     							if(name[0]!= null){
+    								Log.i(TAG, "location = " + name[1]);
+    								eventDate = name[1];
+    							}
+    							
+    						}
+    						else if(partyTokens[i].startsWith("%")){
+    							String[] name = partyTokens[i].split("\\%") ;
+    							if(name[0]!= null){
+    								Log.i(TAG, "email = " + name[1]);
+    								eventDate = name[1];
+    							}
+    							
+    						}
+    						else if(partyTokens[i].startsWith("&")){
+    							String[] name = partyTokens[i].split("\\&") ;
+    							if(name[0]!= null){
+    								Log.i(TAG, "phone = " + name[1]);
+    								eventDate = name[1];
+    							}
+    							
+    						}
+    						else if(partyTokens[i].startsWith("_")){
+    							String[] name = partyTokens[i].split("\\_") ;
+    							if(name[0]!= null){
     								Log.i(TAG, "date = " + name[1]);
-    							//	eventDate
+    								eventDate = name[1];
     							}
     							
     						}
     						else if(partyTokens[i].startsWith("(")){
-    							//String[] name = partyTokens[i].split("\\|");
-    							//Log.i(TAG, "name = " + name.toString());
+    							String[] name = partyTokens[i].split("\\(");
+    							if(name[0] != null){
+    							Log.i(TAG, "latitude = " + name[1]);
+    							eventLatitude = name[1];
+    							}
     							
     						}
     						else if(partyTokens[i].startsWith("*")){
     							String[] name = partyTokens[i].split("\\*");
     							if(name[0]!= null){
-    								Log.i(TAG, "location = " + name[1]);
-    								eventLocation = name[1];
+    								Log.i(TAG, "Longitude = " + name[1]);
+    								eventLongitude = name[1];
     							}
     							
     						}
@@ -159,6 +186,12 @@ public class HomeScreen extends MapActivity {
     							newEvent.setAttribute(AttributeList.EVENT_DESCRIPTION, eventDescription);
     							newEvent.setAttribute(AttributeList.EVENT_TYPE, eventType);
     							newEvent.setAttribute(AttributeList.EVENT_NAME, eventName);
+    							newEvent.setAttribute(AttributeList.EVENT_DATE, eventDate);
+    							newEvent.setAttribute(AttributeList.EVENT_EMAIL, eventType);
+    							newEvent.setAttribute(AttributeList.EVENT_PHONE_NUMBER, eventPhone);
+    							newEvent.setAttribute(AttributeList.EVENT_LATITUDE, eventLatitude);
+    							newEvent.setAttribute(AttributeList.EVENT_LONGITUDE, eventLongitude);
+    							//newEvent.setAttribute(AttributeList.EVENT_ADDRESS, eventLocation);
     							eventArrayList.add(newEvent);
     							itemsCount = 0;
     							
@@ -169,6 +202,8 @@ public class HomeScreen extends MapActivity {
     						Event e = new Event();
     						e = eventArrayList.get(i);
     						Log.i(TAG, "name even arraylist am i right??  " + e.getAttribute(AttributeList.EVENT_DESCRIPTION));
+    						Log.i(TAG, "name even arraylist am i name??  " + e.getAttribute(AttributeList.EVENT_NAME));
+    						Log.i(TAG, "name even arraylist am i type??  " + e.getAttribute(AttributeList.EVENT_TYPE));
 						//	eventArrayList[i].getAttribute(EVENT_NAME);
 						}
     				} else {
