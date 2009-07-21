@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -12,7 +11,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -23,6 +21,7 @@ import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
+import com.lcc3710.Event.AttributeList;
 
 public class HomeScreen extends MapActivity {
 	private Button buttonWant;
@@ -34,6 +33,8 @@ public class HomeScreen extends MapActivity {
 	private MyLocationOverlay myLocOverlay;
 	private LocationManager locManager;
 	private LocationListener locListener;
+	ArrayList<Event> eventArrayList = new ArrayList<Event>();
+
 	private EventOverlay overlay;
 	String delims = "\\^";
 	String[] partyTokens;
@@ -89,40 +90,45 @@ public class HomeScreen extends MapActivity {
     					//Log.d(BetterHood.T)
     					//Log.d(BetterHood.TAG_HOME_SCREEN, "this be the new string" + partyTokens.toString());
     					int itemsCount = 0;
+    					String eventName = null, eventLocation = "dsafsda", eventDescription = "", eventType = "";
     					for(int i=0;i< partyTokens.length ;i++){
-    						String eventName;
+    						
     						if(partyTokens[i].startsWith("|")){
     							String[] name = partyTokens[i].split("\\|");
-    							if(name[1]!= null){
+    							if(name[0]!= null){
     								Log.i(TAG, "name = " + name[1]);
+    								eventName = name[1];
     							}
     							
     						}
     						else if(partyTokens[i].startsWith("-")){
     							String[] name = partyTokens[i].split("-");
-    							if(name[1]!= null){
-    							Log.i(TAG, "type = " + name[1]);
+    							if(name[0]!= null){
+    								Log.i(TAG, "type = " + name[1]);
+    								eventType = name[1];
     							}
     							
     						}
     						else if(partyTokens[i].startsWith("~")){
     							String[] name = partyTokens[i].split("~");
-    							if(name[1]!= null){
-    							Log.i(TAG, "somethin = " + name[1]);
+    								if(name[1]!= null){
+    								Log.i(TAG, "host = " + name[1]);
     							}
     							
     						}
     						else if(partyTokens[i].startsWith("+")){
     							String[] name = partyTokens[i].split("\\+");
-    							if(name[1]!= null){
-    							Log.i(TAG, "description = " + name[1]);
+    							if(name[0]!= null){
+    								Log.i(TAG, "description = " + name[1]);
+    								eventDescription = name[1];
     							}
     							
     						}
     						else if(partyTokens[i].startsWith(")")){
     							String[] name = partyTokens[i].split("\\)") ;
-    							if(name[1]!= null){
-    							Log.i(TAG, "date = " + name[1]);
+    							if(name[0]!= null){
+    								Log.i(TAG, "date = " + name[1]);
+    							//	eventDate
     							}
     							
     						}
@@ -133,8 +139,9 @@ public class HomeScreen extends MapActivity {
     						}
     						else if(partyTokens[i].startsWith("*")){
     							String[] name = partyTokens[i].split("\\*");
-    							if(name[1]!= null){
-    							Log.i(TAG, "location = " + name[1]);
+    							if(name[0]!= null){
+    								Log.i(TAG, "location = " + name[1]);
+    								eventLocation = name[1];
     							}
     							
     						}
@@ -142,12 +149,28 @@ public class HomeScreen extends MapActivity {
     							
     						}
     					    Log.d(BetterHood.TAG_HOME_SCREEN, i + " string " + partyTokens[i]);
-    					}
+    					
     						itemsCount++;
-    						if(itemsCount >= 14){
+    						if(itemsCount >= 10){
+    							Event newEvent = new Event();
+    							
+    							newEvent.setAttribute(AttributeList.EVENT_ADDRESS, eventLocation);
+    							Log.i(TAG,"WHATTTTTTTTTTT" +  newEvent.getAttribute(AttributeList.EVENT_ADDRESS));
+    							newEvent.setAttribute(AttributeList.EVENT_DESCRIPTION, eventDescription);
+    							newEvent.setAttribute(AttributeList.EVENT_TYPE, eventType);
+    							newEvent.setAttribute(AttributeList.EVENT_NAME, eventName);
+    							eventArrayList.add(newEvent);
     							itemsCount = 0;
     							
     						}
+    						
+    					}
+    					for(int i = 0; i < eventArrayList.size(); i++){
+    						Event e = new Event();
+    						e = eventArrayList.get(i);
+    						Log.i(TAG, "name even arraylist am i right??  " + e.getAttribute(AttributeList.EVENT_DESCRIPTION));
+						//	eventArrayList[i].getAttribute(EVENT_NAME);
+						}
     				} else {
     					if ((szWebResponse = extras.getString(BetterHood.EXTRAS_ERROR_MESSAGE)) != null) {
     						Log.i(BetterHood.TAG_HOME_SCREEN, BetterHood.ERROR_PREFIX + "EventList.populate() returned no response!");
