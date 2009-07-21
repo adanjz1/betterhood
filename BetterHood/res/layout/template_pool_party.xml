@@ -92,8 +92,8 @@ xmlns:android="http://schemas.android.com/apk/res/android"
    	/>
    	
    	<EditText
-    	android:id="@+id/editEventCost"
-    	android:layout_height = "wrap_content"
+    	android:id="@+id/editEventMessage"
+    	android:layout_height = "100dip"
     	android:layout_width = "225dip"
     	android:layout_below = "@id/buttonPickDate"
     	android:layout_alignParentRight = "true"
@@ -104,24 +104,6 @@ xmlns:android="http://schemas.android.com/apk/res/android"
    		android:layout_height = "wrap_content"
    		android:layout_width = "wrap_content"
    		android:layout_below = "@id/buttonPickDate"
-   		android:layout_toLeftOf = "@id/editEventCost"
-   		android:text = "Cost ($):"
-   		android:layout_marginRight = "6dip"
-   	/>
-   	
-   	<EditText
-    	android:id="@+id/editEventMessage"
-    	android:layout_height = "100dip"
-    	android:layout_width = "225dip"
-    	android:layout_below = "@id/editEventCost"
-    	android:layout_alignParentRight = "true"
-    	android:layout_marginRight = "6dip"
-    	android:inputType = "text"
-    />
-    <TextView
-   		android:layout_height = "wrap_content"
-   		android:layout_width = "wrap_content"
-   		android:layout_below = "@id/editEventCost"
    		android:layout_toLeftOf = "@id/editEventMessage"
    		android:text = "Optional\nMessage:"
    		android:layout_marginRight = "6dip"
