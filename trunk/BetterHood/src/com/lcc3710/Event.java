@@ -3,8 +3,17 @@ package com.lcc3710;
 import java.util.HashMap;
 
 public class Event {
-	public enum AttributeList {
-		EVENT_NAME, EVENT_ADDRESS, EVENT_DESCRIPTION, EVENT_TYPE, EVENT_DATE, EVENT_ID, EVENT_PHONE_NUMBER, EVENT_EMAIL, EVENT_LONGITUDE, EVENT_LATITUDE;
+	public enum AttributeList {		
+		EVENT_NAME,
+		EVENT_TYPE,
+		EVENT_HOST,
+		EVENT_DESCRIPTION,
+		EVENT_START_DATE,
+		EVENT_LOCATION_ADDRESS,
+		EVENT_LOCATION_LATITUDE,
+		EVENT_LOCATION_LONGITUDE,
+		EVENT_PHONE_NUMBER,
+		EVENT_CONTACT_EMAIL
 	}
 	
 	private HashMap<AttributeList, String> attributes;
