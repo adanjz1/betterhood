@@ -166,6 +166,19 @@ public class EventOverlay extends Overlay {
 		     			bubbleIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.rent);
 		     			shadowIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.shadow);
 		     		}
+		     		if(location.getType() == "charity"){
+		     			bubbleIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.charity);
+		    			shadowIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.shadow);
+		     		
+		     		}
+		     		if(location.getType() == "alert"){
+		     			bubbleIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.alert);
+		     			shadowIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.shadow);
+		     		}
+		     		if(location.getType() == "warning"){
+		     			bubbleIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.warning);
+		     			shadowIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.shadow);
+		     		}
 	    			canvas.drawBitmap(bubbleIcon, screenCoords.x - bubbleIcon.getWidth()/2, screenCoords.y - bubbleIcon.getHeight(),null);
 		    	}
 	    	}
