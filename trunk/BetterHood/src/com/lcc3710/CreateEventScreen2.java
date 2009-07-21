@@ -35,7 +35,6 @@ public class CreateEventScreen2 extends Activity {
 	private Button buttonPickDate;
 	
 	private EditText editEventName;
-	private EditText editEventCost;
 	private EditText editEventMessage;
 	
 	// location dialog picker members
@@ -65,6 +64,8 @@ public class CreateEventScreen2 extends Activity {
 	static final int TIME_DIALOG_ID = 1;
 	static final int LOCATION_DIALOG_ID = 2;
 	
+	private Bundle extras;
+	
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     	
@@ -81,7 +82,7 @@ public class CreateEventScreen2 extends Activity {
 				Log.i(BetterHood.TAG_CREATE_EVENT_SCREEN_2, "Create Event response: " + szWebResponse);
 				
 				// valid?
-				if (!(szWebResponse.length() > 0)) {
+				if (szWebResponse.equals("true")) {
 					createEventAlert.setMessage("Your event, '" + data.getExtras().getString(BetterHood.EXTRAS_EVENT_NAME) + "', was successfully created!");
 		    		createEventAlert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 		                public void onClick(DialogInterface dialog, int whichButton) {
@@ -117,7 +118,7 @@ public class CreateEventScreen2 extends Activity {
         super.onCreate(savedInstanceState);
         
         intent = getIntent();
-        Bundle extras = intent.getExtras();
+        extras = intent.getExtras();
         
         String szTemplateName;
         int iLayoutFile = 0;
@@ -150,7 +151,6 @@ public class CreateEventScreen2 extends Activity {
         buttonPickDate = (Button) findViewById(R.id.buttonPickDate);
 		
         editEventName = (EditText) findViewById(R.id.editEventName);
-        editEventCost = (EditText) findViewById(R.id.editEventCost);
         editEventMessage = (EditText) findViewById(R.id.editEventMessage);
         
         final Calendar c = Calendar.getInstance();
@@ -183,25 +183,22 @@ public class CreateEventScreen2 extends Activity {
 		
 		buttonForward.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {				
-				String tempEventName, tempEventAddressStreet, tempEventAddressCity, tempEventContactEmail, tempEventCost,
-				tempEventDate, tempEventLocationName, tempEventLatitude, tempEventLongitude, tempEventMessage, tempEventPhoneNumber, 
-				tempEventStartTime, tempEventEndTime;
+				String tempEventName, tempEventAddress, tempEventContactEmail, tempEventHost,
+				tempEventDate, tempEventLatitude, tempEventLongitude, tempEventMessage, tempEventPhoneNumber;
 				
 				tempEventName = editEventName.getText().toString();
 				
 				if (szEventAddress != null) {
-					szEventAddress = szEventAddress.replace(" ", "");
-					int commaIdx = szEventAddress.indexOf(",");
-					int commaIdx2 = szEventAddress.indexOf(",", commaIdx+1);
-					tempEventAddressStreet = szEventAddress.substring(0, commaIdx);
-					tempEventAddressCity = szEventAddress.substring(commaIdx+1, commaIdx2);
+					//tempEventAddress = szEventAddress.replace(" ", "");
+					tempEventAddress = szEventAddress;
 				} else {
-					tempEventAddressStreet = null;
-					tempEventAddressCity = null;
+					tempEventAddress = "null";
 				}
-				tempEventCost = editEventCost.getText().toString();
+				if ((tempEventHost = extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME)) == null) {
+					tempEventHost = "null";
+				}
 				
-				String tempMonth, tempDay;
+				String tempMonth, tempDay, tempYear;
 				if (iMonth < 10) {
 					tempMonth = "0" + Integer.toString(iMonth);
 				} else {
@@ -214,40 +211,36 @@ public class CreateEventScreen2 extends Activity {
 					tempDay = Integer.toString(iDay);
 				}
 				
-				tempEventDate = tempMonth + tempDay + Integer.toString(iYear);
+				tempYear = Integer.toString(iYear);
+				
+				tempEventDate = tempYear + "-" + tempMonth + "-" + tempDay + " ";
+				tempEventDate += Integer.toString(iHour) + ":" + Integer.toString(iMinute) + ":0";
 				
 				if (lEventLocation != null) {
 					tempEventLatitude = Double.toString(lEventLocation.getLatitude());
 					tempEventLongitude = Double.toString(lEventLocation.getLongitude());
 				} else {
-					tempEventLatitude = null;
-					tempEventLongitude = null;
+					tempEventLatitude = "85.231356123";
+					tempEventLongitude = "-12.245987253";
 				}
-				tempEventLocationName = "";
-				tempEventMessage = editEventMessage.getText().toString();
-				tempEventStartTime = Integer.toString(iHour) + "_" + Integer.toString(iMinute);
+				tempEventMessage = editEventMessage.getText().toString();				
 				
 				// TEMPORARY CRAP
-				tempEventEndTime = "0";
-				tempEventPhoneNumber = "0";
-				tempEventContactEmail = "0";
+				tempEventPhoneNumber = "0000000000";
+				tempEventContactEmail = "asdf@asdf.com";
 				
 				if (tempEventName.length() == 0) {
 					Toast.makeText(view.getContext(), "Error: " + "'Event Name' cannot be left blank.", BetterHood.TOAST_TIME).show();
 				} else {					
 					intent.putExtra(BetterHood.EXTRAS_EVENT_NAME, tempEventName);
-					intent.putExtra(BetterHood.EXTRAS_EVENT_ADDRESS_STREET, tempEventAddressStreet);
-					intent.putExtra(BetterHood.EXTRAS_EVENT_ADDRESS_CITY, tempEventAddressCity);
+					intent.putExtra(BetterHood.EXTRAS_EVENT_LOCATION_ADDRESS, tempEventAddress);
 					intent.putExtra(BetterHood.EXTRAS_EVENT_CONTACT_EMAIL, tempEventContactEmail);
-					intent.putExtra(BetterHood.EXTRAS_EVENT_COST, tempEventCost);
-					intent.putExtra(BetterHood.EXTRAS_EVENT_DATE, tempEventDate);
+					intent.putExtra(BetterHood.EXTRAS_EVENT_HOST, tempEventHost);
+					intent.putExtra(BetterHood.EXTRAS_EVENT_START_DATE, tempEventDate);
 					intent.putExtra(BetterHood.EXTRAS_EVENT_LOCATION_LATITUDE, tempEventLatitude);
 					intent.putExtra(BetterHood.EXTRAS_EVENT_LOCATION_LONGITUDE, tempEventLongitude);
-					intent.putExtra(BetterHood.EXTRAS_EVENT_LOCATION_NAME, tempEventLocationName);
 					intent.putExtra(BetterHood.EXTRAS_EVENT_PHONE_NUMBER, tempEventPhoneNumber);
 					intent.putExtra(BetterHood.EXTRAS_EVENT_MESSAGE, tempEventMessage);
-					intent.putExtra(BetterHood.EXTRAS_EVENT_START_TIME, tempEventStartTime);
-					intent.putExtra(BetterHood.EXTRAS_EVENT_END_TIME, tempEventEndTime);
 					doEventCreation();
 				}
 				
@@ -257,7 +250,6 @@ public class CreateEventScreen2 extends Activity {
 		if (BetterHood.DEBUG) {
 			editEventName.setText("Event1234");
 			editEventMessage.setText("helloworld");
-			editEventCost.setText("1");
 		}
     }
     
@@ -297,8 +289,6 @@ public class CreateEventScreen2 extends Activity {
     	checkBoxAddressLocation = (CheckBox) dialogLocationPicker.findViewById(R.id.checkBoxAddressLocation);
     	checkBoxCurrentLocation = (CheckBox) dialogLocationPicker.findViewById(R.id.checkBoxCurrentLocation);
     	
-    	checkBoxCurrentLocation.setChecked(true);
-    	
     	CompoundButton.OnCheckedChangeListener checkBoxListener = new CompoundButton.OnCheckedChangeListener() {
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
@@ -312,11 +302,13 @@ public class CreateEventScreen2 extends Activity {
 					}
 					break;
 				case R.id.checkBoxCurrentLocation:
-					if (isChecked) {
-						checkBoxAddressLocation.setChecked(false);
-						buttonDialogForward.setEnabled(true);
-					}  else if (!checkBoxCurrentLocation.isChecked()) {
-						buttonDialogForward.setEnabled(false);
+					if (buttonView.isEnabled()) {
+						if (isChecked) {
+							checkBoxAddressLocation.setChecked(false);
+							buttonDialogForward.setEnabled(true);
+						}  else if (!checkBoxCurrentLocation.isChecked()) {
+							buttonDialogForward.setEnabled(false);
+						}
 					}
 					break;
 				}
@@ -359,6 +351,12 @@ public class CreateEventScreen2 extends Activity {
     		//textCurrentLocation.setText("Current location:\n" + geoPointToAddress(mEventLocation.getPoint()));
     		//textCurrentLocation.setText("Current Location:\n" + Double.toString(lEventLocation.getLatitude()) + ",\n" + Double.toString(lEventLocation.getLongitude()));
     		textCurrentLocation.setText("Current Location:\n" + locationToAddress(lEventLocation));
+    		checkBoxCurrentLocation.setEnabled(true);
+    		checkBoxCurrentLocation.setChecked(true);
+    	} else {
+    		textCurrentLocation.setText("Could not get current location from GPS, please enter an address above.");
+    		checkBoxCurrentLocation.setEnabled(false);
+    		checkBoxAddressLocation.setChecked(true);
     	}
     	
     	if (BetterHood.DEBUG) {
@@ -430,46 +428,34 @@ public class CreateEventScreen2 extends Activity {
     	String token;
     		
     	if ((token = extras.getString(BetterHood.EXTRAS_EVENT_NAME)) != null) {
-    		tempQuery += "Event_Name=" + token;
+    		tempQuery += "event_name=" + token;
     		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_TEMPLATE_NAME)) != null) {
-    			tempQuery += "&Event_Type=" + token.replace(" ", "");
+    			tempQuery += "&event_type=" + token;
     		}
-    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_ADDRESS_STREET)) != null) {
-    			tempQuery += "&Event_Location_Address_Street=" + token;
-    		}
-    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_ADDRESS_CITY)) != null) {
-    			tempQuery += "&Event_Location_Address_City=" + token;
-    		}
-    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_CONTACT_EMAIL)) != null) {
-    			tempQuery += "&Event_Contact_Email=" + token;
-    		}
-    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_COST)) != null) {
-    			tempQuery += "&Event_Cost=" + token.replace(".", "_");
-    		}
-    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_DATE)) != null) {
-    			tempQuery += "&Event_Start_Date=" + token;
-    		}
-    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_LOCATION_LATITUDE)) != null) {
-    			tempQuery += "&Event_Location_Latitude=" + token;
-    		}
-    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_LOCATION_LONGITUDE)) != null) {
-    			tempQuery += "&Event_Location_Longitude=" + token;
-    		}
-    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_LOCATION_NAME)) != null) {
-    			tempQuery += "&Event_Location_Name=" + token;
+    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_HOST)) != null) {
+    			tempQuery += "&event_host=" + token;
     		}
     		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_MESSAGE)) != null) {
-    			tempQuery += "&Event_Description=" + token;
+    			tempQuery += "&event_description=" + token;
+    		}
+    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_START_DATE)) != null) {
+    			tempQuery += "&event_start_date=" + token;
+    		}
+    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_LOCATION_ADDRESS)) != null) {
+    			tempQuery += "&event_location_address=" + token;
+    		}
+    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_LOCATION_LATITUDE)) != null) {
+    			tempQuery += "&event_location_latitude=" + token;
+    		}
+    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_LOCATION_LONGITUDE)) != null) {
+    			tempQuery += "&event_location_longitude=" + token;
     		}
     		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_PHONE_NUMBER)) != null) {
-    			tempQuery += "&Event_Phone_Number=" + token;
+    			tempQuery += "&event_phone_number=" + token;
     		}
-    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_START_TIME)) != null) {
-    			tempQuery += "&Event_Start_Time=" + token;
-    		}
-    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_END_TIME)) != null) {
-    			tempQuery += "&Event_End_Time=" + token;
-    		}
+    		if ((token = extras.getString(BetterHood.EXTRAS_EVENT_CONTACT_EMAIL)) != null) {
+    			tempQuery += "&event_contact_email=" + token;
+    		}   		
     		if ((token = extras.getString(BetterHood.EXTRAS_SESSION_ID)) != null) {
     			tempQuery += "&sid=" + token;
     			

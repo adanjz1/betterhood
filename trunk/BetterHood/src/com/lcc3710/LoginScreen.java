@@ -52,7 +52,7 @@ public class LoginScreen extends Activity {
     					loginAlert.setMessage(tempUsername + " has been logged in!");
     					loginAlert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
     		                public void onClick(DialogInterface dialog, int whichButton) {
-    		                	startHomeScreen(response);
+    		                	startHomeScreen(response, tempUsername);
     		                }
     					});
     				} else {
@@ -226,8 +226,9 @@ public class LoginScreen extends Activity {
     	editPassword.setText("");
     }
     
-    private void startHomeScreen(String sessionID) {
+    private void startHomeScreen(String sessionID, String username) {
     	Intent home = new Intent(getBaseContext(), HomeScreen.class);
+    	home.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, username);
     	home.putExtra(BetterHood.EXTRAS_SESSION_ID, sessionID);
     	startActivityForResult(home, BetterHood.REQ_HOME_SCREEN);
     }
