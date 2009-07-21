@@ -27,6 +27,7 @@ import com.google.android.maps.MyLocationOverlay;
 public class HomeScreen extends MapActivity {
 	private Button buttonWant;
 	private Button buttonSettings;
+	GeoPoint geopoint = null;
 
 	private static final String TAG = "MyActivity"; 
 	
@@ -34,7 +35,7 @@ public class HomeScreen extends MapActivity {
 	private LocationManager locManager;
 	private LocationListener locListener;
 	private EventOverlay overlay;
-	String delims = "[^%]+";
+	String delims = "\\^";
 	String[] partyTokens;
 
 	
@@ -83,11 +84,70 @@ public class HomeScreen extends MapActivity {
     			if (extras != null) {
     				String szWebResponse;
     				if ((szWebResponse = extras.getString(BetterHood.EXTRAS_WEB_RESPONSE)) != null) {
-    					Log.i(BetterHood.TAG_HOME_SCREEN, "EventList.populate() returned response: " + szWebResponse);
+    					Log.d(BetterHood.TAG_HOME_SCREEN, "EventList.populate() returned response: " + szWebResponse + "blehh");
     					partyTokens = szWebResponse.split(delims);
+    					//Log.d(BetterHood.T)
+    					//Log.d(BetterHood.TAG_HOME_SCREEN, "this be the new string" + partyTokens.toString());
+    					int itemsCount = 0;
     					for(int i=0;i< partyTokens.length ;i++){
-    					    Log.d(TAG, partyTokens[i]);
-    					    }
+    						String eventName;
+    						if(partyTokens[i].startsWith("|")){
+    							String[] name = partyTokens[i].split("\\|");
+    							if(name[1]!= null){
+    								Log.i(TAG, "name = " + name[1]);
+    							}
+    							
+    						}
+    						else if(partyTokens[i].startsWith("-")){
+    							String[] name = partyTokens[i].split("-");
+    							if(name[1]!= null){
+    							Log.i(TAG, "type = " + name[1]);
+    							}
+    							
+    						}
+    						else if(partyTokens[i].startsWith("~")){
+    							String[] name = partyTokens[i].split("~");
+    							if(name[1]!= null){
+    							Log.i(TAG, "somethin = " + name[1]);
+    							}
+    							
+    						}
+    						else if(partyTokens[i].startsWith("+")){
+    							String[] name = partyTokens[i].split("\\+");
+    							if(name[1]!= null){
+    							Log.i(TAG, "description = " + name[1]);
+    							}
+    							
+    						}
+    						else if(partyTokens[i].startsWith(")")){
+    							String[] name = partyTokens[i].split("\\)") ;
+    							if(name[1]!= null){
+    							Log.i(TAG, "date = " + name[1]);
+    							}
+    							
+    						}
+    						else if(partyTokens[i].startsWith("(")){
+    							//String[] name = partyTokens[i].split("\\|");
+    							//Log.i(TAG, "name = " + name.toString());
+    							
+    						}
+    						else if(partyTokens[i].startsWith("*")){
+    							String[] name = partyTokens[i].split("\\*");
+    							if(name[1]!= null){
+    							Log.i(TAG, "location = " + name[1]);
+    							}
+    							
+    						}
+    						else if(partyTokens[i].startsWith("&")){
+    							
+    						}
+    					    Log.d(BetterHood.TAG_HOME_SCREEN, i + " string " + partyTokens[i]);
+    					}
+    						itemsCount++;
+    						if(itemsCount >= 14){
+    							itemsCount = 0;
+    							
+    						}
     				} else {
     					if ((szWebResponse = extras.getString(BetterHood.EXTRAS_ERROR_MESSAGE)) != null) {
     						Log.i(BetterHood.TAG_HOME_SCREEN, BetterHood.ERROR_PREFIX + "EventList.populate() returned no response!");
@@ -222,7 +282,7 @@ public class HomeScreen extends MapActivity {
 		}
  
 		// transform the location to a geopoint
-		GeoPoint geopoint = new GeoPoint(
+		geopoint = new GeoPoint(
 				(int) (newLocation.getLatitude() * 1E6), (int) (newLocation
 						.getLongitude() * 1E6));
  
@@ -248,13 +308,41 @@ public class HomeScreen extends MapActivity {
 		
 		}
 	public List<MapLocation> getMapLocations() {
-		if (mapLocations == null) {
-			mapLocations = new ArrayList<MapLocation>();
-			mapLocations.add(new MapLocation("Yard Sale",33.782105,-84.402443, "services", "We are having a yard sale"," saturday 11:30"));
-			mapLocations.add(new MapLocation("House for Rent",33.764706,-84.392652, "rent","I need to rent my house out", "until may 4th"));
-			mapLocations.add(new MapLocation("Party",33.778179,-84.398848, "party" , "we are having a party for steves birthday", "7:20 saturday"));
-			mapLocations.add(new MapLocation("Lawn Service", 33.765206, -84.396927, "services", " I need my yard mowed and will pay 20$","today"));
+		
+		if(geopoint != null){
+			Log.i(TAG, "the Geo Points" + geopoint.toString());
+			
+			if(geopoint.getLatitudeE6() >= (33.769710*1E6) && geopoint.getLatitudeE6() <= (33.786333*1E6)
+					&& geopoint.getLongitudeE6() <= (-84.392037*1E6) && geopoint.getLongitudeE6() >= (-84.407143*1E6) ){
+				Log.i(TAG, "I KNOW IM HERE DAMNIT" );
+				mapLocations = new ArrayList<MapLocation>();
+				mapLocations.add(new MapLocation("Yard Sale",33.782105,-84.402443, "services", "We are having a yard sale"," saturday 11:30"));
+				mapLocations.add(new MapLocation("House for Rent",33.764706,-84.392652, "rent","I need to rent my house out", "until may 4th"));
+				mapLocations.add(new MapLocation("Party",33.778179,-84.398848, "party" , "we are having a party for steves birthday", "7:20 saturday"));
+				mapLocations.add(new MapLocation("Lawn Service", 33.765206, -84.396927,  "services", " I need my yard mowed and will pay 20$","today"));
+			  
+			}
+		
+		     if(geopoint.getLatitudeE6() >= (33.771076*1E6) && geopoint.getLatitudeE6() <= (33.792663*1E6)
+				&& geopoint.getLongitudeE6() <= (-84.364808*1E6) && geopoint.getLongitudeE6() >= (-84.390171*1E6) ){
+			    Log.i(TAG, "I KNOW IM HERE DAMNIT" );
+			    mapLocations = new ArrayList<MapLocation>();
+			    mapLocations.add(new MapLocation("Summerfest fundraiser",33.776631,-84.379506,"charity", "we are having a block party fundraiser for johnny sue", "saturday"));
+			    mapLocations.add(new MapLocation("Midtown Safety Meeting",33.779128,-84.3856, "warning","Meeting to raise awareness about safety", "friday"));
+			    mapLocations.add(new MapLocation("Shooting Alert",33.773135,-84.375815, "alert" , "A shooting has occured at 6:34 p.m.", "Today"));
+			    
+		  
 		}
+		}
+			else if(geopoint == null){
+				mapLocations = new ArrayList<MapLocation>();
+				mapLocations.add(new MapLocation("Yard Sale",33.782105,-84.402443, "doo doo party ", "We are having a doo doo party"," saturday 11:30"));
+			
+			
+			
+			}
+			
+		
 
 		return mapLocations;
 	}
