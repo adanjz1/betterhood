@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class Event {
 	public enum AttributeList {
-		EVENT_NAME, EVENT_ADDRESS, EVENT_LOCATION;
+		EVENT_NAME, EVENT_ADDRESS, EVENT_DESCRIPTION, EVENT_TYPE;
 	}
 	
 	private HashMap<AttributeList, String> attributes;
