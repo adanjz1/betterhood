@@ -200,7 +200,22 @@ public class CreateEventScreen2 extends Activity {
 					tempEventAddressCity = null;
 				}
 				tempEventCost = editEventCost.getText().toString();
-				tempEventDate = Integer.toString(iMonth) + Integer.toString(iDay) + Integer.toString(iYear);
+				
+				String tempMonth, tempDay;
+				if (iMonth < 10) {
+					tempMonth = "0" + Integer.toString(iMonth);
+				} else {
+					tempMonth = Integer.toString(iMonth);
+				}
+				
+				if (iDay < 10) {
+					tempDay = "0" + Integer.toString(iDay);
+				} else {
+					tempDay = Integer.toString(iDay);
+				}
+				
+				tempEventDate = tempMonth + tempDay + Integer.toString(iYear);
+				
 				if (lEventLocation != null) {
 					tempEventLatitude = Double.toString(lEventLocation.getLatitude());
 					tempEventLongitude = Double.toString(lEventLocation.getLongitude());
@@ -213,9 +228,9 @@ public class CreateEventScreen2 extends Activity {
 				tempEventStartTime = Integer.toString(iHour) + "_" + Integer.toString(iMinute);
 				
 				// TEMPORARY CRAP
-				tempEventEndTime = null;
-				tempEventPhoneNumber = null;
-				tempEventContactEmail = null;
+				tempEventEndTime = "0";
+				tempEventPhoneNumber = "0";
+				tempEventContactEmail = "0";
 				
 				if (tempEventName.length() == 0) {
 					Toast.makeText(view.getContext(), "Error: " + "'Event Name' cannot be left blank.", BetterHood.TOAST_TIME).show();
@@ -246,6 +261,7 @@ public class CreateEventScreen2 extends Activity {
 		}
     }
     
+    // when we want to create a dialog, figure out which kind it is and return it
     @Override
     protected Dialog onCreateDialog(int id) {
         switch (id) {

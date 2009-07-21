@@ -33,7 +33,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_height = "wrap_content"
 		android:layout_alignParentTop = "true"
 		android:layout_centerHorizontal = "true"
-		android:text = "Create an event\nStep 2 of 2"
+		android:text = "Create a Pool Party event\nStep 2 of 2"
 	/>
 	
 	<TextView
