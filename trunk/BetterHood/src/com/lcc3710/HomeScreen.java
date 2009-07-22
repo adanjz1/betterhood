@@ -430,7 +430,7 @@ public class HomeScreen extends MapActivity {
 			//because it can find multiple answers
 			
 			try{
-			List<Address> address = gc.getFromLocationName(e.getAttribute(AttributeList.EVENT_LOCATION_ADDRESS), 5);
+			List<Address> address = gc.getFromLocationName(e.getAttribute(AttributeList.EVENT_LOCATION_ADDRESS), 1);
 			
 			// try and see if we get any results
 			
@@ -442,7 +442,7 @@ public class HomeScreen extends MapActivity {
 			
 			if(address.size()>=0){
 			mapLocations.add(new MapLocation(e.getAttribute(AttributeList.EVENT_NAME),
-					x.getLatitude()*1E6,x.getLongitude()*1E6,
+					x.getLatitude(),x.getLongitude(),
 					e.getAttribute(AttributeList.EVENT_TYPE), 
 					e.getAttribute(AttributeList.EVENT_DESCRIPTION), 
 					e.getAttribute(AttributeList.EVENT_START_DATE)));
