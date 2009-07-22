@@ -152,30 +152,30 @@ public class EventOverlay extends Overlay {
 		    		//  Only offset the shadow in the y-axis as the shadow is angled so the base is at x=0; 
 		    		canvas.drawBitmap(shadowIcon, screenCoords.x, screenCoords.y - shadowIcon.getHeight(),null);
 		    	} else {
-		    		if(location.getType() == "services"){
+		    		if(location.getType().equals("Carpool")){
 		     			bubbleIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.services);
 		    			shadowIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.shadow);
 		     		
 		     		}
-		     		if(location.getType() == "party"){
+		     		if(location.getType().equals("Pool Party")) {
 		     			bubbleIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.party);
 		    			shadowIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.shadow);
 		     		
 		     		}
-		     		if(location.getType() == "rent"){
+		     		if(location.getType().equals("rent")){
 		     			bubbleIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.rent);
 		     			shadowIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.shadow);
 		     		}
-		     		if(location.getType() == "charity"){
+		     		if(location.getType().equals("Potluck")){
 		     			bubbleIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.charity);
 		    			shadowIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.shadow);
 		     		
 		     		}
-		     		if(location.getType() == "alert"){
+		     		if(location.getType().equals("Missing Child")){
 		     			bubbleIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.alert);
 		     			shadowIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.shadow);
 		     		}
-		     		if(location.getType() == "warning"){
+		     		if(location.getType().equals("warning")){
 		     			bubbleIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.warning);
 		     			shadowIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.shadow);
 		     		}
