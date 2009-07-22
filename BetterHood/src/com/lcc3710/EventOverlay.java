@@ -197,6 +197,7 @@ public class EventOverlay extends Overlay {
 	    	textCurrentLocation = (TextView) eventDialog.findViewById(R.id.eventName);
 	    	textCurrentLocation.setText(selectedMapLocation.getName());
 	    	location = (TextView) eventDialog.findViewById(R.id.location);
+	    	location.setText(selectedMapLocation.getAddress());
 	    	description = (TextView) eventDialog.findViewById(R.id.description);
 	    	description.setText(selectedMapLocation.getDescription());
 	    	time = (TextView) eventDialog.findViewById(R.id.time);
@@ -246,12 +247,12 @@ public class EventOverlay extends Overlay {
 								//szEventAddress = editAddress.getText().toString();
 							//	buttonPickLocation.setText(szEventAddress);
 							}
-							if (checkBoxCurrentLocation.isChecked()) {
+							//if (checkBoxCurrentLocation.isChecked()) {
 							//	if (lEventLocation != null) {
 									//buttonPickLocation.setText(geoPointToAddress());
 								//	buttonPickLocation.setText(locationToAddress(lEventLocation));
 								//}
-							}
+							//}
 						}
 						eventDialog.dismiss();
 						break;
@@ -270,7 +271,7 @@ public class EventOverlay extends Overlay {
 	    	//}
 	    	
 	    	if (BetterHood.DEBUG) {
-	    		editAddress.setText("451 Heartcircle Pl, Atlanta, GA 30303");
+	    		//editAddress.setText("451 Heartcircle Pl, Atlanta, GA 30303");
 	    	}
 	    	
 	    	return eventDialog;
