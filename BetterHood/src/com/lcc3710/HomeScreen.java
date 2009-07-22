@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -15,8 +17,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
@@ -28,6 +32,8 @@ import com.lcc3710.Event.AttributeList;
 public class HomeScreen extends MapActivity {
 	private Button buttonWant;
 	private Button buttonSettings;
+	private Button buttonEventList;
+	
 	GeoPoint geopoint = null;
 
 	private static final String TAG = BetterHood.TAG_HOME_SCREEN; 
@@ -60,6 +66,10 @@ public class HomeScreen extends MapActivity {
 	private String username;
 	
 	private Bundle extras;
+	
+	private static final int EVENT_LIST_DIALOG_ID = 0;
+	
+	private Dialog eventListDialog;
 	
 	@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -200,6 +210,8 @@ public class HomeScreen extends MapActivity {
     					    //Log.i(BetterHood.TAG_HOME_SCREEN, i + " string " + partyTokens[i]);
     					
     						itemsCount++;
+    						
+    						// if we've reached the end of this event, commit the event and create an empty one
     						if(itemsCount >= 10){  
     							Log.i(BetterHood.TAG_EVENT_LIST, "Adding event #" + Integer.toString(eventArrayList.size()+1) + ": " + newEvent.getAttribute(AttributeList.EVENT_NAME));
     							eventArrayList.add(newEvent);
@@ -247,6 +259,9 @@ public class HomeScreen extends MapActivity {
         
         buttonWant = (Button) findViewById(R.id.buttonWant);
         buttonSettings = (Button) findViewById(R.id.buttonSettings);
+        buttonEventList = (Button) findViewById(R.id.buttonEventList);
+        
+        buttonEventList.setHeight(buttonWant.getHeight());
         
         
         if ((extras = intent.getExtras()) != null) {
@@ -281,6 +296,14 @@ public class HomeScreen extends MapActivity {
 				}
 			}
         });
+        
+        buttonEventList.setOnClickListener(new OnClickListener() {
+			public void onClick(View view) {
+				if (sessionID != null) {
+					showDialog(EVENT_LIST_DIALOG_ID);
+				}
+			}
+        });
       
 	}
 	
@@ -295,6 +318,73 @@ public class HomeScreen extends MapActivity {
 			}
 		}
 	}
+	
+	// when we want to create a dialog, figure out which kind it is and return it
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        switch (id) {
+        case EVENT_LIST_DIALOG_ID:
+            return buildEventListDialog();
+        }
+        return null;
+    }
+    
+    private Dialog buildEventListDialog() {    	
+    	eventListDialog = new Dialog(this);
+    	eventListDialog.setContentView(R.layout.event_list_screen);
+    	eventListDialog.getWindow().setLayout(320, 450);
+    	eventListDialog.setTitle("Current Events");
+    	
+    	Button buttonForward;
+    	buttonForward = (Button) eventListDialog.findViewById(R.id.buttonForward);
+    	
+    	ListView listEventView;
+        listEventView = (ListView) eventListDialog.findViewById(R.id.listEvents);
+    	
+    	String[] aszCurrentEvents;
+    	ArrayAdapter<String> adapter;
+    	
+    	ArrayList<Event> alEvents = eventList.getEvents();
+        aszCurrentEvents = new String[alEvents.size()];
+        
+        for (int i = 0; i < alEvents.size(); i++) {
+        	aszCurrentEvents[i] = alEvents.get(i).getAttribute(AttributeList.EVENT_NAME);
+        }
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, aszCurrentEvents);
+        listEventView.setAdapter(adapter);
+        
+        for (int i = 0; i < listEventView.getCount(); i++) {
+        	String eventType = alEvents.get(i).getAttribute(AttributeList.EVENT_TYPE);
+        	Log.i(TAG, "event type = " + eventType);
+        	Log.i(TAG, "latitude = " + Double.toString(alEvents.get(i).getLatitude()));
+        	Log.i(TAG, "longitude = " + Double.toString(alEvents.get(i).getLongitude()));
+        	int color = 0;
+        	if (eventType.equals("Missing Child")) {
+        		color = Color.RED;
+        	}
+        	if (eventType.equals("Pool Party")) {
+        		color = Color.BLUE;
+        	}
+        	if (eventType.equals("Potluck")) {
+        		color = Color.rgb(255, 128, 0);
+        	}
+        	if (eventType.equals("Carpool")) {
+        		color = Color.GREEN;
+        	}
+        	
+        	if (color != 0) {
+        		//child.setBackgroundColor(color);
+        	}
+        }
+        
+        buttonForward.setOnClickListener(new OnClickListener() {
+			public void onClick(View view) {
+				eventListDialog.dismiss();
+			}
+        });
+    	
+    	return eventListDialog;
+    }
 	
 	private void initMap() {
 		mapView = (MapView) findViewById(R.id.mapview);

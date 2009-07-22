@@ -7,7 +7,7 @@
 	<Button 
 		android:id="@+id/buttonWant"
 		android:text = "I Want"
-		android:layout_width = "100dip"
+		android:layout_width = "110dip"
 		android:layout_height = "wrap_content"
 		android:layout_alignParentLeft = "true"
 		android:layout_alignParentTop = "true"
@@ -15,9 +15,16 @@
 	<Button 
 		android:id="@+id/buttonSettings"
 		android:text = "I Have"
-		android:layout_width = "100dip"
+		android:layout_width = "110dip"
 		android:layout_height = "wrap_content"
 		android:layout_toRightOf = "@id/buttonWant"
+	/>
+	<Button 
+		android:id="@+id/buttonEventList"
+		android:text = "Current Events"
+		android:layout_width = "110dip"
+		android:layout_height = "wrap_content"
+		android:layout_toRightOf = "@id/buttonSettings"
 	/>
 	
 	<com.google.android.maps.MapView
@@ -26,7 +33,7 @@
         android:layout_height="fill_parent"
         android:layout_below = "@id/buttonWant"
         android:clickable="true"
-        android:apiKey="0RUXXsZEFdBq90EIENGX9nY8ZIzGkAbx5PjqExA"
+        android:apiKey="0hL9tSrc2xdo-IfbiOtIcX6kBMhJAWcVJv8Y97w"
          />
         
          <LinearLayout

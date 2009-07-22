@@ -9,6 +9,7 @@ public class BetterHood {
 	public static final int REQ_SETTINGS_SCREEN = 4;
 	public static final int REQ_CHECK_USERNAME_AVAILABILITY = 5;
 	public static final int REQ_POPULATE_EVENT_LIST = 6;
+	public static final int REQ_EVENT_LIST_SCREEN = 7;
 	
 	//debug tags
 	public static final String TAG_LOGIN_SCREEN = "bh_login_screen";
