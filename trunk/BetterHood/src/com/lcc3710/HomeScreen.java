@@ -6,6 +6,8 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -33,7 +35,7 @@ public class HomeScreen extends MapActivity {
 	private MyLocationOverlay myLocOverlay;
 	private LocationManager locManager;
 	private LocationListener locListener;
-	ArrayList<Event> eventArrayList;
+	ArrayList<Event> eventArrayList = null;
 
 	private EventOverlay overlay;
 	String delims = "\\^";
@@ -380,7 +382,7 @@ public class HomeScreen extends MapActivity {
 		
 		}
 	public List<MapLocation> getMapLocations() {
-		
+		//mapLocations = new ArrayList<MapLocation>();
 		if(geopoint != null){
 			Log.i(TAG, "the Geo Points" + geopoint.toString());
 			
@@ -412,7 +414,47 @@ public class HomeScreen extends MapActivity {
 			
 			
 			
+		Geocoder gc = new Geocoder(this);
+		
+		if(eventArrayList != null){
+		
+		//iterate through the array list
+		for(int i = 0; i < eventArrayList.size(); i ++){
+			
+			//creating an even object and giving it the value of the index of eventListArray value i
+			
+			Event e = new Event();
+			e = eventArrayList.get(i);
+			
+			//here we try and give the geocoder the address we have, it returns a list 
+			//because it can find multiple answers
+			
+			try{
+			List<Address> address = gc.getFromLocationName(e.getAttribute(AttributeList.EVENT_LOCATION_ADDRESS), 5);
+			
+			// try and see if we get any results
+			
+			Address x = address.get(0); 
+			Log.d(TAG, "where is this event suppose to occur" + "lat is" + x.getLatitude() + "long is" + x.getLongitude() );
+			
+			//here we create an even with the attributes of the event object if there is at
+			// least any addresses 
+			
+			if(address.size()>=0){
+			mapLocations.add(new MapLocation(e.getAttribute(AttributeList.EVENT_NAME),
+					x.getLatitude()*1E6,x.getLongitude()*1E6,
+					e.getAttribute(AttributeList.EVENT_TYPE), 
+					e.getAttribute(AttributeList.EVENT_DESCRIPTION), 
+					e.getAttribute(AttributeList.EVENT_START_DATE)));
 			}
+			}
+			catch(Exception e1){
+				//todo
+			}
+			
+		 }
+		}
+		}
 			
 		
 
