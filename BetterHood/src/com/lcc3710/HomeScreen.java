@@ -468,24 +468,11 @@ public class HomeScreen extends MapActivity {
 			for (int i = 0; i < events.size(); i++) {
 				e = events.get(i);
 				mapLocations.add(new MapLocation(e));
-//				mapLocations.add(new MapLocation(
-//						e.getAttribute(AttributeList.EVENT_NAME), 
-//						e.getLatitude(), 
-//						e.getLongitude(), 
-//						e.getAttribute(AttributeList.EVENT_TYPE), 
-//						e.getAttribute(AttributeList.EVENT_DESCRIPTION), 
-//						e.getAttribute(AttributeList.EVENT_START_DATE),
-//						e.getAttribute(AttributeList.EVENT_LOCATION_ADDRESS)
-//				));
 			}
 		}
 
 		return mapLocations;
 	}
-	
-
-
-
 	
 	protected boolean isRouteDisplayed() {
 	    return false;
