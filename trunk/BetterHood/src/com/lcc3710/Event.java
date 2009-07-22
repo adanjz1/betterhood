@@ -29,4 +29,12 @@ public class Event {
 	public String getAttribute(AttributeList key) {
 		return attributes.get(key);
 	}
+	
+	public Double getLatitude() {
+		return Double.valueOf(getAttribute(AttributeList.EVENT_LOCATION_LATITUDE));
+	}
+	
+	public Double getLongitude() {
+		return Double.valueOf(getAttribute(AttributeList.EVENT_LOCATION_LONGITUDE));
+	}
 }

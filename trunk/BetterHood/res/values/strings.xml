@@ -11,4 +11,7 @@
 	<string name="createEventStep2Caption">Fill out the event information below.</string>
 	
 	<string name="settingsScreenCaption">Edit your 'I Have' list below.</string>
+	
+	<string name="eventListCaption">Select an active event from your community to see details or participate.</string>
+	
 </resources>

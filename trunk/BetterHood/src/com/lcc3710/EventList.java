@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.os.Parcelable.Creator;
 import android.util.Log;
 
 public class EventList {
@@ -39,5 +42,5 @@ public class EventList {
 
 	public ArrayList<Event> getEvents() {
 		return events;
-	}
+	}	
 }
