@@ -189,8 +189,7 @@ public class CreateEventScreen2 extends Activity {
 				tempEventName = editEventName.getText().toString();
 				
 				if (szEventAddress != null) {
-					//tempEventAddress = szEventAddress.replace(" ", "");
-					tempEventAddress = szEventAddress;
+					tempEventAddress = szEventAddress.replace("\n", ", ");
 				} else {
 					tempEventAddress = "null";
 				}
@@ -220,9 +219,13 @@ public class CreateEventScreen2 extends Activity {
 					tempEventLatitude = Double.toString(lEventLocation.getLatitude());
 					tempEventLongitude = Double.toString(lEventLocation.getLongitude());
 				} else {
-					tempEventLatitude = "85.231356123";
-					tempEventLongitude = "-12.245987253";
+//					tempEventLatitude = "85.231356123";
+//					tempEventLongitude = "-12.245987253";
+					DissectAddress da = new DissectAddress(szEventAddress, view.getContext());
+					tempEventLatitude = Double.toString(da.getLatitude());
+					tempEventLongitude = Double.toString(da.getLongitude());
 				}
+				
 				tempEventMessage = editEventMessage.getText().toString();				
 				
 				// TEMPORARY CRAP
@@ -248,8 +251,8 @@ public class CreateEventScreen2 extends Activity {
 		});
 		
 		if (BetterHood.DEBUG) {
-			editEventName.setText("Event1234");
-			editEventMessage.setText("helloworld");
+			editEventName.setText("pool");
+			editEventMessage.setText("");
 		}
     }
     
@@ -332,7 +335,6 @@ public class CreateEventScreen2 extends Activity {
 						}
 						if (checkBoxCurrentLocation.isChecked()) {
 							if (lEventLocation != null) {
-								//buttonPickLocation.setText(geoPointToAddress());
 								buttonPickLocation.setText(locationToAddress(lEventLocation));
 							}
 						}
@@ -347,10 +349,9 @@ public class CreateEventScreen2 extends Activity {
     	buttonDialogForward.setOnClickListener(buttonListener);
     	
     	
-    	if (lEventLocation != null) {
-    		//textCurrentLocation.setText("Current location:\n" + geoPointToAddress(mEventLocation.getPoint()));
-    		//textCurrentLocation.setText("Current Location:\n" + Double.toString(lEventLocation.getLatitude()) + ",\n" + Double.toString(lEventLocation.getLongitude()));
-    		textCurrentLocation.setText("Current Location:\n" + locationToAddress(lEventLocation));
+    	if (lEventLocation != null) {    		
+    		szEventAddress = locationToAddress(lEventLocation);
+    		textCurrentLocation.setText("Current Location:\n" + szEventAddress);
     		checkBoxCurrentLocation.setEnabled(true);
     		checkBoxCurrentLocation.setChecked(true);
     	} else {
@@ -360,7 +361,7 @@ public class CreateEventScreen2 extends Activity {
     	}
     	
     	if (BetterHood.DEBUG) {
-    		editAddress.setText("451 Heartcircle Pl, Atlanta, GA 30303");
+    		editAddress.setText("458 Brentwood Dr, Atlanta, GA 30305");
     	}
     	
     	return dialogLocationPicker;

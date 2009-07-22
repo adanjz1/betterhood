@@ -222,6 +222,7 @@ public class HomeScreen extends MapActivity {
     					}
     					// update eventList with the results
     					eventList.populate(eventArrayList);
+    					mapView.getController().setCenter(getMapLocations().get(0).getPoint());
     				} else {
     					if ((szWebResponse = extras.getString(BetterHood.EXTRAS_ERROR_MESSAGE)) != null) {
     						Log.i(BetterHood.TAG_HOME_SCREEN, BetterHood.ERROR_PREFIX + "EventList.populate() returned no response!");
@@ -250,10 +251,7 @@ public class HomeScreen extends MapActivity {
         initLocationManager();
         overlay = new EventOverlay(this);
 		mapView.getOverlays().add(overlay);
-
     	mapView.getController().setZoom(14);
-    	mapView.getController().setCenter(getMapLocations().get(0).getPoint());
-
         
         intent = getIntent();
         
@@ -261,8 +259,7 @@ public class HomeScreen extends MapActivity {
         buttonSettings = (Button) findViewById(R.id.buttonSettings);
         buttonEventList = (Button) findViewById(R.id.buttonEventList);
         
-        buttonEventList.setHeight(buttonWant.getHeight());
-        
+        buttonEventList.setHeight(buttonWant.getHeight());        
         
         if ((extras = intent.getExtras()) != null) {
         	sessionID = extras.getString(BetterHood.EXTRAS_SESSION_ID);
@@ -272,8 +269,7 @@ public class HomeScreen extends MapActivity {
         }
         
         eventList = new EventList(sessionID);
-        eventList.queryDatabase(this);
-     
+        eventList.queryDatabase(this);     
         
         buttonWant.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {					
@@ -355,9 +351,9 @@ public class HomeScreen extends MapActivity {
         
         for (int i = 0; i < listEventView.getCount(); i++) {
         	String eventType = alEvents.get(i).getAttribute(AttributeList.EVENT_TYPE);
-        	Log.i(TAG, "event type = " + eventType);
-        	Log.i(TAG, "latitude = " + Double.toString(alEvents.get(i).getLatitude()));
-        	Log.i(TAG, "longitude = " + Double.toString(alEvents.get(i).getLongitude()));
+        	//Log.i(TAG, "event type = " + eventType);
+        	//Log.i(TAG, "latitude = " + Double.toString(alEvents.get(i).getLatitude()));
+        	//Log.i(TAG, "longitude = " + Double.toString(alEvents.get(i).getLongitude()));
         	int color = 0;
         	if (eventType.equals("Missing Child")) {
         		color = Color.RED;
@@ -452,8 +448,6 @@ public class HomeScreen extends MapActivity {
  
 		// Create new Overlay
 		CustomOverlay overlay = new CustomOverlay(geopoint);
-		
-		
  
 		mapView.getOverlays().add(overlay);
 		EventOverlay myEvents = new EventOverlay(this);
@@ -465,88 +459,26 @@ public class HomeScreen extends MapActivity {
 		// redraw map
 		mapView.postInvalidate();
 		
-		//if(overlay.tapped == true){
-			//PopUp popup = new PopUp("This is your current location"); 
-    		//popup.makeWindow();
-        //} 
-		
 		}
 	public List<MapLocation> getMapLocations() {
-		//mapLocations = new ArrayList<MapLocation>();
-		if(geopoint != null){
-			Log.i(TAG, "the Geo Points" + geopoint.toString());
-			
-			if(geopoint.getLatitudeE6() >= (33.769710*1E6) && geopoint.getLatitudeE6() <= (33.786333*1E6)
-					&& geopoint.getLongitudeE6() <= (-84.392037*1E6) && geopoint.getLongitudeE6() >= (-84.407143*1E6) ){
-				Log.i(TAG, "I KNOW IM HERE DAMNIT" );
-				mapLocations = new ArrayList<MapLocation>();
-				mapLocations.add(new MapLocation("Yard Sale",33.782105,-84.402443, "services", "We are having a yard sale"," saturday 11:30"));
-				mapLocations.add(new MapLocation("House for Rent",33.764706,-84.392652, "rent","I need to rent my house out", "until may 4th"));
-				mapLocations.add(new MapLocation("Party",33.778179,-84.398848, "party" , "we are having a party for steves birthday", "7:20 saturday"));
-				mapLocations.add(new MapLocation("Lawn Service", 33.765206, -84.396927,  "services", " I need my yard mowed and will pay 20$","today"));
-			  
+		mapLocations = new ArrayList<MapLocation>();	
+		ArrayList<Event> events;
+		Event e;
+		if ((events = eventList.getEvents()) != null) {
+			for (int i = 0; i < events.size(); i++) {
+				e = events.get(i);
+				mapLocations.add(new MapLocation(e));
+//				mapLocations.add(new MapLocation(
+//						e.getAttribute(AttributeList.EVENT_NAME), 
+//						e.getLatitude(), 
+//						e.getLongitude(), 
+//						e.getAttribute(AttributeList.EVENT_TYPE), 
+//						e.getAttribute(AttributeList.EVENT_DESCRIPTION), 
+//						e.getAttribute(AttributeList.EVENT_START_DATE),
+//						e.getAttribute(AttributeList.EVENT_LOCATION_ADDRESS)
+//				));
 			}
-		
-		     if(geopoint.getLatitudeE6() >= (33.771076*1E6) && geopoint.getLatitudeE6() <= (33.792663*1E6)
-				&& geopoint.getLongitudeE6() <= (-84.364808*1E6) && geopoint.getLongitudeE6() >= (-84.390171*1E6) ){
-			    Log.i(TAG, "I KNOW IM HERE DAMNIT" );
-			    mapLocations = new ArrayList<MapLocation>();
-			    mapLocations.add(new MapLocation("Summerfest fundraiser",33.776631,-84.379506,"charity", "we are having a block party fundraiser for johnny sue", "saturday"));
-			    mapLocations.add(new MapLocation("Midtown Safety Meeting",33.779128,-84.3856, "warning","Meeting to raise awareness about safety", "friday"));
-			    mapLocations.add(new MapLocation("Shooting Alert",33.773135,-84.375815, "alert" , "A shooting has occured at 6:34 p.m.", "Today"));
-			    
-		  
 		}
-		}
-			else if(geopoint == null){
-				mapLocations = new ArrayList<MapLocation>();
-				mapLocations.add(new MapLocation("Yard Sale",33.782105,-84.402443, "doo doo party ", "We are having a doo doo party"," saturday 11:30"));
-			
-			
-			
-		Geocoder gc = new Geocoder(this);
-		
-		if(eventArrayList != null){
-		
-		//iterate through the array list
-		for(int i = 0; i < eventArrayList.size(); i ++){
-			
-			//creating an even object and giving it the value of the index of eventListArray value i
-			
-			Event e = new Event();
-			e = eventArrayList.get(i);
-			
-			//here we try and give the geocoder the address we have, it returns a list 
-			//because it can find multiple answers
-			
-			try{
-			List<Address> address = gc.getFromLocationName(e.getAttribute(AttributeList.EVENT_LOCATION_ADDRESS), 1);
-			
-			// try and see if we get any results
-			
-			Address x = address.get(0); 
-			Log.d(TAG, "where is this event suppose to occur" + "lat is" + x.getLatitude() + "long is" + x.getLongitude() );
-			
-			//here we create an even with the attributes of the event object if there is at
-			// least any addresses 
-			
-			if(address.size()>=0){
-			mapLocations.add(new MapLocation(e.getAttribute(AttributeList.EVENT_NAME),
-					x.getLatitude(),x.getLongitude(),
-					e.getAttribute(AttributeList.EVENT_TYPE), 
-					e.getAttribute(AttributeList.EVENT_DESCRIPTION), 
-					e.getAttribute(AttributeList.EVENT_START_DATE)));
-			}
-			}
-			catch(Exception e1){
-				//todo
-			}
-			
-		 }
-		}
-		}
-			
-		
 
 		return mapLocations;
 	}

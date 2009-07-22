@@ -1,44 +1,42 @@
 package com.lcc3710;
 
-import android.graphics.Bitmap;
-
 import com.google.android.maps.GeoPoint;
+import com.lcc3710.Event.AttributeList;
 
-public class MapLocation {
-
-    private GeoPoint    point;
-    private String      name;
-    public String		typeName, description, time;
-    private Bitmap      bubbleIcon, shadowIcon;
-    
-
-    public MapLocation(String name,double latitude, double longitude, String typeName,
-    		String description, String time) {
-         this.name = name;
-         this.typeName = typeName;
-         this.description = description;
-         this.time = time;
-         point = new GeoPoint((int)(latitude*1e6),(int)(longitude*1e6));
-         
+public class MapLocation {	
+	private GeoPoint point;
+	private Event e;
+	
+    public MapLocation(Event e) {
+    	point = new GeoPoint((int)(e.getLatitude()*1e6),(int)(e.getLongitude()*1e6));
+    	this.e = e;
     }
 
     public GeoPoint getPoint() {
          return point;
     }
-
     public String getName() {
-         return name;
+         return e.getAttribute(AttributeList.EVENT_NAME);
     }
-    
     public String getType(){
-    	return typeName;
-    	
+    	return e.getAttribute(AttributeList.EVENT_TYPE);
+    }
+    public String getHost() {
+    	return e.getAttribute(AttributeList.EVENT_HOST);
     }
     public String getDescription(){
-    	return description;
+    	return e.getAttribute(AttributeList.EVENT_DESCRIPTION);
 }
 	public String getTime(){
-		return time;
+		return e.getAttribute(AttributeList.EVENT_START_DATE);
 	}
-    
+	public String getAddress() {
+		return e.getAttribute(AttributeList.EVENT_LOCATION_ADDRESS);
+	}
+	public String getPhoneNumber() {
+		return e.getAttribute(AttributeList.EVENT_PHONE_NUMBER);
+	}
+    public String getContactEmail() {
+    	return e.getAttribute(AttributeList.EVENT_CONTACT_EMAIL);
+    }
 } 
