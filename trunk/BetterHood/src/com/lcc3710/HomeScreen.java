@@ -8,8 +8,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -26,7 +24,6 @@ import android.widget.Toast;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
-import com.google.android.maps.MyLocationOverlay;
 import com.lcc3710.Event.AttributeList;
 
 public class HomeScreen extends MapActivity {
@@ -35,10 +32,7 @@ public class HomeScreen extends MapActivity {
 	private Button buttonEventList;
 	
 	GeoPoint geopoint = null;
-
-	private static final String TAG = BetterHood.TAG_HOME_SCREEN; 
 	
-	private MyLocationOverlay myLocOverlay;
 	private LocationManager locManager;
 	private LocationListener locListener;
 	ArrayList<Event> eventArrayList = null;
@@ -351,9 +345,7 @@ public class HomeScreen extends MapActivity {
         
         for (int i = 0; i < listEventView.getCount(); i++) {
         	String eventType = alEvents.get(i).getAttribute(AttributeList.EVENT_TYPE);
-        	//Log.i(TAG, "event type = " + eventType);
-        	//Log.i(TAG, "latitude = " + Double.toString(alEvents.get(i).getLatitude()));
-        	//Log.i(TAG, "longitude = " + Double.toString(alEvents.get(i).getLongitude()));
+
         	int color = 0;
         	if (eventType.equals("Missing Child")) {
         		color = Color.RED;
@@ -398,13 +390,14 @@ public class HomeScreen extends MapActivity {
 	/**
 	 * Initialises the MyLocationOverlay and adds it to the overlays of the map
 	 */
+	/*
 	private void initMyLocation() {
 		myLocOverlay = new MyLocationOverlay(this, mapView);
 		myLocOverlay.enableMyLocation();
 		mapView.getOverlays().add(myLocOverlay);
  
 	}
-	
+	*/
 	private void initLocationManager() {
 		locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
  

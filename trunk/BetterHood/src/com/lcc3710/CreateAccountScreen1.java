@@ -102,10 +102,10 @@ public class CreateAccountScreen1 extends Activity {
         	editAddress.setText("123 Hearthwood Cir");
         	editZipCode.setText("30305");
         	editEmail.setText("gpb2009@gatech.edu");
-        	editCommunityCode.setText("123456");
+        	editCommunityCode.setText("1");
         	editUsername.setText("gpb2009");
-        	editPassword.setText("gatech");
-        	editPasswordConfirm.setText("gatech");
+        	editPassword.setText("gpb2009");
+        	editPasswordConfirm.setText("gpb2009");
         }
         
         bUsernameAvailable = false;

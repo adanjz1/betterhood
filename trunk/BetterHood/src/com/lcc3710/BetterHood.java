@@ -21,6 +21,7 @@ public class BetterHood {
 	public static final String TAG_CREATE_EVENT_SCREEN_2 = "bh_create_event_2";
 	public static final String TAG_HOME_SCREEN = "bh_home_screen";
 	public static final String TAG_EVENT_LIST = "bh_event_list";
+	public static final String TAG_EVENT_OVERLAY = "bh_event_overlay";
 	
 	// extras tags
 	public static final String EXTRAS_QUERY = "query";
