@@ -97,6 +97,7 @@
 		android:layout_alignParentLeft = "true"
 		android:layout_alignParentBottom = "false"
 		android:layout_below = "@id/labelEventDescription"
+		android:layout_marginTop = "20dip"
 	/>
 	<Button
 		android:id = "@+id/buttonForward"
@@ -107,7 +108,7 @@
 		android:layout_alignParentRight = "true"
 		android:layout_alignParentBottom = "false"
 		android:layout_below = "@id/textEventDescription"
-	android:minHeight="20dip"/>
+		/>
 	
 	
 	<TextView
@@ -121,11 +122,11 @@
 	
 	<EditText
     	android:id="@+id/editEventComment"
-    	android:layout_height = "100dip"
+    	android:layout_height = "wrap_content"
     	android:layout_width = "fill_parent"
     	android:layout_marginLeft = "5dip"
     	android:layout_marginRight = "5dip"
-    	android:layout_marginTop = "10dip"
+    	
     	android:gravity = "top"
     	android:scrollHorizontally = "false"
     	android:layout_toRightOf = "@id/labelEventComment"
@@ -135,25 +136,29 @@
     	android:singleLine = "false"
     />
 
-	<Button
-		android:id = "@+id/buttonAddComment"
-		android:text = "Add Comment"
-		android:layout_height = "wrap_content"
-		android:layout_width = "100dip"
-		android:layout_alignParentRight = "true"
-		android:layout_alignParentBottom = "true"
-		android:layout_below = "@id/labelEventComment"
-		
-	/>
+	
 	<Button
 		android:id = "@+id/buttonViewComments"
 		android:text = "View Comments"
 		android:layout_height = "wrap_content"
 		android:layout_width = "100dip"
-		android:layout_toRightOf = "@id/buttonAddComment"
-		android:layout_alignParentRight = "true"
+		android:layout_marginTop = "10dip"
+		
+		android:layout_alignParentRight = "false"
 		android:layout_alignParentBottom = "true"
+		android:layout_below = "@id/labelEventComment"
+		
+	/>
+	<Button
+		android:id = "@+id/buttonAddComment"
+		android:text = "Add Comment"
+		android:layout_height = "wrap_content"
+		android:layout_width = "100dip"
+		android:layout_marginTop = "10dip"
+		
+		
 		android:layout_below = "@id/editEventComment"
+		android:layout_toRightOf = "@id/buttonViewComments"
 		
 	/>
 </RelativeLayout>
