@@ -371,6 +371,7 @@ public class HomeScreen extends MapActivity {
 			}
         });
     	
+     
     	return eventListDialog;
     }
 	
