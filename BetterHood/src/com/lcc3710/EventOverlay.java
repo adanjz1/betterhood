@@ -11,7 +11,10 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.RectF;
 import android.graphics.Paint.Style;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -28,6 +31,7 @@ public class EventOverlay extends Overlay {
 
 	private Button buttonDialogBack;
 	private Button buttonDialogForward;
+	private Button buttonAddComment;
 	
 	private TextView textEventType;
 	private TextView textEventDate;
@@ -154,6 +158,7 @@ public class EventOverlay extends Overlay {
 		}
 	}
 
+		
 	private Dialog buildEventDisplayDialog() {
 		eventDialog = new Dialog(this.homeScreen);
 
@@ -162,6 +167,7 @@ public class EventOverlay extends Overlay {
 
 		buttonDialogBack = (Button) eventDialog.findViewById(R.id.buttonBack);
 		buttonDialogForward = (Button) eventDialog.findViewById(R.id.buttonForward);
+		buttonAddComment = (Button) eventDialog.findViewById(R.id.buttonAddComment);
 		
 		textEventType = (TextView) eventDialog.findViewById(R.id.textEventType);
 		textEventDate = (TextView) eventDialog.findViewById(R.id.textEventDate);
@@ -182,6 +188,8 @@ public class EventOverlay extends Overlay {
 		eventDialog.setTitle(selectedMapLocation.getName());
 		
 		editEventComment.setMaxLines(5);
+		
+		  
 
 		View.OnClickListener buttonListener = new View.OnClickListener() {
 			public void onClick(View v) {
@@ -191,7 +199,16 @@ public class EventOverlay extends Overlay {
 					break;
 				case R.id.buttonForward:
 					if (v.isEnabled()) {
-						eventDialog.dismiss();
+					eventDialog.dismiss();
+					}
+					break;
+				case R.id.buttonAddComment:
+					//posting comments
+					if(editEventComment.getText() != null){
+						Log.i("what'smy Query=" , editEventComment.getText().toString());
+						HandleEventComment commentHandler = new HandleEventComment(homeScreen);
+						commentHandler.postComment(selectedMapLocation.getHost(),editEventComment.getText().toString(), BetterHood.EXTRAS_ACCOUNT_FIRST_NAME + BetterHood.EXTRAS_ACCOUNT_LAST_NAME);
+						
 					}
 					break;
 				}
@@ -200,6 +217,7 @@ public class EventOverlay extends Overlay {
 
 		buttonDialogBack.setOnClickListener(buttonListener);
 		buttonDialogForward.setOnClickListener(buttonListener);
+		buttonAddComment.setOnClickListener(buttonListener);
 
 		return eventDialog;
 	}

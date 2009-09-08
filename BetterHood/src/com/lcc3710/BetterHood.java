@@ -10,6 +10,7 @@ public class BetterHood {
 	public static final int REQ_CHECK_USERNAME_AVAILABILITY = 5;
 	public static final int REQ_POPULATE_EVENT_LIST = 6;
 	public static final int REQ_EVENT_LIST_SCREEN = 7;
+	public static final int REQ_EVENT_COMMENT= 8;
 	
 	//debug tags
 	public static final String TAG_LOGIN_SCREEN = "bh_login_screen";
@@ -64,6 +65,7 @@ public class BetterHood {
 	public static final String PHP_FILE_CREATE_EVENT = "create_event.php";
 	public static final String PHP_FILE_CHECK_USERNAME = "check_username.php";
 	public static final String PHP_FILE_POPULATE_EVENT_LIST = "populate_event_list.php";
+	public static final String PHP_FILE_POPULATE_EVENT_COMMENT_LIST = "populate_event_list_comment.php";
 	
 	// templates
 	public static final String TEMPLATE_CARPOOL = "Carpool";

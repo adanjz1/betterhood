@@ -77,7 +77,7 @@
 		android:text = "Event\nDescription:"
 		android:layout_width = "100dip"
 		android:layout_height = "wrap_content"
-		android:layout_below = "@id/textEventHost"
+		android:layout_below = "@id/labelEventHost"
 		android:layout_marginTop = "5dip"
 	/>
 	<TextView
@@ -89,14 +89,36 @@
 		android:layout_marginTop = "5dip"
 	/>
 	
+	<Button
+		android:id = "@+id/buttonBack"
+		android:text = "Cancel"
+		android:layout_height = "wrap_content"
+		android:layout_width = "100dip"
+		android:layout_alignParentLeft = "true"
+		android:layout_alignParentBottom = "false"
+		android:layout_below = "@id/labelEventDescription"
+	/>
+	<Button
+		android:id = "@+id/buttonForward"
+		android:text = "Join Event!"
+		android:layout_height = "wrap_content"
+		android:layout_width = "100dip"
+		android:layout_toRightOf = "@id/buttonBack"
+		android:layout_alignParentRight = "true"
+		android:layout_alignParentBottom = "false"
+		android:layout_below = "@id/textEventDescription"
+	android:minHeight="20dip"/>
+	
+	
 	<TextView
 		android:id="@+id/labelEventComment"
 		android:text = "Add a comment:"
 		android:layout_width = "100dip"
 		android:layout_height = "wrap_content"
 		android:layout_marginTop = "10dip"
-		android:layout_below = "@id/textEventDescription"
+		android:layout_below = "@id/buttonBack"
 	/>
+	
 	<EditText
     	android:id="@+id/editEventComment"
     	android:layout_height = "100dip"
@@ -107,27 +129,31 @@
     	android:gravity = "top"
     	android:scrollHorizontally = "false"
     	android:layout_toRightOf = "@id/labelEventComment"
-    	android:layout_below = "@id/textEventDescription"
+    	android:layout_below = "@id/buttonForward"
     	
     	android:inputType = "text"
     	android:singleLine = "false"
     />
 
 	<Button
-		android:id = "@+id/buttonBack"
-		android:text = "Cancel"
+		android:id = "@+id/buttonAddComment"
+		android:text = "Add Comment"
 		android:layout_height = "wrap_content"
 		android:layout_width = "100dip"
-		android:layout_alignParentLeft = "true"
-		android:layout_alignParentBottom = "true"
-	/>
-	<Button
-		android:id = "@+id/buttonForward"
-		android:text = "Join Event!"
-		android:layout_height = "wrap_content"
-		android:layout_width = "100dip"
-		android:layout_toRightOf = "@id/buttonBack"
 		android:layout_alignParentRight = "true"
 		android:layout_alignParentBottom = "true"
+		android:layout_below = "@id/labelEventComment"
+		
+	/>
+	<Button
+		android:id = "@+id/buttonViewComments"
+		android:text = "View Comments"
+		android:layout_height = "wrap_content"
+		android:layout_width = "100dip"
+		android:layout_toRightOf = "@id/buttonAddComment"
+		android:layout_alignParentRight = "true"
+		android:layout_alignParentBottom = "true"
+		android:layout_below = "@id/editEventComment"
+		
 	/>
 </RelativeLayout>
