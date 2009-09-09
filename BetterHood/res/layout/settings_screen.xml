@@ -33,7 +33,7 @@
 		android:id = "@+id/listIHave"
 		android:choiceMode = "multipleChoice"
 		android:layout_width = "fill_parent"
-		android:layout_height = "300dip"
+		android:layout_height = "275dip"
 		android:layout_below = "@id/textSettingsCaption"
 	/>
 	
@@ -66,6 +66,7 @@
 		android:layout_height = "wrap_content"
 		android:layout_width = "150dip"
 		android:layout_toRightOf = "@id/buttonBack"
+		android:layout_below = "@id/editListText"
 		android:layout_alignParentRight = "true"
 	/>
 </RelativeLayout>
