@@ -37,12 +37,27 @@
 		android:layout_below = "@id/textSettingsCaption"
 	/>
 	
+	<EditText
+    	android:id="@+id/editListText"
+    	android:layout_height = "wrap_content"
+    	android:layout_width = "fill_parent"
+    	android:layout_marginLeft = "5dip"
+    	android:layout_marginRight = "5dip"
+    	
+    	android:gravity = "top"
+    	android:scrollHorizontally = "false"
+    	android:layout_below = "@id/listIHave"
+    	
+    	android:inputType = "text"
+    	android:singleLine = "false"
+    />
+	
 	<Button
 		android:id = "@+id/buttonBack"
 		android:text = "Cancel"
 		android:layout_height = "wrap_content"
 		android:layout_width = "150dip"
-		android:layout_below = "@id/listIHave"
+		android:layout_below = "@id/editListText"
 		android:layout_alignParentLeft = "true"
 	/>
 	<Button
@@ -50,7 +65,6 @@
 		android:text = "Apply Changes!"
 		android:layout_height = "wrap_content"
 		android:layout_width = "150dip"
-		android:layout_below = "@id/listIHave"
 		android:layout_toRightOf = "@id/buttonBack"
 		android:layout_alignParentRight = "true"
 	/>
