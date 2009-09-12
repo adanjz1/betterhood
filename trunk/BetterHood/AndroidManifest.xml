@@ -37,6 +37,9 @@
         <activity android:name=".MapEventScreen"
         		  android:label="@string/title">
         </activity>
+        <activity android:name=".SimilarScreen"
+        		  android:label="@string/title">
+        </activity>
         <activity android:name=".SettingsScreen">
         </activity>
         <activity android:name=".ConnectionResource">

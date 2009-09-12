@@ -476,10 +476,10 @@ public class HomeScreen extends MapActivity {
 		  
 		  super.onCreateOptionsMenu(menu);
 		  
-		  MenuItem item = menu.add("I Want");
+		  MenuItem item = menu.add("Desire");
 		 // item.setIcon(R.drawable.w);
 		    
-		  item = menu.add("I Have");
+		  item = menu.add("Share");
 		  //item.setIcon(R.drawable.have);
 		 
 		  item = menu.add("Event List");
@@ -502,7 +502,7 @@ public class HomeScreen extends MapActivity {
 			
 			
 			
-			if(id == "I Want"){
+			if(id == "Desire"){
 				Intent inWant = new Intent(this.getBaseContext(), CreateEventScreen1.class);
 				inWant.putExtra(BetterHood.EXTRAS_SESSION_ID, sessionID);
 				inWant.putExtra(BetterHood.EXTRAS_CURRENT_LOCATION, lastKnownLocation);
@@ -510,7 +510,7 @@ public class HomeScreen extends MapActivity {
 				startActivityForResult(inWant, BetterHood.REQ_CREATE_EVENT);
 			}
 				
-			else if(id == "I Have"){
+			else if(id == "Share"){
 				if (sessionID != null) {
 					Intent inSettings = new Intent(this.getBaseContext(), SettingsScreen.class);
 					inSettings.putExtra(BetterHood.EXTRAS_SESSION_ID, sessionID);
@@ -521,6 +521,17 @@ public class HomeScreen extends MapActivity {
 			
 				if (sessionID != null) {
 					Intent inSettings = new Intent(this.getBaseContext(), EventListScreen.class);
+					inSettings.putExtra(BetterHood.EXTRAS_EVENT_LIST, elist);
+					startActivityForResult(inSettings, BetterHood.REQ_EVENT_LIST_SCREEN);
+				    //Intent intent = new Intent();;
+					//startActivityForResult(intent, eventList);
+				}
+				
+			}
+			
+			else if(id == "Similarities"){
+				if (sessionID != null) {
+					Intent inSettings = new Intent(this.getBaseContext(), SimilarScreen.class);
 					inSettings.putExtra(BetterHood.EXTRAS_EVENT_LIST, elist);
 					startActivityForResult(inSettings, BetterHood.REQ_EVENT_LIST_SCREEN);
 				    //Intent intent = new Intent();;
