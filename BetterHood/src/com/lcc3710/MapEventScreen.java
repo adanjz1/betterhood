@@ -76,11 +76,13 @@ public class MapEventScreen extends Activity {
 			public void onClick(View v) {
 				switch (v.getId()) {
 				case R.id.buttonBack:
-					//this.dismiss();
+					setResult(RESULT_CANCELED, intent);
+					finish();
 					break;
 				case R.id.buttonForward:
 					if (v.isEnabled()) {
-					//eventDialog.dismiss();
+						setResult(RESULT_CANCELED, intent);
+						finish();
 					}
 					break;
 				case R.id.buttonAddComment:

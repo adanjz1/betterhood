@@ -95,6 +95,12 @@ public class EventListScreen extends Activity {
         		//child.setBackgroundColor(color);
         	}
         }
+        buttonForward.setOnClickListener(new OnClickListener() {
+			public void onClick(View view) {
+				setResult(RESULT_CANCELED, intent);
+				finish();
+			}
+        });
         
 	}
 	
