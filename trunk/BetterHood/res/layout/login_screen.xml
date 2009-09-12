@@ -10,7 +10,7 @@
     	android:layout_width = "fill_parent"
     	android:layout_marginBottom = "6dip"
     	android:layout_alignParentTop="true"
-    	android:src="@drawable/better"
+    	android:src="@drawable/better_symbol"
 	/>
 	<EditText
     	android:id="@+id/editUsername"

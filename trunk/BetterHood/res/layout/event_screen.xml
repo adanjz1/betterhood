@@ -98,12 +98,14 @@
 		android:layout_alignParentBottom = "false"
 		android:layout_below = "@id/labelEventDescription"
 		android:layout_marginTop = "20dip"
+		
 	/>
 	<Button
 		android:id = "@+id/buttonForward"
 		android:text = "Join Event!"
 		android:layout_height = "wrap_content"
 		android:layout_width = "100dip"
+		android:layout_marginTop = "4dip"
 		android:layout_toRightOf = "@id/buttonBack"
 		android:layout_alignParentRight = "true"
 		android:layout_alignParentBottom = "false"
