@@ -34,6 +34,7 @@ public class CreateEventScreen2 extends Activity {
 	private Button buttonPickLocation;
 	private Button buttonPickDate;
 	
+	Activity thisActivity = this;
 	private EditText editEventName;
 	private EditText editEventMessage;
 	
@@ -226,15 +227,23 @@ public class CreateEventScreen2 extends Activity {
 					tempEventLongitude = Double.toString(da.getLongitude());
 				}
 				
-				tempEventMessage = editEventMessage.getText().toString();				
+				tempEventMessage = editEventMessage.getText().toString();	
+				
 				
 				// TEMPORARY CRAP
 				tempEventPhoneNumber = "0000000000";
 				tempEventContactEmail = "asdf@asdf.com";
 				
-				if (tempEventName.length() == 0) {
-					Toast.makeText(view.getContext(), "Error: " + "'Event Name' cannot be left blank.", BetterHood.TOAST_TIME).show();
-				} else {					
+				if (tempEventName.length() == 0 || tempEventMessage.length() == 0) {
+					String name = "Error: " + "'Event Name' cannot be left blank.";
+					String description = "Description must be provided";
+					
+					String message = (tempEventName.length() < 0) ? name:description;
+					
+					Toast.makeText(view.getContext(), "Error: " + message, BetterHood.TOAST_TIME).show();
+				} 
+				
+				else {					
 					intent.putExtra(BetterHood.EXTRAS_EVENT_NAME, tempEventName);
 					intent.putExtra(BetterHood.EXTRAS_EVENT_LOCATION_ADDRESS, tempEventAddress);
 					intent.putExtra(BetterHood.EXTRAS_EVENT_CONTACT_EMAIL, tempEventContactEmail);
@@ -244,15 +253,20 @@ public class CreateEventScreen2 extends Activity {
 					intent.putExtra(BetterHood.EXTRAS_EVENT_LOCATION_LONGITUDE, tempEventLongitude);
 					intent.putExtra(BetterHood.EXTRAS_EVENT_PHONE_NUMBER, tempEventPhoneNumber);
 					intent.putExtra(BetterHood.EXTRAS_EVENT_MESSAGE, tempEventMessage);
-					doEventCreation();
-				}
+					
+					if(editEventMessage.getText().length() != 0){
+							doEventCreation();
+							
+						}
+					
 				
+			}
 			}
 		});
 		
 		if (BetterHood.DEBUG) {
 			editEventName.setText("pool");
-			editEventMessage.setText("");
+			editEventMessage.setText("Enter a Description");
 		}
     }
     

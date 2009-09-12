@@ -165,6 +165,10 @@ public class HomeScreen extends MapActivity {
     								//Log.i(TAG, "description = " + name[1]);
     								newEvent.setAttribute(AttributeList.EVENT_DESCRIPTION, name[1]);
     							}
+    							if(name[0].length() == 0){
+    								
+    								newEvent.setAttribute(AttributeList.EVENT_DESCRIPTION, "Description not provided");
+    							}
     							
     						}
     						// EVENT_ADDRESS
