@@ -39,7 +39,7 @@ public class HomeScreen extends MapActivity {
 	private Button buttonWant;
 	private Button buttonSettings;
 	private Button buttonEventList;
-	
+	Bundle b;
 	GeoPoint geopoint = null;
 	
 	private LocationManager locManager;
@@ -62,7 +62,7 @@ public class HomeScreen extends MapActivity {
     private int lastRequestCode;
 	
 	private MapView mapView;
-	
+	String elist;
 	private Intent intent;
 	
 	private String sessionID;
@@ -121,8 +121,10 @@ public class HomeScreen extends MapActivity {
     				if ((szWebResponse = extras.getString(BetterHood.EXTRAS_WEB_RESPONSE)) != null) {
     					Log.i(BetterHood.TAG_HOME_SCREEN, "EventList.populate() returned response: " + szWebResponse);
     					
+    					elist = szWebResponse;
     					eventArrayList = new ArrayList<Event>();
     					partyTokens = szWebResponse.split(delims);
+    					
 
     					int itemsCount = 0;
     					String[] name;
@@ -259,6 +261,7 @@ public class HomeScreen extends MapActivity {
 		
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_screen);
+        b = savedInstanceState;
         
        // LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE); 
    //     Location location = locationManager.getCurrentLocation("gps");
@@ -305,6 +308,7 @@ public class HomeScreen extends MapActivity {
     protected Dialog onCreateDialog(int id) {
         switch (id) {
         case EVENT_LIST_DIALOG_ID:
+        	
             return buildEventListDialog();
         }
         return null;
@@ -512,7 +516,11 @@ public class HomeScreen extends MapActivity {
 			else if(id == "Event List"){
 			
 				if (sessionID != null) {
-					showDialog(EVENT_LIST_DIALOG_ID);
+					Intent inSettings = new Intent(this.getBaseContext(), EventListScreen.class);
+					inSettings.putExtra(BetterHood.EXTRAS_EVENT_LIST, elist);
+					startActivityForResult(inSettings, BetterHood.REQ_EVENT_LIST_SCREEN);
+				    //Intent intent = new Intent();;
+					//startActivityForResult(intent, eventList);
 				}
 				
 			}
