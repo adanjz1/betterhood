@@ -32,6 +32,7 @@ public class SimilarScreen extends Activity{
         setContentView(R.layout.similar_screen);
         intent = getIntent();
         extras = intent.getExtras();
+        
 
         
         if (extras != null) {
@@ -50,6 +51,7 @@ public class SimilarScreen extends Activity{
 	private void populateSimilar(){
 		buttonCancel = (Button) findViewById(R.id.buttonReturn);
 		lv = (ListView) findViewById(R.id.similarView);
+		lv.setChoiceMode(1);
 		
 		lv.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, aszIHave));
 		buttonCancel.setOnClickListener(new OnClickListener() {

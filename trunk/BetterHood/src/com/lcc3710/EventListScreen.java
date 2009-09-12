@@ -74,7 +74,7 @@ public class EventListScreen extends Activity {
         for (int i = 0; i < alEvents.size(); i++) {
         	aszCurrentEvents[i] = alEvents.get(i).getAttribute(AttributeList.EVENT_NAME);
         }
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, aszCurrentEvents);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, aszCurrentEvents);
         listEventView.setAdapter(adapter);
         
         for (int i = 0; i < listEventView.getCount(); i++) {
