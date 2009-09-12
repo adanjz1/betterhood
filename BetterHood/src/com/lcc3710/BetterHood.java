@@ -11,6 +11,7 @@ public class BetterHood {
 	public static final int REQ_POPULATE_EVENT_LIST = 6;
 	public static final int REQ_EVENT_LIST_SCREEN = 7;
 	public static final int REQ_EVENT_COMMENT= 8;
+	public static final int REQ_SIMILAR_SCREEN= 9;
 	
 	//debug tags
 	public static final String TAG_LOGIN_SCREEN = "bh_login_screen";
@@ -67,6 +68,7 @@ public class BetterHood {
 	public static final String PHP_FILE_POPULATE_EVENT_LIST = "populate_event_list.php";
 	public static final String PHP_FILE_POPULATE_EVENT_COMMENT_LIST = "populate_event_list_comment.php";
 	public static final String PHP_FILE_ADD_TO_IHAVE = "add_to_ihave.php";
+	public static final String PHP_FILE_POPULATE_SIMILAR_LIST = "add_to_ihave.php";
 	
 	// templates
 	public static final String TEMPLATE_CARPOOL = "Carpool";
