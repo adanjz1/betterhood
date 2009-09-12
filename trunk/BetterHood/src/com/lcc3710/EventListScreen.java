@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -24,6 +25,7 @@ public class EventListScreen extends Activity {
 	String[] partyTokens;
 	ArrayList<Event> theEvent;
 	String eList;
+	final Activity eActivity = this;
 	
 	
 	
@@ -38,6 +40,7 @@ public class EventListScreen extends Activity {
        
     	setContentView(R.layout.event_list_screen);
     	
+    	
     	this.setTitle("Current Events");
     	//Log.i("eventlist =",extras.getString(BetterHood.EXTRAS_EVENT_LIST));
     	
@@ -46,11 +49,7 @@ public class EventListScreen extends Activity {
         
         makeList(parseList(extras.getString(BetterHood.EXTRAS_EVENT_LIST)));
         
-    	
-        
-       
-    	
-     
+
     	
     }
 	
@@ -59,13 +58,15 @@ public class EventListScreen extends Activity {
 		Button buttonForward;
     	buttonForward = (Button) this.findViewById(R.id.buttonForward);
     	
-    	ListView listEventView;
+    	final ListView listEventView;
+    	
         listEventView = (ListView) this.findViewById(R.id.listEvents);
+        listEventView.setChoiceMode(1);
     	
     	String[] aszCurrentEvents;
     	ArrayAdapter<String> adapter;
     	
-    	ArrayList<Event> alEvents = eventL;
+    	final ArrayList<Event> alEvents = eventL;
         aszCurrentEvents = new String[alEvents.size()];
         
         for (int i = 0; i < alEvents.size(); i++) {
@@ -95,12 +96,33 @@ public class EventListScreen extends Activity {
         		//child.setBackgroundColor(color);
         	}
         }
+        listEventView.getCheckedItemPosition();
         buttonForward.setOnClickListener(new OnClickListener() {
+        	
 			public void onClick(View view) {
-				setResult(RESULT_CANCELED, intent);
-				finish();
+				for(int i = 0; i < listEventView.getCount(); i++){
+					if(listEventView.isItemChecked(i)){
+						
+						Intent in = new Intent(eActivity, MapEventScreen.class);
+						in.putExtra(BetterHood.EXTRAS_EVENT_HOST, alEvents.get(i).getAttribute(AttributeList.EVENT_HOST));
+						in.putExtra(BetterHood.EXTRAS_EVENT_MESSAGE, alEvents.get(i).getAttribute(AttributeList.EVENT_DESCRIPTION));
+						in.putExtra(BetterHood.EXTRAS_EVENT_START_DATE, alEvents.get(i).getAttribute(AttributeList.EVENT_START_DATE));
+						in.putExtra(BetterHood.EXTRAS_EVENT_LOCATION_ADDRESS, alEvents.get(i).getAttribute(AttributeList.EVENT_LOCATION_ADDRESS));
+						in.putExtra(BetterHood.EXTRAS_EVENT_TEMPLATE_NAME,alEvents.get(i).getAttribute(AttributeList.EVENT_TYPE));
+						in.putExtra(BetterHood.EXTRAS_EVENT_NAME, alEvents.get(i).getAttribute(AttributeList.EVENT_NAME));
+						startActivity(in);
+						
+						
+					}
+				}
+				listEventView.getCheckedItemPosition();
+				
 			}
         });
+        
+        
+        
+
         
 	}
 	
