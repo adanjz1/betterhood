@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -71,9 +72,16 @@ public class EventOverlay extends Overlay {
 		}		
 		if(selectedMapLocation != null){
 			dialogIsHit = true;
-			if(dialogIsHit){				
-				Dialog myEvent = buildEventDisplayDialog();
-				myEvent.show();
+			if(dialogIsHit){	
+				Intent mapIntent = new Intent(this.homeScreen.getBaseContext(), MapEventScreen.class);
+				mapIntent.putExtra(BetterHood.EXTRAS_EVENT_HOST, selectedMapLocation.getHost());
+				mapIntent.putExtra(BetterHood.EXTRAS_EVENT_MESSAGE, selectedMapLocation.getDescription());
+				mapIntent.putExtra(BetterHood.EXTRAS_EVENT_START_DATE, selectedMapLocation.getTime());
+				mapIntent.putExtra(BetterHood.EXTRAS_EVENT_LOCATION_ADDRESS, selectedMapLocation.getAddress());
+				mapIntent.putExtra(BetterHood.EXTRAS_EVENT_TEMPLATE_NAME, selectedMapLocation.getType());
+				mapIntent.putExtra(BetterHood.EXTRAS_EVENT_NAME, selectedMapLocation.getName());
+				this.homeScreen.startActivityForResult(mapIntent, BetterHood.REQ_EVENT_LIST_SCREEN);
+				
 			}
 		}
 
@@ -178,6 +186,8 @@ public class EventOverlay extends Overlay {
 		editEventComment = (EditText) eventDialog.findViewById(R.id.editEventComment);
 		
 		buttonDialogForward.setEnabled(true);
+		
+		
 		
 		textEventType.setText(selectedMapLocation.getType());
 		textEventDate.setText(selectedMapLocation.getTime());
