@@ -57,6 +57,8 @@ public class EventListScreen extends Activity {
 		
 		Button buttonForward;
     	buttonForward = (Button) this.findViewById(R.id.buttonForward);
+    	Button buttonCancel;
+		buttonCancel = (Button) this.findViewById(R.id.buttonCancel);
     	
     	final ListView listEventView;
     	
@@ -115,8 +117,15 @@ public class EventListScreen extends Activity {
 						
 					}
 				}
-				listEventView.getCheckedItemPosition();
 				
+				
+			}
+        });
+        buttonCancel.setOnClickListener(new OnClickListener() {
+        	
+			public void onClick(View view) {
+				setResult(RESULT_CANCELED, intent);
+	        	finish();
 			}
         });
         
