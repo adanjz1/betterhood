@@ -477,13 +477,17 @@ public class HomeScreen extends MapActivity {
 		  super.onCreateOptionsMenu(menu);
 		  
 		  MenuItem item = menu.add("I Want");
-		  item.setIcon(R.drawable.w);
+		 // item.setIcon(R.drawable.w);
 		    
 		  item = menu.add("I Have");
-		  item.setIcon(R.drawable.have);
+		  //item.setIcon(R.drawable.have);
 		 
 		  item = menu.add("Event List");
-		  item.setIcon(R.drawable.settings);
+		 // item.setIcon(R.drawable.settings);
+		  
+		  item = menu.add("Similarities");
+		  
+		  item = menu.add("responses");
 		  
 		  
 		  
