@@ -1,9 +1,13 @@
 package com.lcc3710;
 
+
+
 import java.util.ArrayList;
+
 import java.util.Iterator;
 import java.util.List;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +17,11 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -64,6 +73,16 @@ public class HomeScreen extends MapActivity {
 	private static final int EVENT_LIST_DIALOG_ID = 0;
 	
 	private Dialog eventListDialog;
+	
+	public static final int Menu1 = Menu.FIRST + 1;
+	public static final int Menu2 = Menu.FIRST + 2;
+	public static final int Menu3 = Menu.FIRST + 3;
+	public static final int Menu4 = Menu.FIRST + 4;
+	private static final int want = 1;
+	private static final int have = 2;
+	private static final int list = 3;
+	
+
 	
 	@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -249,11 +268,7 @@ public class HomeScreen extends MapActivity {
         
         intent = getIntent();
         
-        buttonWant = (Button) findViewById(R.id.buttonWant);
-        buttonSettings = (Button) findViewById(R.id.buttonSettings);
-        buttonEventList = (Button) findViewById(R.id.buttonEventList);
-        
-        buttonEventList.setHeight(buttonWant.getHeight());        
+       
         
         if ((extras = intent.getExtras()) != null) {
         	sessionID = extras.getString(BetterHood.EXTRAS_SESSION_ID);
@@ -265,35 +280,7 @@ public class HomeScreen extends MapActivity {
         eventList = new EventList(sessionID);
         eventList.queryDatabase(this);     
         
-        buttonWant.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View view) {					
-				Intent inWant = new Intent(view.getContext(), CreateEventScreen1.class);
-				
-				inWant.putExtra(BetterHood.EXTRAS_SESSION_ID, sessionID);
-				inWant.putExtra(BetterHood.EXTRAS_CURRENT_LOCATION, lastKnownLocation);
-				inWant.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, username);
-				
-				startActivityForResult(inWant, BetterHood.REQ_CREATE_EVENT);
-			}
-        });
-        
-        buttonSettings.setOnClickListener(new OnClickListener() {
-			public void onClick(View view) {
-				if (sessionID != null) {
-					Intent inSettings = new Intent(view.getContext(), SettingsScreen.class);
-					inSettings.putExtra(BetterHood.EXTRAS_SESSION_ID, sessionID);
-					startActivityForResult(inSettings, BetterHood.REQ_SETTINGS_SCREEN);
-				}
-			}
-        });
-        
-        buttonEventList.setOnClickListener(new OnClickListener() {
-			public void onClick(View view) {
-				if (sessionID != null) {
-					showDialog(EVENT_LIST_DIALOG_ID);
-				}
-			}
-        });
+       
       
 	}
 	
@@ -472,7 +459,68 @@ public class HomeScreen extends MapActivity {
 	    return false;
 	}
 	
+	/** create the menu items */
+
+
 	
+	  @Override 
+	  public boolean onCreateOptionsMenu(Menu menu) {
+		  
+		  super.onCreateOptionsMenu(menu);
+		  
+		  MenuItem item = menu.add("I Want");
+		  item.setIcon(R.drawable.w);
+		    
+		  item = menu.add("I Have");
+		  item.setIcon(R.drawable.have);
+		 
+		  item = menu.add("Event List");
+		  item.setIcon(R.drawable.settings);
+		  
+		  
+		  
+		  return true;
+		}
+
+		/** when menu button option selected */
+		public boolean onOptionsItemSelected(MenuItem item) {
+			String id = (String) item.getTitle();
+			Log.i("whats item id=", id);
+			
+			
+			
+			
+			if(id == "I Want"){
+				Intent inWant = new Intent(this.getBaseContext(), CreateEventScreen1.class);
+				inWant.putExtra(BetterHood.EXTRAS_SESSION_ID, sessionID);
+				inWant.putExtra(BetterHood.EXTRAS_CURRENT_LOCATION, lastKnownLocation);
+				inWant.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, username);
+				startActivityForResult(inWant, BetterHood.REQ_CREATE_EVENT);
+			}
+				
+			else if(id == "I Have"){
+				if (sessionID != null) {
+					Intent inSettings = new Intent(this.getBaseContext(), SettingsScreen.class);
+					inSettings.putExtra(BetterHood.EXTRAS_SESSION_ID, sessionID);
+					startActivityForResult(inSettings, BetterHood.REQ_SETTINGS_SCREEN);
+				}
+			}
+			else if(id == "Event List"){
+			
+				if (sessionID != null) {
+					showDialog(EVENT_LIST_DIALOG_ID);
+				}
+				
+			}
+				
+			
+				     
+				     // Consume the selection event.
+				 return true;
+				   }
+		
+		
+		
 }
 
 

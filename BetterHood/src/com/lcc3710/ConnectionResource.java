@@ -41,31 +41,31 @@ public class ConnectionResource extends Activity {
 		}
 		
 		switch (requestCode) {
-		case BetterHood.REQ_LOGIN:
-			queryBase = BetterHood.PHP_FILE_LOGIN;
-			break;
-		case BetterHood.REQ_CREATE_ACCOUNT:
-			queryBase = BetterHood.PHP_FILE_CREATE_ACCOUNT;
-			break;
-		case BetterHood.REQ_CREATE_EVENT:
-			queryBase = BetterHood.PHP_FILE_CREATE_EVENT;
-			break;
-		case BetterHood.REQ_CHECK_USERNAME_AVAILABILITY:
-			queryBase = BetterHood.PHP_FILE_CHECK_USERNAME;
-			break;
-		case BetterHood.REQ_POPULATE_EVENT_LIST:
-			queryBase = BetterHood.PHP_FILE_POPULATE_EVENT_LIST;
-			break;
-		case BetterHood.REQ_EVENT_COMMENT:
-			queryBase = BetterHood.PHP_FILE_POPULATE_EVENT_COMMENT_LIST;
-			break;
-		case BetterHood.REQ_SETTINGS_SCREEN:
-			queryBase = BetterHood.PHP_FILE_ADD_TO_IHAVE;
-			break;
-		default:
-			intent.putExtra(BetterHood.EXTRAS_ERROR_MESSAGE, "ConnectionResource received an invalid request code");
-			setResult(RESULT_CANCELED, intent);
-			finish();
+			case BetterHood.REQ_LOGIN:
+				queryBase = BetterHood.PHP_FILE_LOGIN;
+				break;
+			case BetterHood.REQ_CREATE_ACCOUNT:
+				queryBase = BetterHood.PHP_FILE_CREATE_ACCOUNT;
+				break;
+			case BetterHood.REQ_CREATE_EVENT:
+				queryBase = BetterHood.PHP_FILE_CREATE_EVENT;
+				break;
+			case BetterHood.REQ_CHECK_USERNAME_AVAILABILITY:
+				queryBase = BetterHood.PHP_FILE_CHECK_USERNAME;
+				break;
+			case BetterHood.REQ_POPULATE_EVENT_LIST:
+				queryBase = BetterHood.PHP_FILE_POPULATE_EVENT_LIST;
+				break;
+			case BetterHood.REQ_EVENT_COMMENT:
+				queryBase = BetterHood.PHP_FILE_POPULATE_EVENT_COMMENT_LIST;
+				break;
+			case BetterHood.REQ_SETTINGS_SCREEN:
+				queryBase = BetterHood.PHP_FILE_ADD_TO_IHAVE;
+				break;
+			default:
+				intent.putExtra(BetterHood.EXTRAS_ERROR_MESSAGE, "ConnectionResource received an invalid request code");
+				setResult(RESULT_CANCELED, intent);
+				finish();
 		}
 		
 		String val = textURL(query);
