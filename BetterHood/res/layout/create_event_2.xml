@@ -5,6 +5,12 @@
 	android:layout_width="fill_parent" 
 	android:layout_height="fill_parent"
 	>	
+	<ScrollView
+		android:id="@+id/scrollview"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		>
 	<View
 		android:id="@+id/headerCreateEvent"
 		android:layout_width = "fill_parent"
@@ -75,4 +81,5 @@
 		android:layout_alignParentRight = "true"
 		android:layout_alignParentBottom = "true"
 	/>
+	</ScrollView>
 </RelativeLayout>

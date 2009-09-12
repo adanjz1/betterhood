@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-
+<LinearLayout
+android:id="@+id/linlayoutBase"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+android:orientation="vertical"
+xmlns:android="http://schemas.android.com/apk/res/android"
+>
+		<ScrollView
+		android:id="@+id/scrollview"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		>
 <RelativeLayout 
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent" 
 	android:layout_height="fill_parent"
 	>	
+	
 	<View
 		android:id="@+id/headerCreateEvent"
 		android:layout_width = "fill_parent"
@@ -42,7 +55,7 @@
 		android:text = "Back to Home"
 		android:layout_height = "wrap_content"
 		android:layout_width = "150dip"
-		android:layout_below = "@id/listIHave"
+		android:layout_below = "@id/editEventTemplate"
 		android:layout_alignParentLeft = "true"
 		android:layout_alignParentBottom = "true"
 	/>
@@ -51,9 +64,12 @@
 		android:text = "On to Step 2!"
 		android:layout_height = "wrap_content"
 		android:layout_width = "150dip"
-		android:layout_below = "@id/listIHave"
+		android:layout_below = "@id/editEventTemplate"
 		android:layout_toRightOf = "@id/buttonBack"
 		android:layout_alignParentRight = "true"
 		android:layout_alignParentBottom = "true"
 	/>
+	
 </RelativeLayout>
+</ScrollView>
+</LinearLayout>

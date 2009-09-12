@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-
+<LinearLayout
+android:id="@+id/linlayoutBase"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+android:orientation="vertical"
+xmlns:android="http://schemas.android.com/apk/res/android"
+>
+		
 <RelativeLayout 
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent" 
 	android:layout_height="fill_parent"
 	>	
+	
 	<View
 		android:id="@+id/headerSettingsScreen"
 		android:layout_width = "fill_parent"
@@ -29,13 +37,6 @@
 		android:text = "@string/settingsScreenCaption"
 	/>
 	
-	<ListView
-		android:id = "@+id/listIHave"
-		android:choiceMode = "multipleChoice"
-		android:layout_width = "fill_parent"
-		android:layout_height = "275dip"
-		android:layout_below = "@id/textSettingsCaption"
-	/>
 	
 	<EditText
     	android:id="@+id/editListText"
@@ -46,7 +47,7 @@
     	
     	android:gravity = "top"
     	android:scrollHorizontally = "false"
-    	android:layout_below = "@id/listIHave"
+    	android:layout_below = "@id/textSettingsCaption"
     	
     	android:inputType = "text"
     	android:singleLine = "false"
@@ -69,4 +70,13 @@
 		android:layout_below = "@id/editListText"
 		android:layout_alignParentRight = "true"
 	/>
+	<ListView
+		android:id = "@+id/listIHave"
+		android:choiceMode = "multipleChoice"
+		android:layout_below = "@id/buttonBack"
+		android:layout_width = "fill_parent"
+		android:layout_height = "275dip"
+	/>
 </RelativeLayout>
+
+</LinearLayout>
