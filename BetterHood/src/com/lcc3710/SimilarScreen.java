@@ -18,6 +18,7 @@ public class SimilarScreen extends Activity{
 	private Intent intent;
 	private Bundle extras;
 	private String sessionID;
+	private Activity a = this;
 	
 	private static final String[] aszIHave = new String[] {
     	"John", "Taylor", "Freddy Kruger", "Alex", "Tiffany", "Scott",
@@ -46,6 +47,7 @@ public class SimilarScreen extends Activity{
     			//something went wrong in creating the event
     		}
     		break;
+    	case BetterHood.REQ_HOME_SCREEN:
 		}
     			
     		
@@ -80,8 +82,10 @@ public class SimilarScreen extends Activity{
 		lv.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, aszIHave));
 		buttonCancel.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
-					setResult(RESULT_CANCELED, intent);
-					finish();
+					Intent home = new Intent(a, HomeScreen.class);
+			    	home.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
+			    	home.putExtra(BetterHood.EXTRAS_SESSION_ID, sessionID);
+			    	startActivityForResult(home, BetterHood.REQ_HOME_SCREEN);
 				}        	
 	        });
 	}

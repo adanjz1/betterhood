@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-
+<LinearLayout
+android:id="@+id/linlayoutBase"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+android:orientation="vertical"
+xmlns:android="http://schemas.android.com/apk/res/android"
+>
+		<ScrollView
+		android:id="@+id/scrollview"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		>
 <RelativeLayout 
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent" 
 	android:layout_height="fill_parent"
 	>
+	
 	
 	<TextView
 		android:id="@+id/labelEventType"
@@ -105,22 +118,17 @@
 		android:text = "Join Event!"
 		android:layout_height = "wrap_content"
 		android:layout_width = "100dip"
-		android:layout_marginTop = "4dip"
 		android:layout_toRightOf = "@id/buttonBack"
-		android:layout_alignParentRight = "true"
 		android:layout_alignParentBottom = "false"
-		android:layout_below = "@id/textEventDescription"
-		/>
+		android:layout_below = "@id/textEventDescription" android:layout_alignBottom="@id/buttonBack" android:layout_alignParentRight="true" android:layout_alignParentLeft="false" android:layout_alignRight="@id/buttonBack" android:layout_alignTop="@id/buttonBack"/>
 	
 	
 	<TextView
 		android:id="@+id/labelEventComment"
-		android:text = "Add a comment:"
 		android:layout_width = "100dip"
 		android:layout_height = "wrap_content"
 		android:layout_marginTop = "10dip"
-		android:layout_below = "@id/buttonBack"
-	/>
+		android:layout_below = "@id/buttonBack" android:text="Add a comment to this event:"/>
 	
 	<EditText
     	android:id="@+id/editEventComment"
@@ -133,10 +141,9 @@
     	android:scrollHorizontally = "false"
     	android:layout_toRightOf = "@id/labelEventComment"
     	android:layout_below = "@id/buttonForward"
-    	
     	android:inputType = "text"
     	android:singleLine = "false"
-    />
+    android:layout_alignBottom="@id/labelEventComment" android:layout_alignParentRight="true" android:layout_alignTop="@id/labelEventComment"/>
 
 	
 	<Button
@@ -147,7 +154,7 @@
 		android:layout_marginTop = "10dip"
 		
 		android:layout_alignParentRight = "false"
-		android:layout_alignParentBottom = "true"
+		android:layout_alignParentBottom = "false"
 		android:layout_below = "@id/labelEventComment"
 		
 	/>
@@ -156,11 +163,10 @@
 		android:text = "Add Comment"
 		android:layout_height = "wrap_content"
 		android:layout_width = "100dip"
-		android:layout_marginTop = "10dip"
-		
-		
-		android:layout_below = "@id/editEventComment"
 		android:layout_toRightOf = "@id/buttonViewComments"
+		android:layout_alignRight="@id/buttonViewComments"
 		
-	/>
+	    android:layout_alignParentRight="true" android:layout_alignTop="@id/buttonViewComments" android:layout_alignParentBottom="@id/buttonViewComments" android:layout_alignBottom="@id/buttonViewComments"/>
 </RelativeLayout>
+</ScrollView>
+</LinearLayout>
