@@ -52,6 +52,7 @@ public class BetterHood {
 	public static final String EXTRAS_EVENT_START_DATE = "eventStartDate";
 	public static final String EXTRAS_EVENT_MESSAGE = "eventMessage";
 	public static final String EXTRAS_EVENT_HOST = "eventHost";
+	public static final String EXTRAS_EVENT_SIMILAR = "eventHost";
 	
 	public static final String EXTRAS_EVENT_LIST = "eventList";
 	

@@ -519,7 +519,9 @@ public class HomeScreen extends MapActivity {
 			else if(id == "Share"){
 				if (sessionID != null) {
 					Intent inSettings = new Intent(this.getBaseContext(), SettingsScreen.class);
+					inSettings.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
 					inSettings.putExtra(BetterHood.EXTRAS_SESSION_ID, sessionID);
+					inSettings.putExtra(BetterHood.EXTRAS_ACCOUNT_FIRST_NAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_FIRST_NAME));
 					startActivityForResult(inSettings, BetterHood.REQ_SETTINGS_SCREEN);
 				}
 			}
@@ -559,8 +561,10 @@ public class HomeScreen extends MapActivity {
 		public void startSimilarScreen(String sessionID, String username){
 			
 			Intent home = new Intent(getBaseContext(), SimilarScreen.class);
-	    	home.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
+			home.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
+	    	home.putExtra(BetterHood.EXTRAS_ACCOUNT_FIRST_NAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_FIRST_NAME));
 	    	home.putExtra(BetterHood.EXTRAS_SESSION_ID, extras.getString(BetterHood.EXTRAS_SESSION_ID));
+	    	home.putExtra(BetterHood.EXTRAS_EVENT_SIMILAR, sessionID);
 	    	startActivityForResult(home, BetterHood.REQ_SIMILAR_SCREEN);
 		}
 		

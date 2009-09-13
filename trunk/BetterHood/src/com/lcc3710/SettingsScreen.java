@@ -75,10 +75,14 @@ public class SettingsScreen extends Activity {
 				// commit changes
 				String query = "";
 				query += "&" + BetterHood.EXTRAS_ACCOUNT_FIRST_NAME.toString();
+				//Log.i("name====", extras.getString(BetterHood.EXTRAS_ACCOUNT_FIRST_NAME.toString()));
+				//Log.i("name====", BetterHood.EXTRAS_ACCOUNT_USERNAME.toString());
 				for(int i = 0; i < aszIHave.length; i++){
 					
 					if(listIHave.isItemChecked(i) == true){
 						query += "&item_name=" + aszIHave[i].toString();
+						query += "&item_owner=" +  extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME);
+						//Log.i("sodm", query += "&item_owner=" +  extras.getString(BetterHood.EXTRAS_EVENT_HOST));
 						
 					}
 					
@@ -86,6 +90,7 @@ public class SettingsScreen extends Activity {
 				
 				if(editListText.getText().toString() != null && editListText.getText().toString().length() > 0){
 					query += "&item_name=" + editListText.getText().toString();
+					query += "&item_owner=" +  extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME);
 				}
 				query += "&sid=" + extras.getString(BetterHood.EXTRAS_SESSION_ID);
 					Log.i("what do i gots =", query);
