@@ -74,23 +74,25 @@ public class SettingsScreen extends Activity {
 			public void onClick(View v) {	
 				// commit changes
 				String query = "";
+				query += "&" + BetterHood.EXTRAS_ACCOUNT_FIRST_NAME.toString();
 				for(int i = 0; i < aszIHave.length; i++){
 					
 					if(listIHave.isItemChecked(i) == true){
-						query += "&item=" + aszIHave[i].toString();
+						query += "&item_name=" + aszIHave[i].toString();
 						
 					}
 					
 				}
 				
-				if(editListText.getText().toString() != null){
-					query += "&item=" + editListText.getText().toString();
+				if(editListText.getText().toString() != null && editListText.getText().toString().length() > 0){
+					query += "&item_name=" + editListText.getText().toString();
 				}
+				query += "&sid=" + extras.getString(BetterHood.EXTRAS_SESSION_ID);
 					Log.i("what do i gots =", query);
 					iHaveIntent = new Intent(intentHolder, ConnectionResource.class);
 					iHaveIntent.putExtra(BetterHood.EXTRAS_QUERY, query);
 					iHaveIntent.putExtra(BetterHood.EXTRAS_REQUEST_CODE, BetterHood.REQ_SETTINGS_SCREEN);
-					startActivityForResult(iHaveIntent, BetterHood.REQ_EVENT_COMMENT);
+					startActivityForResult(iHaveIntent, BetterHood.REQ_SETTINGS_SCREEN);
 				
 				setResult(RESULT_OK, intent);
 				finish();

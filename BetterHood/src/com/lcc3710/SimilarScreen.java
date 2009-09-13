@@ -3,11 +3,13 @@ package com.lcc3710;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class SimilarScreen extends Activity{
 	
@@ -25,6 +27,28 @@ public class SimilarScreen extends Activity{
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO response handling
+		intent = getIntent();
+        extras = intent.getExtras();
+		switch (requestCode) {
+    	case BetterHood.REQ_SIMILAR_SCREEN:
+    		
+    		if (resultCode == RESULT_OK) {
+    			// event was created, success!
+    			if (extras != null) {
+    				String szWebResponse;
+    				if ((szWebResponse = extras.getString(BetterHood.EXTRAS_WEB_RESPONSE)) != null) {
+    					Log.i(BetterHood.TAG_HOME_SCREEN, "pop sim returned response: " + szWebResponse);
+    				}
+    		}
+    		}
+    		
+    		if (resultCode == RESULT_CANCELED) {
+    			//something went wrong in creating the event
+    		}
+    		break;
+		}
+    			
+    		
 	}
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -32,7 +56,7 @@ public class SimilarScreen extends Activity{
         setContentView(R.layout.similar_screen);
         intent = getIntent();
         extras = intent.getExtras();
-        
+      
 
         
         if (extras != null) {
