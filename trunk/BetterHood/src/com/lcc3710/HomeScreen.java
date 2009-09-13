@@ -102,6 +102,7 @@ public class HomeScreen extends MapActivity {
     			// event was created, success!
     			Log.i("WTF IS HAPPENING", response);
     			String tempUsername = extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME);
+    			
     			startSimilarScreen(response, tempUsername);
 
     		}
@@ -540,6 +541,7 @@ public class HomeScreen extends MapActivity {
 					inSettings.putExtra(BetterHood.EXTRAS_EVENT_LIST, elist);
 					String tempQuery = "";
 					tempQuery += "&sid=" + extras.getString(BetterHood.EXTRAS_SESSION_ID);
+					inSettings.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
 					inSettings.putExtra(BetterHood.EXTRAS_QUERY, tempQuery);
 	    			inSettings.putExtra(BetterHood.EXTRAS_REQUEST_CODE, BetterHood.REQ_SIMILAR_SCREEN);
 					startActivityForResult(inSettings, BetterHood.REQ_SIMILAR_SCREEN);
@@ -557,8 +559,8 @@ public class HomeScreen extends MapActivity {
 		public void startSimilarScreen(String sessionID, String username){
 			
 			Intent home = new Intent(getBaseContext(), SimilarScreen.class);
-	    	home.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, username);
-	    	home.putExtra(BetterHood.EXTRAS_SESSION_ID, sessionID);
+	    	home.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
+	    	home.putExtra(BetterHood.EXTRAS_SESSION_ID, extras.getString(BetterHood.EXTRAS_SESSION_ID));
 	    	startActivityForResult(home, BetterHood.REQ_SIMILAR_SCREEN);
 		}
 		
