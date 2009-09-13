@@ -1,5 +1,9 @@
 package com.lcc3710;
 
+import java.util.ArrayList;
+
+import com.lcc3710.Event.AttributeList;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +23,9 @@ public class SimilarScreen extends Activity{
 	private Bundle extras;
 	private String sessionID;
 	private Activity a = this;
+	String delims = "\\^";
+	String[] partyTokens;
+	
 	
 	private static final String[] aszIHave = new String[] {
     	"John", "Taylor", "Freddy Kruger", "Alex", "Tiffany", "Scott",
@@ -34,6 +41,7 @@ public class SimilarScreen extends Activity{
     	case BetterHood.REQ_SIMILAR_SCREEN:
     		
     		if (resultCode == RESULT_OK) {
+    			Log.i("gettin dat info=", extras.getString(BetterHood.EXTRAS_EVENT_SIMILAR));
     			// event was created, success!
     			if (extras != null) {
     				String szWebResponse;
@@ -58,6 +66,9 @@ public class SimilarScreen extends Activity{
         setContentView(R.layout.similar_screen);
         intent = getIntent();
         extras = intent.getExtras();
+       
+		
+       // Log.i("gettin dat info=", extras.getString(BetterHood.EXTRAS_EVENT_SIMILAR));
       
 
         
@@ -79,7 +90,55 @@ public class SimilarScreen extends Activity{
 		lv = (ListView) findViewById(R.id.similarView);
 		lv.setChoiceMode(1);
 		
-		lv.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, aszIHave));
+		partyTokens = extras.getString(BetterHood.EXTRAS_EVENT_SIMILAR).split(delims);
+		Log.i("poart=", partyTokens.toString());
+		int num = partyTokens.length;
+	
+		String[] items = new String[num/2];
+		String[] itemsName = new String[num/2];
+		int itemsNameCount = 0;
+		
+		
+		String[] name = partyTokens[0].split("\\|");
+		int itemsCount = 0;
+		
+		
+		Event newEvent = new Event();
+		
+		for (int i = 0; i < partyTokens.length; i++) {
+			
+			// EVENT_NAME
+			
+			if(partyTokens[i].startsWith("|")){
+				
+				name = partyTokens[i].split("\\|");
+				
+					//Log.i(TAG, "name = " + name[1]);
+					items[itemsCount] = name[1];
+					itemsCount++;
+					//items[i+1] = "no";
+					
+				
+				
+			}
+			if(partyTokens[i].startsWith(">")){
+				
+				name = partyTokens[i].split("\\>");
+				
+					//Log.i(TAG, "name = " + name[1]);
+					itemsName[itemsNameCount] = name[1];
+					itemsNameCount++;
+					//items[i+1] = "no";
+					
+				
+				
+			}
+			
+			
+			
+		
+		//lv.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, aszIHave));
+		lv.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, itemsName));
 		buttonCancel.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
 					Intent home = new Intent(a, HomeScreen.class);
@@ -89,4 +148,4 @@ public class SimilarScreen extends Activity{
 				}        	
 	        });
 	}
-}
+	}}
