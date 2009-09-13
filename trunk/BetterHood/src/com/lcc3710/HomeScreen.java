@@ -94,11 +94,16 @@ public class HomeScreen extends MapActivity {
 		}
 		
     	switch (requestCode) {
-    	case BetterHood.REQ_CREATE_EVENT:
+    	case BetterHood.REQ_SIMILAR_SCREEN:
+    		final String response = data.getExtras().getString(BetterHood.EXTRAS_WEB_RESPONSE);
+    		Log.i("WTF IS HAPPENING", response);
     		
     		if (resultCode == RESULT_OK) {
     			// event was created, success!
-    			Toast.makeText(this.getWindow().getContext(), "Event created successfully!", BetterHood.TOAST_TIME);
+    			Log.i("WTF IS HAPPENING", response);
+    			String tempUsername = extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME);
+    			startSimilarScreen(response, tempUsername);
+
     		}
     		
     		if (resultCode == RESULT_CANCELED) {
@@ -531,9 +536,13 @@ public class HomeScreen extends MapActivity {
 			
 			else if(id == "Similarities"){
 				if (sessionID != null) {
-					Intent inSettings = new Intent(this.getBaseContext(), SimilarScreen.class);
+					Intent inSettings = new Intent(this.getBaseContext(), ConnectionResource.class);
 					inSettings.putExtra(BetterHood.EXTRAS_EVENT_LIST, elist);
-					startActivityForResult(inSettings, BetterHood.REQ_EVENT_LIST_SCREEN);
+					String tempQuery = "";
+					tempQuery += "&sid=" + extras.getString(BetterHood.EXTRAS_SESSION_ID);
+					inSettings.putExtra(BetterHood.EXTRAS_QUERY, tempQuery);
+	    			inSettings.putExtra(BetterHood.EXTRAS_REQUEST_CODE, BetterHood.REQ_SIMILAR_SCREEN);
+					startActivityForResult(inSettings, BetterHood.REQ_SIMILAR_SCREEN);
 				    //Intent intent = new Intent();;
 					//startActivityForResult(intent, eventList);
 				}
@@ -545,6 +554,13 @@ public class HomeScreen extends MapActivity {
 				     // Consume the selection event.
 				 return true;
 				   }
+		public void startSimilarScreen(String sessionID, String username){
+			
+			Intent home = new Intent(getBaseContext(), SimilarScreen.class);
+	    	home.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, username);
+	    	home.putExtra(BetterHood.EXTRAS_SESSION_ID, sessionID);
+	    	startActivityForResult(home, BetterHood.REQ_SIMILAR_SCREEN);
+		}
 		
 		
 		

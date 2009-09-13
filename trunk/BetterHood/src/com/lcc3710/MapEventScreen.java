@@ -44,7 +44,7 @@ public class MapEventScreen extends Activity {
 		final Activity ac = a;
 
 		this.setContentView(R.layout.event_screen);
-		this.getWindow().setLayout(300, 400);
+	//	this.getWindow().setLayout(300, 400);
 
 		buttonDialogBack = (Button) this.findViewById(R.id.buttonBack);
 		buttonDialogForward = (Button) this.findViewById(R.id.buttonForward);
