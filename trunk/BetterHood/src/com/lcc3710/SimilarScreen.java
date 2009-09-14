@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -21,10 +22,13 @@ public class SimilarScreen extends Activity{
 	private ListView lv;
 	private Intent intent;
 	private Bundle extras;
+	private Button buttonRespond;
 	private String sessionID;
+	String[] itemsName;
 	private Activity a = this;
 	String delims = "\\^";
 	String[] partyTokens;
+	String[] items;
 	
 	
 	private static final String[] aszIHave = new String[] {
@@ -87,6 +91,7 @@ public class SimilarScreen extends Activity{
 }
 	private void populateSimilar(){
 		buttonCancel = (Button) findViewById(R.id.buttonReturn);
+		buttonRespond = (Button) findViewById(R.id.buttonRespond);
 		lv = (ListView) findViewById(R.id.similarView);
 		lv.setChoiceMode(1);
 		
@@ -94,8 +99,8 @@ public class SimilarScreen extends Activity{
 		Log.i("poart=", partyTokens.toString());
 		int num = partyTokens.length;
 	
-		String[] items = new String[num/2];
-		String[] itemsName = new String[num/2];
+		 items = new String[num/2];
+		itemsName = new String[num/2];
 		int itemsNameCount = 0;
 		
 		
@@ -135,6 +140,10 @@ public class SimilarScreen extends Activity{
 			}
 			
 			
+				
+				
+			
+				
 			
 		
 		//lv.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, aszIHave));
@@ -147,5 +156,30 @@ public class SimilarScreen extends Activity{
 			    	startActivityForResult(home, BetterHood.REQ_HOME_SCREEN);
 				}        	
 	        });
+		buttonRespond.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				String name;
+				String comment;
+				for(int i =0; i< lv.getCount(); i++){
+					if(lv.isItemChecked(i)){
+						name = itemsName[i].toString();
+						comment = items[i].toString();
+						Log.i("nammmmme", name);
+						Log.i("whattisit", comment);
+						Intent home = new Intent(a, SimilarSub.class);
+				    	home.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
+				    	home.putExtra(BetterHood.EXTRAS_SESSION_ID, sessionID);
+				    	home.putExtra(BetterHood.EXTRAS_EVENT_NAME, comment);
+				    	home.putExtra(BetterHood.EXTRAS_EVENT_HOST, name);
+				    	
+				    	startActivityForResult(home, BetterHood.REQ_HOME_SCREEN);
+						
+						
+						
+					}
+				}
+			
+			}        	
+        });
 	}
 	}}

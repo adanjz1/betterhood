@@ -81,7 +81,7 @@ public class SettingsScreen extends Activity {
 					
 					if(listIHave.isItemChecked(i) == true){
 						query += "&item_name=" + aszIHave[i].toString();
-						query += "&item_owner=" +  extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME);
+						query += "&item_owner_name=" +  extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME);
 						//Log.i("sodm", query += "&item_owner=" +  extras.getString(BetterHood.EXTRAS_EVENT_HOST));
 						
 					}
@@ -90,9 +90,9 @@ public class SettingsScreen extends Activity {
 				
 				if(editListText.getText().toString() != null && editListText.getText().toString().length() > 0){
 					query += "&item_name=" + editListText.getText().toString();
-					query += "&item_owner=" +  extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME);
+					query += "&item_owner_name=" +  extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME);
 				}
-				query += "&sid=" + extras.getString(BetterHood.EXTRAS_SESSION_ID);
+				    query += "&sid=" + extras.getString(BetterHood.EXTRAS_SESSION_ID);
 					Log.i("what do i gots =", query);
 					iHaveIntent = new Intent(intentHolder, ConnectionResource.class);
 					iHaveIntent.putExtra(BetterHood.EXTRAS_QUERY, query);
