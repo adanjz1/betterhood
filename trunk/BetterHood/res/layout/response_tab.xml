@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+     android:id="@+id/th_set_menu_tabhost"
+     android:layout_width="fill_parent"
+     android:layout_height="fill_parent">
+	
+     <TabWidget
+          android:id="@android:id/tabs"
+          android:layout_width="fill_parent"
+          android:layout_height="fill_parent"/>
+     <FrameLayout
+          android:id="@android:id/tabcontent"
+          android:layout_width="fill_parent"
+          android:layout_height="fill_parent"
+          android:paddingTop="65px"> 
+               <LinearLayout
+			android:id="@+id/linlayoutBase"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+		android:orientation="vertical"
+			xmlns:android="http://schemas.android.com/apk/res/android"
+>
+		
+			<RelativeLayout 
+				xmlns:android="http://schemas.android.com/apk/res/android"
+				android:layout_width="fill_parent" 
+				android:layout_height="fill_parent"
+				> 
+          <ListView
+          android:id = "@+id/list"
+          android:layout_width="fill_parent"
+          android:layout_height = "275dip"
+          />
+     <Button
+		android:id = "@+id/canButt"
+		android:text = "Cancel"
+		android:layout_height = "wrap_content"
+		android:layout_width = "150dip"
+		android:layout_below = "@id/list"
+		android:layout_alignParentLeft = "false"
+	/>
+	<Button
+		android:id = "@+id/buttonForward"
+		android:text = "View Comment"
+		android:layout_height = "wrap_content"
+		android:layout_width = "150dip"
+		android:layout_toRightOf = "@id/canButt"
+		android:layout_below = "@id/list"
+		android:layout_alignParentRight = "false"
+	/>
+	     </RelativeLayout>
+
+	</LinearLayout>
+	<LinearLayout
+			android:id="@+id/linlayoutBase2"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+		android:orientation="vertical"
+			xmlns:android="http://schemas.android.com/apk/res/android"
+>
+		
+			<RelativeLayout 
+				xmlns:android="http://schemas.android.com/apk/res/android"
+				android:layout_width="fill_parent" 
+				android:layout_height="fill_parent"
+				> 
+	<ListView
+          android:id = "@+id/listSent"
+          android:layout_width="fill_parent"
+          android:layout_height = "275dip"
+          />
+     <Button
+		android:id = "@+id/canButtSent"
+		android:text = "Cancel"
+		android:layout_height = "wrap_content"
+		android:layout_width = "150dip"
+		android:layout_below = "@id/listSent"
+		android:layout_alignParentLeft = "false"
+	/>
+	<Button
+		android:id = "@+id/buttonForwardSent"
+		android:text = "View Comment"
+		android:layout_height = "wrap_content"
+		android:layout_width = "150dip"
+		android:layout_toRightOf = "@id/canButtSent"
+		android:layout_below = "@id/listSent"
+		android:layout_alignParentRight = "false"
+	/>
+				
+				
+	 </RelativeLayout>
+
+	</LinearLayout>
+     </FrameLayout>
+
+</TabHost>

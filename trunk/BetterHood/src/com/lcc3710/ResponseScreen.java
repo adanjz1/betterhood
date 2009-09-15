@@ -2,6 +2,7 @@ package com.lcc3710;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -20,6 +21,11 @@ public class ResponseScreen extends Activity{
 	     private Intent intent;
 	 	private Bundle extras;
 	 	private Button back;
+	 	String[] itemsName;
+		
+		String delims = "\\^";
+		String[] partyTokens;
+		String[] items;
 	     
 	     @Override
 	     public void onCreate(Bundle icicle)
@@ -28,8 +34,52 @@ public class ResponseScreen extends Activity{
 	          setContentView(R.layout.response_tab);
 	          intent = getIntent();
 	          extras = intent.getExtras();
+	          Log.i("gettin dat info=", extras.getString(BetterHood.EXTRAS_EVENT_SIMILAR));
 	          
-	          
+	          partyTokens = extras.getString(BetterHood.EXTRAS_EVENT_SIMILAR).split(delims);
+	  		Log.i("poart=", partyTokens.toString());
+	  		int num = partyTokens.length;
+	  	
+	  		 items = new String[num/2];
+	  		itemsName = new String[num/2];
+	  		int itemsNameCount = 0;
+	  		
+	  		
+	  		String[] name = partyTokens[0].split("\\|");
+	  		int itemsCount = 0;
+	  		
+	  		
+	  		Event newEvent = new Event();
+	  		
+	  		for (int i = 0; i < partyTokens.length; i++) {
+	  			
+	  			// EVENT_NAME
+	  			
+	  			if(partyTokens[i].startsWith("|")){
+	  				
+	  				name = partyTokens[i].split("\\|");
+	  				
+	  					//Log.i(TAG, "name = " + name[1]);
+	  					items[itemsCount] = name[1];
+	  					itemsCount++;
+	  					//items[i+1] = "no";
+	  					
+	  				
+	  				
+	  			}
+	  			if(partyTokens[i].startsWith(">")){
+	  				
+	  				name = partyTokens[i].split("\\>");
+	  				
+	  					//Log.i(TAG, "name = " + name[1]);
+	  					itemsName[itemsNameCount] = name[1];
+	  					itemsNameCount++;
+	  					//items[i+1] = "no";
+	  					
+	  				
+	  				
+	  			}
+	  		}
 	          
 	         
 	          
@@ -40,11 +90,11 @@ public class ResponseScreen extends Activity{
 	          
 	          
 	         
-	          back = (Button) findViewById(R.id.canButt);
-	         ListView list = (ListView) findViewById(R.id.list);
+	        back = (Button) findViewById(R.id.canButt);
+	        ListView list = (ListView) findViewById(R.id.list);
 	        final ListView listSent = (ListView) findViewById(R.id.listSent);
 	        
-	         ArrayAdapter<String> adapter = new ArrayAdapter<String>(a,android.R.layout.simple_list_item_multiple_choice,new String[]{"item1","item2","item3"});
+	         ArrayAdapter<String> adapter = new ArrayAdapter<String>(a,android.R.layout.simple_list_item_multiple_choice,itemsName);
              list.setAdapter(adapter);
              
             
@@ -60,17 +110,19 @@ public class ResponseScreen extends Activity{
 	               public View createTabContent(String tag)
 	               {                           
 	            	   	
-	            	   back.setOnClickListener(new OnClickListener() {
-	   	      			public void onClick(View v) {
-	   	      				setResult(RESULT_CANCELED, intent);
-	   	      				finish();
-	   	      			}        	
-	   	              });
+	            	   
 	                    return findViewById(R.id.linlayoutBase);
 	                    
 	               }          
 	                    
 	               });  
+	          
+	          back.setOnClickListener(new OnClickListener() {
+ 	      			public void onClick(View v) {
+ 	      				setResult(RESULT_CANCELED, intent);
+ 	      				finish();
+ 	      			}        	
+ 	              });
 	         
 	          
 	          

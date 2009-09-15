@@ -13,6 +13,7 @@ public class BetterHood {
 	public static final int REQ_EVENT_COMMENT= 8;
 	public static final int REQ_SIMILAR_SCREEN= 9;
 	public static final int REQ_SIMILAR_SUB= 10;
+	public static final int REQ_SIMILAR_RESPONSE = 11;
 	
 	//debug tags
 	public static final String TAG_LOGIN_SCREEN = "bh_login_screen";
@@ -54,6 +55,7 @@ public class BetterHood {
 	public static final String EXTRAS_EVENT_MESSAGE = "eventMessage";
 	public static final String EXTRAS_EVENT_HOST = "eventHost";
 	public static final String EXTRAS_EVENT_SIMILAR = "eventHost";
+	public static final String EXTRAS_RESPONSES = "eventHost";
 	
 	public static final String EXTRAS_EVENT_LIST = "eventList";
 	
@@ -72,6 +74,7 @@ public class BetterHood {
 	public static final String PHP_FILE_ADD_TO_IHAVE = "add_to_ihave.php";
 	public static final String PHP_FILE_POPULATE_SIMILAR_LIST = "populate_similar.php";
 	public static final String PHP_FILE_SIMILAR_SUB_COMMENT = "post_similar_comment.php";
+	public static final String PHP_FILE_POPULATE_RESPONSES = "populate_response.php";
 	
 	// templates
 	public static final String TEMPLATE_CARPOOL = "Carpool";
