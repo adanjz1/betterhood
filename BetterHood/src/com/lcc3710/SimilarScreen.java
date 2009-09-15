@@ -169,8 +169,8 @@ public class SimilarScreen extends Activity{
 						Intent home = new Intent(a, SimilarSub.class);
 				    	home.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
 				    	home.putExtra(BetterHood.EXTRAS_SESSION_ID, sessionID);
-				    	home.putExtra(BetterHood.EXTRAS_EVENT_NAME, comment);
-				    	home.putExtra(BetterHood.EXTRAS_EVENT_HOST, name);
+				    	home.putExtra(BetterHood.EXTRAS_EVENT_NAME, name);
+				    	home.putExtra(BetterHood.EXTRAS_EVENT_HOST, comment);
 				    	
 				    	startActivityForResult(home, BetterHood.REQ_HOME_SCREEN);
 						
