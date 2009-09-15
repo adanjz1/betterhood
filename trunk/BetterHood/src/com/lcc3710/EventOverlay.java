@@ -46,6 +46,7 @@ public class EventOverlay extends Overlay {
 	boolean dialogIsHit = false;
 	AlertDialog.Builder alert2;
 	Dialog eventDialog;
+	private String uname, uID;
 
 	private Paint	innerPaint, borderPaint, textPaint;
 
@@ -53,8 +54,10 @@ public class EventOverlay extends Overlay {
 	//  window should be displayed & where...i.e. whether a user 'clicked' on a known map location
 	private MapLocation selectedMapLocation;  
 
-	public EventOverlay(HomeScreen	map) {
+	public EventOverlay(HomeScreen	map, String name, String ID) {
 		this.homeScreen = map;
+		uname = name;
+		uID = ID;
 		shadowIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.shadow);
 		bubbleIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.party);
 	}
@@ -75,11 +78,14 @@ public class EventOverlay extends Overlay {
 			if(dialogIsHit){	
 				Intent mapIntent = new Intent(this.homeScreen.getBaseContext(), MapEventScreen.class);
 				mapIntent.putExtra(BetterHood.EXTRAS_EVENT_HOST, selectedMapLocation.getHost());
+				mapIntent.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, uname);
+				mapIntent.putExtra(BetterHood.EXTRAS_SESSION_ID, uID);
 				mapIntent.putExtra(BetterHood.EXTRAS_EVENT_MESSAGE, selectedMapLocation.getDescription());
 				mapIntent.putExtra(BetterHood.EXTRAS_EVENT_START_DATE, selectedMapLocation.getTime());
 				mapIntent.putExtra(BetterHood.EXTRAS_EVENT_LOCATION_ADDRESS, selectedMapLocation.getAddress());
 				mapIntent.putExtra(BetterHood.EXTRAS_EVENT_TEMPLATE_NAME, selectedMapLocation.getType());
 				mapIntent.putExtra(BetterHood.EXTRAS_EVENT_NAME, selectedMapLocation.getName());
+				mapIntent.putExtra(BetterHood.EXTRAS_EVENT_ID, selectedMapLocation.getID());
 				this.homeScreen.startActivityForResult(mapIntent, BetterHood.REQ_EVENT_LIST_SCREEN);
 				
 			}

@@ -21,6 +21,10 @@ public class MapLocation {
     public String getType(){
     	return e.getAttribute(AttributeList.EVENT_TYPE);
     }
+    public String getID() {
+        return e.getAttribute(AttributeList.EVENT_ID);
+   }
+  
     public String getHost() {
     	return e.getAttribute(AttributeList.EVENT_HOST);
     }
