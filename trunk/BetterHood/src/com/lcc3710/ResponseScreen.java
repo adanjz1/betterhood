@@ -21,12 +21,82 @@ public class ResponseScreen extends Activity{
 	     private Intent intent;
 	 	private Bundle extras;
 	 	private Button back;
+	 	 private int lastRequestCode;
 	 	String[] itemsName;
+	 	String[] itemsNameOut;
+	 	ListView listSent;
+	 	
 		
 		String delims = "\\^";
 		String[] partyTokens;
+		String[] partyTokensOut;
 		String[] items;
-	     
+		String[] itemsOut;
+		 protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+				Bundle extras;
+				lastRequestCode = requestCode;
+				
+				
+				
+		    	switch (requestCode) {
+		    	case BetterHood.REQ_OUT_RESPONSE:
+		    		final String response = data.getExtras().getString(BetterHood.EXTRAS_WEB_RESPONSE);
+		    		Log.i("WTF IS HAPPENING", response);
+		    		 partyTokensOut =  response.split(delims);
+		    		// intent = getIntent();
+			         // extras = intent.getExtras();
+		    		
+		    		if (resultCode == RESULT_OK) {
+		    			// event was created, success!
+		    			Log.i("WTF IS HAPPENING", response);
+		    			//String tempUsername = extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME);
+		    			int num = partyTokensOut.length;
+		    			String[] name = partyTokensOut[0].split("\\|");
+		    			itemsOut = new String[num/2];
+		    	  		itemsNameOut = new String[num/2];
+		    	  		int itemsCountOut = 0;
+		    	  		int itemsNameCountOut = 0;
+		    	  		
+		    			for (int i = 0; i < partyTokensOut.length; i++) {
+		    	  			
+		    	  			// EVENT_NAME
+		    	  			
+		    	  			if(partyTokensOut[i].startsWith("|")){
+		    	  				
+		    	  				name = partyTokensOut[i].split("\\|");
+		    	  				
+		    	  					//Log.i(TAG, "name = " + name[1]);
+		    	  					itemsOut[itemsCountOut] = name[1];
+		    	  					itemsCountOut++;
+		    	  					//items[i+1] = "no";
+		    	  					
+		    	  				
+		    	  				
+		    	  			}
+		    	  			if(partyTokensOut[i].startsWith(">")){
+		    	  				
+		    	  				name = partyTokensOut[i].split("\\>");
+		    	  				
+		    	  					//Log.i(TAG, "name = " + name[1]);
+		    	  					itemsNameOut[itemsNameCountOut] = name[1];
+		    	  					itemsNameCountOut++;
+		    	  					//items[i+1] = "no";
+		    	  					
+		    	  				
+		    	  				
+		    	  			}
+		    	  		}
+		    			ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(a,android.R.layout.simple_list_item_multiple_choice,itemsNameOut);
+		                listSent.setAdapter(adapter2); 
+
+		    		}
+		    		
+		    		if (resultCode == RESULT_CANCELED) {
+		    			//something went wrong in creating the event
+		    		}
+		    		break;
+		    	}
+		 }
 	     @Override
 	     public void onCreate(Bundle icicle)
 	     {
@@ -37,18 +107,18 @@ public class ResponseScreen extends Activity{
 	          Log.i("gettin dat info=", extras.getString(BetterHood.EXTRAS_EVENT_SIMILAR));
 	          
 	          partyTokens = extras.getString(BetterHood.EXTRAS_EVENT_SIMILAR).split(delims);
-	  		Log.i("poart=", partyTokens.toString());
-	  		int num = partyTokens.length;
+	  		  Log.i("poart=", partyTokens.toString());
+	  		  int num = partyTokens.length;
 	  	
 	  		 items = new String[num/2];
-	  		itemsName = new String[num/2];
-	  		int itemsNameCount = 0;
+	  		 itemsName = new String[num/2];
+	  		 int itemsNameCount = 0;
 	  		
 	  		
 	  		String[] name = partyTokens[0].split("\\|");
 	  		int itemsCount = 0;
 	  		
-	  		
+	  		listSent = (ListView) findViewById(R.id.listSent);
 	  		Event newEvent = new Event();
 	  		
 	  		for (int i = 0; i < partyTokens.length; i++) {
@@ -80,6 +150,7 @@ public class ResponseScreen extends Activity{
 	  				
 	  			}
 	  		}
+	  		
 	          
 	         
 	          
@@ -92,7 +163,8 @@ public class ResponseScreen extends Activity{
 	         
 	        back = (Button) findViewById(R.id.canButt);
 	        ListView list = (ListView) findViewById(R.id.list);
-	        final ListView listSent = (ListView) findViewById(R.id.listSent);
+	        listSent = (ListView) findViewById(R.id.listSent);
+	        
 	        
 	         ArrayAdapter<String> adapter = new ArrayAdapter<String>(a,android.R.layout.simple_list_item_multiple_choice,itemsName);
              list.setAdapter(adapter);
@@ -134,8 +206,17 @@ public class ResponseScreen extends Activity{
 	          
 	          ts1.setContent(new TabHost.TabContentFactory(){
 	               public View createTabContent(String tag)
-	               {                           
-	            	   	
+	               {            
+	            	   
+	            	    Intent inSettings = new Intent(a, ConnectionResource.class);
+						
+						String tempQuery = "";
+						tempQuery += "&sid=" + extras.getString(BetterHood.EXTRAS_SESSION_ID);
+						//inSettings.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
+						inSettings.putExtra(BetterHood.EXTRAS_QUERY, tempQuery);
+						inSettings.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
+		    			inSettings.putExtra(BetterHood.EXTRAS_REQUEST_CODE, BetterHood.REQ_OUT_RESPONSE);
+						startActivityForResult(inSettings, BetterHood.REQ_OUT_RESPONSE);	
 	            	    ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(a,android.R.layout.simple_list_item_multiple_choice,new String[]{"item4","item5","item6"});
 	                    listSent.setAdapter(adapter2); 
 	                    return findViewById(R.id.linlayoutBase2);
