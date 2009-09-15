@@ -119,8 +119,10 @@ public class ResponseScreen extends Activity{
 	          
 	          back.setOnClickListener(new OnClickListener() {
  	      			public void onClick(View v) {
- 	      				setResult(RESULT_CANCELED, intent);
- 	      				finish();
+ 	      				Intent home = new Intent(a, HomeScreen.class);
+ 				    	home.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
+ 				    	home.putExtra(BetterHood.EXTRAS_SESSION_ID, extras.getString(BetterHood.EXTRAS_SESSION_ID));
+ 				    	startActivityForResult(home, BetterHood.REQ_HOME_SCREEN);
  	      			}        	
  	              });
 	         
