@@ -493,7 +493,7 @@ public class HomeScreen extends MapActivity {
 		  
 		  item = menu.add("Similarities");
 		  
-		  item = menu.add("responses");
+		  item = menu.add("Responses");
 		  
 		  
 		  
@@ -529,6 +529,17 @@ public class HomeScreen extends MapActivity {
 			
 				if (sessionID != null) {
 					Intent inSettings = new Intent(this.getBaseContext(), EventListScreen.class);
+					inSettings.putExtra(BetterHood.EXTRAS_EVENT_LIST, elist);
+					startActivityForResult(inSettings, BetterHood.REQ_EVENT_LIST_SCREEN);
+				    //Intent intent = new Intent();;
+					//startActivityForResult(intent, eventList);
+				}
+				
+			}
+			else if(id == "Responses"){
+				
+				if (sessionID != null) {
+					Intent inSettings = new Intent(this.getBaseContext(), ResponseScreen.class);
 					inSettings.putExtra(BetterHood.EXTRAS_EVENT_LIST, elist);
 					startActivityForResult(inSettings, BetterHood.REQ_EVENT_LIST_SCREEN);
 				    //Intent intent = new Intent();;
