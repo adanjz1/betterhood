@@ -13,7 +13,8 @@ public class Event {
 		EVENT_LOCATION_LATITUDE,
 		EVENT_LOCATION_LONGITUDE,
 		EVENT_PHONE_NUMBER,
-		EVENT_CONTACT_EMAIL
+		EVENT_CONTACT_EMAIL,
+		EVENT_ID;
 	}
 	
 	private HashMap<AttributeList, String> attributes;

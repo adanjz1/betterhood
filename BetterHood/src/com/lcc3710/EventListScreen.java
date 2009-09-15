@@ -106,7 +106,9 @@ public class EventListScreen extends Activity {
 					if(listEventView.isItemChecked(i)){
 						
 						Intent in = new Intent(eActivity, MapEventScreen.class);
+						in.putExtra(BetterHood.EXTRAS_SESSION_ID, extras.getString(BetterHood.EXTRAS_SESSION_ID));
 						in.putExtra(BetterHood.EXTRAS_EVENT_HOST, alEvents.get(i).getAttribute(AttributeList.EVENT_HOST));
+						in.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
 						in.putExtra(BetterHood.EXTRAS_EVENT_MESSAGE, alEvents.get(i).getAttribute(AttributeList.EVENT_DESCRIPTION));
 						in.putExtra(BetterHood.EXTRAS_EVENT_START_DATE, alEvents.get(i).getAttribute(AttributeList.EVENT_START_DATE));
 						in.putExtra(BetterHood.EXTRAS_EVENT_LOCATION_ADDRESS, alEvents.get(i).getAttribute(AttributeList.EVENT_LOCATION_ADDRESS));

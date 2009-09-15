@@ -65,8 +65,8 @@ public class MapEventScreen extends Activity {
 		textEventAddress.setText(extras.getString(BetterHood.EXTRAS_EVENT_LOCATION_ADDRESS));
 		textEventHost.setText(extras.getString(BetterHood.EXTRAS_EVENT_HOST));
 		textEventDescription.setText(extras.getString(BetterHood.EXTRAS_EVENT_MESSAGE));
-		
-		this.setTitle(extras.getString(BetterHood.EXTRAS_EVENT_NAME));
+		Log.i("do i have an id yo", extras.getString(BetterHood.EXTRAS_EVENT_ID));
+		this.setTitle( extras.getString(BetterHood.EXTRAS_EVENT_NAME));
 		
 		editEventComment.setMaxLines(5);
 		
@@ -81,7 +81,17 @@ public class MapEventScreen extends Activity {
 					break;
 				case R.id.buttonForward:
 					if (v.isEnabled()) {
-						setResult(RESULT_CANCELED, intent);
+						String query ="";
+						query += "&sid=" + extras.getString(BetterHood.EXTRAS_SESSION_ID);
+						query += "&user_name=" + extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME);
+						query += "&event_id=" + extras.getString(BetterHood.EXTRAS_EVENT_ID);
+						
+						Log.i("what do i gots =", query);
+						Intent iHaveIntent = new Intent(ac, ConnectionResource.class);
+						iHaveIntent.putExtra(BetterHood.EXTRAS_QUERY, query);
+						iHaveIntent.putExtra(BetterHood.EXTRAS_REQUEST_CODE, BetterHood.REQ_JOIN_EVENT);
+						startActivityForResult(iHaveIntent, BetterHood.REQ_JOIN_EVENT);
+						setResult(RESULT_OK, intent);
 						finish();
 					}
 					break;

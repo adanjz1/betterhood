@@ -246,6 +246,13 @@ public class HomeScreen extends MapActivity {
     								newEvent.setAttribute(AttributeList.EVENT_CONTACT_EMAIL, name[1]);
     							}
     						}
+    						else if (partyTokens[i].startsWith("#")) {
+    							name = partyTokens[i].split("\\#");
+    							if (name[0] != null) {
+    								//Log.i(TAG, "contact email = " + name[1]);
+    								newEvent.setAttribute(AttributeList.EVENT_ID, name[1]);
+    							}
+    						}
     						else if(partyTokens[i].startsWith("&")){
     							
     						}
@@ -254,7 +261,7 @@ public class HomeScreen extends MapActivity {
     						itemsCount++;
     						
     						// if we've reached the end of this event, commit the event and create an empty one
-    						if(itemsCount >= 10){  
+    						if(itemsCount >= 11){  
     							Log.i(BetterHood.TAG_EVENT_LIST, "Adding event #" + Integer.toString(eventArrayList.size()+1) + ": " + newEvent.getAttribute(AttributeList.EVENT_NAME));
     							eventArrayList.add(newEvent);
     							itemsCount = 0;
@@ -292,17 +299,19 @@ public class HomeScreen extends MapActivity {
        
         initMap();
         initLocationManager();
-        overlay = new EventOverlay(this);
-		mapView.getOverlays().add(overlay);
-    	mapView.getController().setZoom(14);
+        
         
         intent = getIntent();
+        
         
        
         
         if ((extras = intent.getExtras()) != null) {
         	sessionID = extras.getString(BetterHood.EXTRAS_SESSION_ID);
         	username = extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME);
+        	overlay = new EventOverlay(this,username, sessionID);
+    		mapView.getOverlays().add(overlay);
+        	mapView.getController().setZoom(14);
         } else {
         	//big fat error
         }
@@ -462,7 +471,7 @@ public class HomeScreen extends MapActivity {
 		CustomOverlay overlay = new CustomOverlay(geopoint);
  
 		mapView.getOverlays().add(overlay);
-		EventOverlay myEvents = new EventOverlay(this);
+		EventOverlay myEvents = new EventOverlay(this,extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME), extras.getString(BetterHood.EXTRAS_SESSION_ID));
 		mapView.getOverlays().add(myEvents);
  
 		// move to location
