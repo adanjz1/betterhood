@@ -21,6 +21,9 @@
         <activity android:name=".SimilarSub"
         		  android:label="@string/title">
         </activity>
+        <activity android:name=".ResponseScreen"
+        		  android:label="@string/title">
+        </activity>
         <activity android:name=".CreateAccountScreen2"
         		  android:label="@string/title">
         </activity>

@@ -111,6 +111,23 @@ public class HomeScreen extends MapActivity {
     			//something went wrong in creating the event
     		}
     		break;
+    	case BetterHood.REQ_SIMILAR_RESPONSE:
+    		final String responseSimilar = data.getExtras().getString(BetterHood.EXTRAS_WEB_RESPONSE);
+    		Log.i("WTF IS  similar HAPPENING", responseSimilar);
+    		
+    		if (resultCode == RESULT_OK) {
+    			// event was created, success!
+    			Log.i("WTF IS HAPPENING", responseSimilar);
+    			String tempUsername = extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME);
+    			
+    			startResponseScreen(responseSimilar, tempUsername);
+
+    		}
+    		
+    		if (resultCode == RESULT_CANCELED) {
+    			//something went wrong in creating the event
+    		}
+    		break;
     	case BetterHood.REQ_SETTINGS_SCREEN:
     		if (resultCode == RESULT_OK) {
     			//successfully updated settings
@@ -539,9 +556,14 @@ public class HomeScreen extends MapActivity {
 			else if(id == "Responses"){
 				
 				if (sessionID != null) {
-					Intent inSettings = new Intent(this.getBaseContext(), ResponseScreen.class);
+					Intent inSettings = new Intent(this.getBaseContext(), ConnectionResource.class);
 					inSettings.putExtra(BetterHood.EXTRAS_EVENT_LIST, elist);
-					startActivityForResult(inSettings, BetterHood.REQ_EVENT_LIST_SCREEN);
+					String tempQuery = "";
+					tempQuery += "&sid=" + extras.getString(BetterHood.EXTRAS_SESSION_ID);
+					inSettings.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
+					inSettings.putExtra(BetterHood.EXTRAS_QUERY, tempQuery);
+	    			inSettings.putExtra(BetterHood.EXTRAS_REQUEST_CODE, BetterHood.REQ_SIMILAR_RESPONSE);
+					startActivityForResult(inSettings, BetterHood.REQ_SIMILAR_RESPONSE);
 				    //Intent intent = new Intent();;
 					//startActivityForResult(intent, eventList);
 				}
@@ -577,6 +599,16 @@ public class HomeScreen extends MapActivity {
 	    	home.putExtra(BetterHood.EXTRAS_SESSION_ID, extras.getString(BetterHood.EXTRAS_SESSION_ID));
 	    	home.putExtra(BetterHood.EXTRAS_EVENT_SIMILAR, sessionID);
 	    	startActivityForResult(home, BetterHood.REQ_SIMILAR_SCREEN);
+		}
+		
+		public void startResponseScreen(String sessionID, String username){
+			
+			Intent home = new Intent(getBaseContext(), ResponseScreen.class);
+			home.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
+	    	home.putExtra(BetterHood.EXTRAS_ACCOUNT_FIRST_NAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_FIRST_NAME));
+	    	home.putExtra(BetterHood.EXTRAS_SESSION_ID, extras.getString(BetterHood.EXTRAS_SESSION_ID));
+	    	home.putExtra(BetterHood.EXTRAS_EVENT_SIMILAR, sessionID);
+	    	startActivityForResult(home, BetterHood.REQ_SIMILAR_RESPONSE);
 		}
 		
 		
