@@ -21,6 +21,7 @@ public class ResponseScreen extends Activity{
 	     private Intent intent;
 	 	private Bundle extras;
 	 	private Button back;
+	 	private Button backSent;
 	 	 private int lastRequestCode;
 	 	String[] itemsName;
 	 	String[] itemsNameOut;
@@ -88,6 +89,7 @@ public class ResponseScreen extends Activity{
 		    	  		}
 		    			ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(a,android.R.layout.simple_list_item_multiple_choice,itemsNameOut);
 		                listSent.setAdapter(adapter2); 
+		                listSent.setChoiceMode(1);
 
 		    		}
 		    		
@@ -162,8 +164,10 @@ public class ResponseScreen extends Activity{
 	          
 	         
 	        back = (Button) findViewById(R.id.canButt);
+	        backSent = (Button) findViewById(R.id.canButtSent);
 	        ListView list = (ListView) findViewById(R.id.list);
 	        listSent = (ListView) findViewById(R.id.listSent);
+	        list.setChoiceMode(1);
 	        
 	        
 	         ArrayAdapter<String> adapter = new ArrayAdapter<String>(a,android.R.layout.simple_list_item_multiple_choice,itemsName);
@@ -197,6 +201,14 @@ public class ResponseScreen extends Activity{
  				    	startActivityForResult(home, BetterHood.REQ_HOME_SCREEN);
  	      			}        	
  	              });
+	          backSent.setOnClickListener(new OnClickListener() {
+	      			public void onClick(View v) {
+	      				Intent home = new Intent(a, HomeScreen.class);
+				    	home.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
+				    	home.putExtra(BetterHood.EXTRAS_SESSION_ID, extras.getString(BetterHood.EXTRAS_SESSION_ID));
+				    	startActivityForResult(home, BetterHood.REQ_HOME_SCREEN);
+	      			}        	
+	              });
 	         
 	          
 	          
