@@ -79,7 +79,7 @@
 	/>
 	<Button
 		android:id = "@+id/buttonForwardSent"
-		android:text = "View Comment"
+		android:text = "who the hell cares"
 		android:layout_height = "wrap_content"
 		android:layout_width = "150dip"
 		android:layout_toRightOf = "@id/canButtSent"
