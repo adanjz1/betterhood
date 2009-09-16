@@ -81,7 +81,7 @@ public class SettingsScreen extends Activity {
         final TabSpec ts = myTabHost.newTabSpec("TAB_TAG_1");
        // myTabHost.setCurrentTab(index)
         
-        ts.setIndicator("Inbox");                
+        ts.setIndicator("Items");                
         
         ts.setContent(new TabHost.TabContentFactory(){
             public View createTabContent(String tag)
@@ -122,7 +122,7 @@ public class SettingsScreen extends Activity {
         
         
         
-        ts1.setIndicator("Outbox");
+        ts1.setIndicator("Interest");
                   
         myTabHost.addTab(ts1);
         
