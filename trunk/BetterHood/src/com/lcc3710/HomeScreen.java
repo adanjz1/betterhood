@@ -508,6 +508,8 @@ public class HomeScreen extends MapActivity {
 		  
 		  super.onCreateOptionsMenu(menu);
 		  
+		  
+		  
 		  MenuItem item = menu.add("Desire");
 		 // item.setIcon(R.drawable.w);
 		    
