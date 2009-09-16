@@ -16,6 +16,7 @@ public class BetterHood {
 	public static final int REQ_SIMILAR_RESPONSE = 11;
 	public static final int REQ_OUT_RESPONSE = 12;
 	public static final int REQ_JOIN_EVENT = 13;
+	public static final int REQ_SETTINGS_SCREEN_INTEREST = 14;
 	
 	//debug tags
 	public static final String TAG_LOGIN_SCREEN = "bh_login_screen";
@@ -80,7 +81,7 @@ public class BetterHood {
 	public static final String PHP_FILE_POPULATE_RESPONSES = "populate_response.php";
 	public static final String PHP_FILE_POPULATE_OUT_RESPONSES = "populate_out_response.php";
 	public static final String PHP_FILE_JOIN_EVENT = "php_join_event.php";
-	
+	public static final String PHP_FILE_ADD_TO_IHAVE_INTEREST = "add_to_ihave_interest.php";
 	// templates
 	public static final String TEMPLATE_CARPOOL = "Carpool";
 	public static final String TEMPLATE_MISSING_CHILD = "Missing Child";
