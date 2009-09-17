@@ -83,8 +83,12 @@ public class BetterHood {
 	public static final String PHP_FILE_JOIN_EVENT = "php_join_event.php";
 	public static final String PHP_FILE_ADD_TO_IHAVE_INTEREST = "add_to_ihave_interest.php";
 	// templates
+	public static final String TEMPLATE_BABYSITTER = "Babysitter";
 	public static final String TEMPLATE_CARPOOL = "Carpool";
+	public static final String TEMPLATE_LAWNMOWER = "Lawnmower";
 	public static final String TEMPLATE_MISSING_CHILD = "Missing Child";
+	public static final String TEMPLATE_PARTY = "Party";
+	public static final String TEMPLATE_PLAYDATE = "Play-date";
 	public static final String TEMPLATE_POOL_PARTY = "Pool Party";
 	public static final String TEMPLATE_POTLUCK = "Potluck";
 	

@@ -127,12 +127,17 @@ public class CreateEventScreen2 extends Activity {
         if ((szTemplateName = extras.getString(BetterHood.EXTRAS_EVENT_TEMPLATE_NAME)) != null) {
         	if (szTemplateName.equals(BetterHood.TEMPLATE_CARPOOL)) {
         		iLayoutFile = R.layout.template_carpool;
+        	} else if (szTemplateName.equals(BetterHood.TEMPLATE_LAWNMOWER)) {
+        		iLayoutFile = R.layout.template_lawnmower;
         	} else if (szTemplateName.equals(BetterHood.TEMPLATE_MISSING_CHILD)) {
         		iLayoutFile = R.layout.template_missing_child;
         	} else if (szTemplateName.equals(BetterHood.TEMPLATE_POOL_PARTY)) {
         		iLayoutFile = R.layout.template_pool_party;
         	} else if (szTemplateName.equals(BetterHood.TEMPLATE_POTLUCK)) {
         		iLayoutFile = R.layout.template_potluck;
+        	//default template
+        	} else {
+        		iLayoutFile = R.layout.template_pool_party;
         	}
         	setContentView(iLayoutFile);
         } else {
