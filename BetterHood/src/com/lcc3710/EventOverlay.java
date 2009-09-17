@@ -159,16 +159,23 @@ public class EventOverlay extends Overlay {
 				//canvas.drawBitmap(shadowIcon, screenCoords.x, screenCoords.y - shadowIcon.getHeight(),null);
 			} else {
 				if(location.getType().equals("Carpool")){
+					bubbleIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.car);
+				}
+				else if(location.getType().equals("Lawnmower")){
 					bubbleIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.services);
 				}
-				if(location.getType().equals("Missing Child")){
+				else if(location.getType().equals("Missing Child")){
 					bubbleIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.alert);
 				}
-				if(location.getType().equals("Pool Party")) {
+				else if(location.getType().equals("Pool Party")) {
 					bubbleIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.balloon);
 				}
-				if(location.getType().equals("Potluck")){
+				else if(location.getType().equals("Potluck")){
 					bubbleIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.charity);
+				}
+				//default icon
+				else {
+					bubbleIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.balloon);
 				}
 				
 				//resize based on zoom level				

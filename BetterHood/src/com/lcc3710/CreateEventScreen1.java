@@ -22,7 +22,10 @@ public class CreateEventScreen1 extends Activity {
 	private Intent intent;
 	
 	static final String[] aszAvailableEvents = {
-    	BetterHood.TEMPLATE_CARPOOL, BetterHood.TEMPLATE_MISSING_CHILD, BetterHood.TEMPLATE_POOL_PARTY,
+    	BetterHood.TEMPLATE_CARPOOL, 
+    	BetterHood.TEMPLATE_LAWNMOWER, 
+    	BetterHood.TEMPLATE_MISSING_CHILD, 
+    	BetterHood.TEMPLATE_POOL_PARTY,
     	BetterHood.TEMPLATE_POTLUCK
     };
 	
