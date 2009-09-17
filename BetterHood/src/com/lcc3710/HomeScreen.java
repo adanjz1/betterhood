@@ -311,7 +311,7 @@ public class HomeScreen extends MapActivity {
         	username = extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME);
         	overlay = new EventOverlay(this,username, sessionID);
     		mapView.getOverlays().add(overlay);
-        	mapView.getController().setZoom(14);
+        	mapView.getController().setZoom(16);
         } else {
         	//big fat error
         }
@@ -507,13 +507,11 @@ public class HomeScreen extends MapActivity {
 	  public boolean onCreateOptionsMenu(Menu menu) {
 		  
 		  super.onCreateOptionsMenu(menu);
-		  
-		  
-		  
-		  MenuItem item = menu.add("Desire");
+		  MenuItem item = menu.add("I Want");
+
 		 // item.setIcon(R.drawable.w);
 		    
-		  item = menu.add("Share");
+		  item = menu.add("I Have");
 		  //item.setIcon(R.drawable.have);
 		 
 		  item = menu.add("Event List");
@@ -521,7 +519,7 @@ public class HomeScreen extends MapActivity {
 		  
 		  item = menu.add("Similarities");
 		  
-		  item = menu.add("Responses");
+		  item = menu.add("Messages");
 		  
 		  
 		  
@@ -536,7 +534,7 @@ public class HomeScreen extends MapActivity {
 			
 			
 			
-			if(id == "Desire"){
+			if(id == "I Want"){
 				Intent inWant = new Intent(this.getBaseContext(), CreateEventScreen1.class);
 				inWant.putExtra(BetterHood.EXTRAS_SESSION_ID, sessionID);
 				inWant.putExtra(BetterHood.EXTRAS_CURRENT_LOCATION, lastKnownLocation);
@@ -544,7 +542,7 @@ public class HomeScreen extends MapActivity {
 				startActivityForResult(inWant, BetterHood.REQ_CREATE_EVENT);
 			}
 				
-			else if(id == "Share"){
+			else if(id == "I Have"){
 				if (sessionID != null) {
 					Intent inSettings = new Intent(this.getBaseContext(), SettingsScreen.class);
 					inSettings.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
@@ -564,7 +562,7 @@ public class HomeScreen extends MapActivity {
 				}
 				
 			}
-			else if(id == "Responses"){
+			else if(id == "Messages"){
 				
 				if (sessionID != null) {
 					Intent inSettings = new Intent(this.getBaseContext(), ConnectionResource.class);
