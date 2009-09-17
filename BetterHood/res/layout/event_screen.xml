@@ -130,20 +130,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_marginTop = "10dip"
 		android:layout_below = "@id/buttonBack" android:text="Add a comment to this event:"/>
 	
-	<EditText
-    	android:id="@+id/editEventComment"
-    	android:layout_height = "wrap_content"
-    	android:layout_width = "fill_parent"
-    	android:layout_marginLeft = "5dip"
-    	android:layout_marginRight = "5dip"
-    	
-    	android:gravity = "top"
-    	android:scrollHorizontally = "false"
-    	android:layout_toRightOf = "@id/labelEventComment"
-    	android:layout_below = "@id/buttonForward"
-    	android:inputType = "text"
-    	android:singleLine = "false"
-    android:layout_alignBottom="@id/labelEventComment" android:layout_alignParentRight="true" android:layout_alignTop="@id/labelEventComment"/>
+	
 
 	
 	<Button
@@ -158,15 +145,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_below = "@id/labelEventComment"
 		
 	/>
-	<Button
-		android:id = "@+id/buttonAddComment"
-		android:text = "Add Comment"
-		android:layout_height = "wrap_content"
-		android:layout_width = "100dip"
-		android:layout_toRightOf = "@id/buttonViewComments"
-		android:layout_alignRight="@id/buttonViewComments"
-		
-	    android:layout_alignParentRight="true" android:layout_alignTop="@id/buttonViewComments" android:layout_alignParentBottom="@id/buttonViewComments" android:layout_alignBottom="@id/buttonViewComments"/>
+	
 </RelativeLayout>
 </ScrollView>
 </LinearLayout>

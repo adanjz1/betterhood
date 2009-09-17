@@ -46,7 +46,7 @@ public class SimilarSub extends Activity{
 				
 				query += "&sid=" + extras.getString(BetterHood.EXTRAS_SESSION_ID);
 				query += "&user_name=" + extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME);
-				query += "&comment_recipient=" + extras.getString(BetterHood.EXTRAS_EVENT_HOST);
+				query += "&comment_recipient=" + extras.getString(BetterHood.EXTRAS_EVENT_NAME);
 				query += "&comment_topic=" + eText.getText().toString();
 				Log.i("what do i gots =", query);
 				Intent iHaveIntent = new Intent(a, ConnectionResource.class);

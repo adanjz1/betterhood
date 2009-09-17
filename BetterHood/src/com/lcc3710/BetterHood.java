@@ -17,6 +17,8 @@ public class BetterHood {
 	public static final int REQ_OUT_RESPONSE = 12;
 	public static final int REQ_JOIN_EVENT = 13;
 	public static final int REQ_SETTINGS_SCREEN_INTEREST = 14;
+	public static final int REQ_SIMILAR_SCREEN_INTEREST = 15;
+	public static final int REQ_SIMILAR_SCREEN_EVENTS_HAVE = 16;
 	
 	//debug tags
 	public static final String TAG_LOGIN_SCREEN = "bh_login_screen";
@@ -46,7 +48,7 @@ public class BetterHood {
 	public static final String EXTRAS_ACCOUNT_USERNAME = "username";
 	public static final String EXTRAS_ACCOUNT_PASSWORD = "password";
 	public static final String EXTRAS_ACCOUNT_IHAVE = "iHave";
-	
+	public static final String[] EXTRAS_SIMILAR = {"iHave"};
 	public static final String EXTRAS_EVENT_TEMPLATE_NAME = "templateName";
 	public static final String EXTRAS_EVENT_NAME = "eventName";
 	public static final String EXTRAS_EVENT_LOCATION_LATITUDE = "eventLatitude";
@@ -82,6 +84,8 @@ public class BetterHood {
 	public static final String PHP_FILE_POPULATE_OUT_RESPONSES = "populate_out_response.php";
 	public static final String PHP_FILE_JOIN_EVENT = "php_join_event.php";
 	public static final String PHP_FILE_ADD_TO_IHAVE_INTEREST = "add_to_ihave_interest.php";
+	public static final String PHP_FILE_POPULATE_SIMILAR_INTEREST_LIST = "populate_similar_interest.php";
+	public static final String PHP_FILE_POPULATE_SIMILAR_EVENTS_HAVE = "populate_similar_events.php";
 	// templates
 	public static final String TEMPLATE_BABYSITTER = "Babysitter";
 	public static final String TEMPLATE_CARPOOL = "Carpool";

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -26,6 +27,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -38,6 +40,7 @@ import com.lcc3710.Event.AttributeList;
 public class HomeScreen extends MapActivity {
 	private Button buttonWant;
 	private Button buttonSettings;
+	private ListView lv;
 	private Button buttonEventList;
 	Bundle b;
 	GeoPoint geopoint = null;
@@ -69,10 +72,11 @@ public class HomeScreen extends MapActivity {
 	private String username;
 	
 	private Bundle extras;
+	private String[] stringOfNeeds;
 	
 	private static final int EVENT_LIST_DIALOG_ID = 0;
 	
-	private Dialog eventListDialog;
+	private Dialog eventListDialog, eventNoticeDialog;
 	
 	public static final int Menu1 = Menu.FIRST + 1;
 	public static final int Menu2 = Menu.FIRST + 2;
@@ -81,6 +85,10 @@ public class HomeScreen extends MapActivity {
 	private static final int want = 1;
 	private static final int have = 2;
 	private static final int list = 3;
+	String[] itemsName2, itemsName3;
+	private Activity a = this;
+	
+	String[] items, items2, items3;
 	
 
 	
@@ -136,6 +144,101 @@ public class HomeScreen extends MapActivity {
     			// somethign went wrong in settings
     		}
     		break;
+    	 case BetterHood.REQ_SIMILAR_SCREEN_EVENTS_HAVE:
+ 	    	Log.i("you ok,", data.getStringExtra(BetterHood.EXTRAS_WEB_RESPONSE));
+ 		if (resultCode == RESULT_OK) {
+ 			String[] interest = data.getStringExtra(BetterHood.EXTRAS_WEB_RESPONSE).split(delims);
+ 			//partyTokens.add(2,interest) ;
+ 			//Log.i("poart=", partyTokens.toString());
+ 			int num = interest.length;
+ 		
+ 			 items3 = new String[num/2];
+ 			itemsName3 = new String[num/2];
+ 			int itemsNameCount = 0;
+ 			
+ 			
+ 			
+ 			String [] partyTokensReal = interest;
+ 			String[] name = interest[0].split("\\|");
+ 			int itemsCount = 0;
+ 			
+ 			
+ 			Event newEvent = new Event();
+ 			
+ 			for (int i = 0; i < interest.length; i++) {
+ 				
+ 				// EVENT_NAME
+ 				
+ 				if(interest[i].startsWith("|")){
+ 					
+ 					name = interest[i].split("\\|");
+ 					
+ 						//Log.i(TAG, "name = " + name[1]);
+ 						items3[itemsCount] = name[1];
+ 						itemsCount++;
+ 						//items[i+1] = "no";
+ 						
+ 					
+ 					
+ 				}
+ 				if(interest[i].startsWith(">")){
+ 					
+ 					name = interest[i].split("\\>");
+ 					
+ 						//Log.i(TAG, "name = " + name[1]);
+ 						itemsName3[itemsNameCount] = name[1];
+ 						itemsNameCount++;
+ 						//items[i+1] = "no";
+ 						 
+ 		
+ 						
+ 					
+ 					
+ 		}
+ 			}
+ 			//partyTokens.set(2, itemsName2);
+ 		
+ 			String[]  adapt = new String[items3.length];
+ 			System.out.println(adapt.length);
+ 			//System.out.println(itemsName2.length);
+ 			//System.out.println(itemsName.length);
+ 			//String[] item = partyTokens.get(0);
+ 			//String[] item2 = partyTokens.get(1);
+ 			
+ 			
+ 			//aAdapter.clear();
+ 			for(int i =0; i < (items3.length); i++){
+ 				
+ 				
+ 				if(i < itemsName3.length){
+ 					//System.out.println(itemsName2[0]);
+ 					adapt[i] = "Someone Wants: " + itemsName3[i];
+ 					
+ 				}
+ 				
+ 				
+ 				
+ 				
+ 			}
+ 			
+ 			String[]  adaptName = new String[items3.length];
+ 			int count3=0;
+ 			int count4=0;
+ 			for(int i =0; i < (items3.length); i++){
+ 				
+ 				
+ 				if(i < items3.length ){
+ 					//System.out.println(itemsName2[0]);
+ 					adaptName[i] = items3[i];
+ 					count4++;
+ 				}
+
+ 			}
+ 			stringOfNeeds = adapt;
+ 			buildNoticeDialog().show();
+ 			final String[] adapter = adapt;
+ 			final String[] adapterName = adaptName;
+ 		}break;
     	case BetterHood.REQ_POPULATE_EVENT_LIST:
     		if (resultCode == RESULT_OK) {
     			// event list populated, we better find out whats in the extras
@@ -190,7 +293,7 @@ public class HomeScreen extends MapActivity {
     								//Log.i(TAG, "description = " + name[1]);
     								newEvent.setAttribute(AttributeList.EVENT_DESCRIPTION, name[1]);
     							}
-    							if(name[0].length() == 0){
+    							if(name[1].length() < 1){
     								
     								newEvent.setAttribute(AttributeList.EVENT_DESCRIPTION, "Description not provided");
     							}
@@ -277,6 +380,7 @@ public class HomeScreen extends MapActivity {
     						Log.i(BetterHood.TAG_HOME_SCREEN, BetterHood.ERROR_PREFIX + "EventList.populate() returned no response!");
     					}
     				}
+    				
     			}
     		}
     		
@@ -312,12 +416,28 @@ public class HomeScreen extends MapActivity {
         	overlay = new EventOverlay(this,username, sessionID);
     		mapView.getOverlays().add(overlay);
         	mapView.getController().setZoom(16);
+        	String tempQuery="";
+        	eventList = new EventList(sessionID);
+		     eventList.queryDatabase(this);  
+			Intent in = new Intent(this, ConnectionResource.class);
+		//	in.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, adapt);
+			tempQuery += "&sid=" + sessionID;
+			//in.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
+			in.putExtra(BetterHood.EXTRAS_QUERY, tempQuery);
+			in.putExtra(BetterHood.EXTRAS_SESSION_ID, sessionID);
+			in.putExtra(BetterHood.EXTRAS_ACCOUNT_FIRST_NAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_FIRST_NAME));
+			in.putExtra(BetterHood.EXTRAS_REQUEST_CODE, BetterHood.REQ_SIMILAR_SCREEN_EVENTS_HAVE);
+			startActivityForResult(in, BetterHood.REQ_SIMILAR_SCREEN_EVENTS_HAVE);
+		
+        	
+			    
+			
+		    
         } else {
         	//big fat error
         }
         
-        eventList = new EventList(sessionID);
-        eventList.queryDatabase(this);     
+       
         
        
       
@@ -326,6 +446,7 @@ public class HomeScreen extends MapActivity {
 	// called when HomeScreen is shown to user after being paused
 	protected void onResume() {
 		super.onResume();
+		
 		//intent = getIntent();
 		if (lastRequestCode > 2) {
 			if (lastRequestCode != BetterHood.REQ_POPULATE_EVENT_LIST) {
@@ -346,10 +467,34 @@ public class HomeScreen extends MapActivity {
         return null;
     }
     
+    
+    private Dialog buildNoticeDialog() {
+    	eventNoticeDialog = new Dialog(this);
+    	eventNoticeDialog.setContentView(R.layout.event_notice_dialog);
+    	eventNoticeDialog.getWindow().setLayout(320, 400);
+    	eventNoticeDialog.setTitle("Common Events");
+    	
+    	  Button buttonBack = (Button) eventNoticeDialog.findViewById(R.id.buttonBack);
+          Button buttonForward = (Button)eventNoticeDialog.findViewById(R.id.buttonForward);
+          lv = (ListView) eventNoticeDialog.findViewById(R.id.listNeeds);
+          
+          lv.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, stringOfNeeds));
+          lv.setChoiceMode(1);
+          
+          buttonBack.setOnClickListener(new OnClickListener() {
+  			public void onClick(View view) {
+  				eventNoticeDialog.dismiss();
+  			}
+          });
+          
+          return eventNoticeDialog;
+    	
+    
+    }
     private Dialog buildEventListDialog() {    	
     	eventListDialog = new Dialog(this);
     	eventListDialog.setContentView(R.layout.event_list_screen);
-    	eventListDialog.getWindow().setLayout(320, 450);
+    	eventListDialog.getWindow().setLayout(280, 400);
     	eventListDialog.setTitle("Current Events");
     	
     	Button buttonForward;

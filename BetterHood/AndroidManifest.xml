@@ -27,6 +27,9 @@
         <activity android:name=".CreateAccountScreen2"
         		  android:label="@string/title">
         </activity>
+        <activity android:name=".SimilarScreenActivity"
+        		  android:label="@string/title">
+        </activity>
         <activity android:name=".HomeScreen"
         		  android:label="@string/title">
         </activity>

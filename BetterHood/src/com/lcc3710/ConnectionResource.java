@@ -68,6 +68,12 @@ public class ConnectionResource extends Activity {
 			case BetterHood.REQ_SIMILAR_SCREEN:
 				queryBase = BetterHood.PHP_FILE_POPULATE_SIMILAR_LIST;
 				break;
+			case BetterHood.REQ_SIMILAR_SCREEN_INTEREST:
+				queryBase = BetterHood.PHP_FILE_POPULATE_SIMILAR_INTEREST_LIST;
+				break;
+			case BetterHood.REQ_SIMILAR_SCREEN_EVENTS_HAVE:
+				queryBase = BetterHood.PHP_FILE_POPULATE_SIMILAR_EVENTS_HAVE;
+				break;
 			case BetterHood.REQ_SIMILAR_SUB:
 				queryBase = BetterHood.PHP_FILE_SIMILAR_SUB_COMMENT;
 				break;

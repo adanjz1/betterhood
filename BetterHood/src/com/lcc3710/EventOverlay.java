@@ -197,7 +197,7 @@ public class EventOverlay extends Overlay {
 
 		buttonDialogBack = (Button) eventDialog.findViewById(R.id.buttonBack);
 		buttonDialogForward = (Button) eventDialog.findViewById(R.id.buttonForward);
-		buttonAddComment = (Button) eventDialog.findViewById(R.id.buttonAddComment);
+		//buttonAddComment = (Button) eventDialog.findViewById(R.id.buttonAddComment);
 		
 		textEventType = (TextView) eventDialog.findViewById(R.id.textEventType);
 		textEventDate = (TextView) eventDialog.findViewById(R.id.textEventDate);
@@ -205,7 +205,7 @@ public class EventOverlay extends Overlay {
 		textEventHost = (TextView) eventDialog.findViewById(R.id.textEventHost);
 		textEventDescription = (TextView) eventDialog.findViewById(R.id.textEventDescription);
 		
-		editEventComment = (EditText) eventDialog.findViewById(R.id.editEventComment);
+	//	editEventComment = (EditText) eventDialog.findViewById(R.id.editEventComment);
 		
 		buttonDialogForward.setEnabled(true);
 		
@@ -234,7 +234,7 @@ public class EventOverlay extends Overlay {
 					eventDialog.dismiss();
 					}
 					break;
-				case R.id.buttonAddComment:
+				/*case R.id.buttonAddComment:
 					//posting comments
 					if(editEventComment.getText() != null){
 						Log.i("what'smy Query=" , editEventComment.getText().toString());
@@ -242,14 +242,14 @@ public class EventOverlay extends Overlay {
 						commentHandler.postComment(selectedMapLocation.getHost(),editEventComment.getText().toString(), BetterHood.EXTRAS_ACCOUNT_FIRST_NAME + BetterHood.EXTRAS_ACCOUNT_LAST_NAME);
 						
 					}
-					break;
+					break;*/
 				}
 			}
 		};
 
 		buttonDialogBack.setOnClickListener(buttonListener);
 		buttonDialogForward.setOnClickListener(buttonListener);
-		buttonAddComment.setOnClickListener(buttonListener);
+		//buttonAddComment.setOnClickListener(buttonListener);
 
 		return eventDialog;
 	}
