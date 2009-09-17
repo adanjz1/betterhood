@@ -48,7 +48,7 @@ public class MapEventScreen extends Activity {
 
 		buttonDialogBack = (Button) this.findViewById(R.id.buttonBack);
 		buttonDialogForward = (Button) this.findViewById(R.id.buttonForward);
-		buttonAddComment = (Button) this.findViewById(R.id.buttonAddComment);
+	//	buttonAddComment = (Button) this.findViewById(R.id.buttonAddComment);
 		
 		textEventType = (TextView) this.findViewById(R.id.textEventType);
 		textEventDate = (TextView) this.findViewById(R.id.textEventDate);
@@ -56,19 +56,19 @@ public class MapEventScreen extends Activity {
 		textEventHost = (TextView) this.findViewById(R.id.textEventHost);
 		textEventDescription = (TextView) this.findViewById(R.id.textEventDescription);
 		
-		editEventComment = (EditText) this.findViewById(R.id.editEventComment);
+		//editEventComment = (EditText) this.findViewById(R.id.editEventComment);
 		
 		buttonDialogForward.setEnabled(true);
 		
 		textEventType.setText(extras.getString(BetterHood.EXTRAS_EVENT_TEMPLATE_NAME));
 		textEventDate.setText(extras.getString(BetterHood.EXTRAS_EVENT_START_DATE));
 		textEventAddress.setText(extras.getString(BetterHood.EXTRAS_EVENT_LOCATION_ADDRESS));
-		textEventHost.setText(extras.getString(BetterHood.EXTRAS_EVENT_HOST));
+		textEventHost.setText(extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
 		textEventDescription.setText(extras.getString(BetterHood.EXTRAS_EVENT_MESSAGE));
 		Log.i("do i have an id yo", extras.getString(BetterHood.EXTRAS_EVENT_ID));
 		this.setTitle( extras.getString(BetterHood.EXTRAS_EVENT_NAME));
 		
-		editEventComment.setMaxLines(5);
+		//editEventComment.setMaxLines(5);
 		
 		  
 
@@ -95,7 +95,7 @@ public class MapEventScreen extends Activity {
 						finish();
 					}
 					break;
-				case R.id.buttonAddComment:
+				/*case R.id.buttonAddComment:
 					//posting comments
 					if(editEventComment.getText() != null){
 						Log.i("what'smy Query=" , editEventComment.getText().toString());
@@ -103,14 +103,14 @@ public class MapEventScreen extends Activity {
 						commentHandler.postComment(extras.getString(BetterHood.EXTRAS_EVENT_HOST),editEventComment.getText().toString(), BetterHood.EXTRAS_ACCOUNT_FIRST_NAME + BetterHood.EXTRAS_ACCOUNT_LAST_NAME);
 						
 					}
-					break;
+					break;*/
 				}
 			}
 		};
 
 		buttonDialogBack.setOnClickListener(buttonListener);
 		buttonDialogForward.setOnClickListener(buttonListener);
-		buttonAddComment.setOnClickListener(buttonListener);
+		//buttonAddComment.setOnClickListener(buttonListener);
 	}
 	}
 
