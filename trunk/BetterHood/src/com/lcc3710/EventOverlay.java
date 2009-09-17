@@ -28,7 +28,7 @@ public class EventOverlay extends Overlay {
 
 	private Bitmap bubbleIcon, shadowIcon;
 	
-	private static int iconWidth = 70;
+	private int iconWidth;
 
 	private HomeScreen homeScreen;
 
@@ -170,7 +170,10 @@ public class EventOverlay extends Overlay {
 				if(location.getType().equals("Potluck")){
 					bubbleIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.charity);
 				}
-				//resize based on iconWidth
+				
+				//resize based on zoom level				
+				iconWidth = (mapView.getZoomLevel() * 9) - 88;
+				Log.i(BetterHood.TAG_HOME_SCREEN, "iconWidth: " + Integer.toString(iconWidth));
 				int tempHeight = (int)(((float)iconWidth / (float)bubbleIcon.getWidth()) * (float)bubbleIcon.getHeight());
 				bubbleIcon = Bitmap.createScaledBitmap(bubbleIcon, iconWidth, tempHeight, true);
 				canvas.drawBitmap(bubbleIcon, screenCoords.x - bubbleIcon.getWidth()/2, screenCoords.y - bubbleIcon.getHeight(),null);
