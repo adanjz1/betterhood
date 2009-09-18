@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
+import android.text.method.MovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +19,7 @@ public class MapEventScreen extends Activity {
 	private Button buttonDialogBack;
 	private Button buttonDialogForward;
 	private Button buttonAddComment;
+	private Button buttonComments;
 	private TextView textEventType;
 	private TextView textEventDate;
 	private TextView textEventAddress;
@@ -49,6 +52,7 @@ public class MapEventScreen extends Activity {
 		buttonDialogBack = (Button) this.findViewById(R.id.buttonBack);
 		buttonDialogForward = (Button) this.findViewById(R.id.buttonForward);
 	//	buttonAddComment = (Button) this.findViewById(R.id.buttonAddComment);
+		buttonComments = (Button) this.findViewById(R.id.buttonComments);
 		
 		textEventType = (TextView) this.findViewById(R.id.textEventType);
 		textEventDate = (TextView) this.findViewById(R.id.textEventDate);
@@ -63,6 +67,9 @@ public class MapEventScreen extends Activity {
 		textEventType.setText(extras.getString(BetterHood.EXTRAS_EVENT_TEMPLATE_NAME));
 		textEventDate.setText(extras.getString(BetterHood.EXTRAS_EVENT_START_DATE));
 		textEventAddress.setText(extras.getString(BetterHood.EXTRAS_EVENT_LOCATION_ADDRESS));
+		//textEventHost.setText("John Smith");
+		//textEventDescription.setText("My son is loose somewhere in the neighborhood! Please " +
+		//		"help me find him!");
 		textEventHost.setText(extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
 		textEventDescription.setText(extras.getString(BetterHood.EXTRAS_EVENT_MESSAGE));
 		Log.i("do i have an id yo", extras.getString(BetterHood.EXTRAS_EVENT_ID));
