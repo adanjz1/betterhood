@@ -701,6 +701,9 @@ public class HomeScreen extends MapActivity {
 				if (sessionID != null) {
 					Intent inSettings = new Intent(this.getBaseContext(), EventListScreen.class);
 					inSettings.putExtra(BetterHood.EXTRAS_EVENT_LIST, elist);
+					inSettings.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
+					inSettings.putExtra(BetterHood.EXTRAS_SESSION_ID, sessionID);
+					inSettings.putExtra(BetterHood.EXTRAS_ACCOUNT_FIRST_NAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_FIRST_NAME));
 					startActivityForResult(inSettings, BetterHood.REQ_EVENT_LIST_SCREEN);
 				    //Intent intent = new Intent();;
 					//startActivityForResult(intent, eventList);

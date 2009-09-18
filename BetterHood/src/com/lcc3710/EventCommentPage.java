@@ -192,6 +192,7 @@ public class EventCommentPage extends Activity {
 			query += "&sid=" + extras.getString(BetterHood.EXTRAS_SESSION_ID);
 			query += "&user_name=" + extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME);
 			query += "&event_id=" + extras.getString(BetterHood.EXTRAS_EVENT_ID);
+			System.out.println(extras.getString(BetterHood.EXTRAS_EVENT_ID));
 			query += "&comment_text=" + commentTXT.getText().toString();
 			Intent iHaveIntent = new Intent(a, ConnectionResource.class);
 			iHaveIntent.putExtra(BetterHood.EXTRAS_QUERY, query);
@@ -200,6 +201,13 @@ public class EventCommentPage extends Activity {
 			startActivityForResult(iHaveIntent, BetterHood.REQ_COMMENT_POST);
 			}
 			
+				}        	
+	        });
+			
+			buttonCancel.setOnClickListener(new OnClickListener() {
+				public void onClick(View v) {
+					setResult(RESULT_CANCELED, intent);
+					finish();
 				}        	
 	        });
 			
