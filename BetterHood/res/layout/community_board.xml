@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+android:id="@+id/linlayoutBase"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+android:orientation="vertical"
+xmlns:android="http://schemas.android.com/apk/res/android"
+>
+		<ScrollView
+		android:id="@+id/scrollview"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		>
+<RelativeLayout 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" 
+	android:layout_height="fill_parent"
+	>	
+
+<TextView
+android:id="@+id/commentHead"
+android:layout_width="wrap_content"
+android:layout_height="50px"
+android:text="Event Comment Board"
+android:layout_alignParentTop="true"
+android:layout_alignParentLeft="true"
+android:layout_above="@+id/commentHead2"
+/>
+<TextView
+android:id="@+id/commentHead2"
+android:layout_width="wrap_content"
+android:layout_height="50px"
+android:text="Post your own comment or question"
+android:layout_alignParentTop="true"
+android:layout_below="@+id/commentHead"
+/>
+
+<TextView
+android:id="@+id/eventComments"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="TextView"
+android:layout_below="@+id/commentHead2"
+android:layout_alignParentLeft="true"
+/>
+
+<EditText
+android:id="@+id/commentBox"
+android:layout_width="fill_parent"
+android:layout_height="127px"
+android:text=""
+android:textSize="18sp"
+android:layout_below="@+id/eventComments"
+
+/>
+<Button
+android:id="@+id/cancelComment"
+android:layout_width="150px"
+android:layout_height="63px"
+android:text="Back"
+android:layout_alignTop="@+id/widget33"
+
+android:layout_below="@+id/commentBox"
+/>
+<Button
+android:id="@+id/postComment"
+android:layout_width="155px"
+android:layout_height="63px"
+android:text="Post Comment"
+android:layout_below="@+id/commentBox"
+android:layout_toRightOf = "@id/cancelComment"
+/>
+
+</RelativeLayout>
+</ScrollView>
+</LinearLayout>

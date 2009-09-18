@@ -19,6 +19,8 @@ public class BetterHood {
 	public static final int REQ_SETTINGS_SCREEN_INTEREST = 14;
 	public static final int REQ_SIMILAR_SCREEN_INTEREST = 15;
 	public static final int REQ_SIMILAR_SCREEN_EVENTS_HAVE = 16;
+	public static final int REQ_COMMENT_POST = 17;
+	public static final int REQ_COMMENT_POPULATE = 18;
 	
 	//debug tags
 	public static final String TAG_LOGIN_SCREEN = "bh_login_screen";
@@ -86,6 +88,8 @@ public class BetterHood {
 	public static final String PHP_FILE_ADD_TO_IHAVE_INTEREST = "add_to_ihave_interest.php";
 	public static final String PHP_FILE_POPULATE_SIMILAR_INTEREST_LIST = "populate_similar_interest.php";
 	public static final String PHP_FILE_POPULATE_SIMILAR_EVENTS_HAVE = "populate_similar_events.php";
+	public static final String PHP_FILE_POPULATE_EVENT_COMMENT = "populate_event_comment.php";
+	public static final String PHP_FILE_POST_EVENT_COMMENT= "post_event_comment.php";
 	// templates
 	public static final String TEMPLATE_BABYSITTER = "Babysitter";
 	public static final String TEMPLATE_CARPOOL = "Carpool";

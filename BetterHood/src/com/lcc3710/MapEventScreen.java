@@ -63,6 +63,7 @@ public class MapEventScreen extends Activity {
 		//editEventComment = (EditText) this.findViewById(R.id.editEventComment);
 		
 		buttonDialogForward.setEnabled(true);
+		buttonComments.setEnabled(true);
 		
 		textEventType.setText(extras.getString(BetterHood.EXTRAS_EVENT_TEMPLATE_NAME));
 		textEventDate.setText(extras.getString(BetterHood.EXTRAS_EVENT_START_DATE));
@@ -102,22 +103,33 @@ public class MapEventScreen extends Activity {
 						finish();
 					}
 					break;
-				/*case R.id.buttonAddComment:
+				case R.id.buttonComments:
 					//posting comments
-					if(editEventComment.getText() != null){
-						Log.i("what'smy Query=" , editEventComment.getText().toString());
-						HandleEventComment commentHandler = new HandleEventComment(ac);
-						commentHandler.postComment(extras.getString(BetterHood.EXTRAS_EVENT_HOST),editEventComment.getText().toString(), BetterHood.EXTRAS_ACCOUNT_FIRST_NAME + BetterHood.EXTRAS_ACCOUNT_LAST_NAME);
+					
+						String query = "";
+						query += "&sid=" + extras.getString(BetterHood.EXTRAS_SESSION_ID);
+						//query += "&user_name=" + extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME);
+						query += "&event_id=" + extras.getString(BetterHood.EXTRAS_EVENT_ID);
+						//query += "&comment_text=" + commentTXT.getText().toString();
 						
-					}
-					break;*/
+						
+						Intent iHaveIntent = new Intent(ac, EventCommentPage.class);
+						iHaveIntent.putExtra(BetterHood.EXTRAS_SESSION_ID, extras.getString(BetterHood.EXTRAS_SESSION_ID));
+						iHaveIntent.putExtra(BetterHood.EXTRAS_QUERY, query);
+						iHaveIntent.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
+						iHaveIntent.putExtra(BetterHood.EXTRAS_REQUEST_CODE, BetterHood.REQ_COMMENT_POPULATE);
+						iHaveIntent.putExtra(BetterHood.EXTRAS_EVENT_ID,extras.getString(BetterHood.EXTRAS_EVENT_ID));
+						startActivityForResult(iHaveIntent, BetterHood.REQ_COMMENT_POPULATE);
+						
+					
+					break;
 				}
 			}
 		};
 
 		buttonDialogBack.setOnClickListener(buttonListener);
 		buttonDialogForward.setOnClickListener(buttonListener);
-		//buttonAddComment.setOnClickListener(buttonListener);
+		buttonComments.setOnClickListener(buttonListener);
 	}
 	}
 
