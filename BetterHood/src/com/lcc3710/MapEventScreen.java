@@ -73,7 +73,7 @@ public class MapEventScreen extends Activity {
 		//		"help me find him!");
 		textEventHost.setText(extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
 		textEventDescription.setText(extras.getString(BetterHood.EXTRAS_EVENT_MESSAGE));
-		Log.i("do i have an id yo", extras.getString(BetterHood.EXTRAS_EVENT_ID));
+		//Log.i("do i have an id yo", extras.getString(BetterHood.EXTRAS_EVENT_ID));
 		this.setTitle( extras.getString(BetterHood.EXTRAS_EVENT_NAME));
 		
 		//editEventComment.setMaxLines(5);

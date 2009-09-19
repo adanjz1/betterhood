@@ -64,6 +64,7 @@ public class BetterHood {
 	public static final String EXTRAS_EVENT_SIMILAR = "eventHost";
 	public static final String EXTRAS_RESPONSES = "eventHost";
 	public static final String EXTRAS_EVENT_ID = "eventHost";
+	public static final String EXTRAS_USER_LOGGED_IN = "logged in";
 	
 	public static final String EXTRAS_EVENT_LIST = "eventList";
 	

@@ -26,7 +26,7 @@
 		android:layout_width = "100dip"
 		android:layout_height = "wrap_content"
 		android:layout_alignParentTop = "true"
-	/>
+	android:textColor="#FF227A81"/>
 	<TextView
 		android:id="@+id/textEventType"
 		android:layout_width = "fill_parent"
@@ -41,8 +41,7 @@
 		android:layout_width = "100dip"
 		android:layout_height = "wrap_content"
 		android:layout_below = "@id/textEventType"
-		android:layout_marginTop = "5dip"
-	/>
+		android:layout_marginTop = "5dip" android:textColor="#FF227A81"/>
 	<TextView
 		android:id="@+id/textEventDate"
 		android:layout_width = "fill_parent"
@@ -59,7 +58,7 @@
 		android:layout_height = "wrap_content"
 		android:layout_below = "@id/textEventDate"
 		android:layout_marginTop = "5dip"
-	/>
+	android:textColor="#FF227A81"/>
 	<TextView
 		android:id="@+id/textEventAddress"
 		android:layout_width = "fill_parent"
@@ -76,7 +75,7 @@
 		android:layout_height = "wrap_content"
 		android:layout_below = "@id/textEventAddress"
 		android:layout_marginTop = "5dip"
-	/>
+	android:textColor="#FF227A81"/>
 	<TextView
 		android:id="@+id/textEventHost"
 		android:layout_width = "fill_parent"
@@ -93,7 +92,7 @@
 		android:layout_height = "wrap_content"
 		android:layout_below = "@id/textEventHost"
 		android:layout_marginTop = "5dip"
-	/>
+	android:textColor="#FF227A81"/>
 	<TextView
 		android:id="@+id/textEventDescription"
 		android:layout_width = "fill_parent"
