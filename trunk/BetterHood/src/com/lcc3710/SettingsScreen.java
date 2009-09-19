@@ -55,6 +55,7 @@ public class SettingsScreen extends Activity {
         buttonForward = (Button)findViewById(R.id.buttonForward);
         listIHave = (ListView) findViewById(R.id.listIHave);
         editListText = (EditText) findViewById(R.id.editListText);
+        listIHave.setChoiceMode(2);
         
         buttonBack2 = (Button) findViewById(R.id.buttonBack2);
         buttonForward2 = (Button)findViewById(R.id.buttonForward2);

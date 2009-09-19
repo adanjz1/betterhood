@@ -15,7 +15,9 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 
 public class EventListScreen extends Activity {
 	private Intent intent;
@@ -25,6 +27,7 @@ public class EventListScreen extends Activity {
 	String[] partyTokens;
 	ArrayList<Event> theEvent;
 	String eList;
+    private OnCheckedChangeListener BasicCheckListener;
 	final Activity eActivity = this;
 	
 	
@@ -48,6 +51,8 @@ public class EventListScreen extends Activity {
         extras = intent.getExtras();
         
         makeList(parseList(extras.getString(BetterHood.EXTRAS_EVENT_LIST)));
+        
+		
         
 
     	
@@ -114,6 +119,8 @@ public class EventListScreen extends Activity {
 						in.putExtra(BetterHood.EXTRAS_EVENT_LOCATION_ADDRESS, alEvents.get(i).getAttribute(AttributeList.EVENT_LOCATION_ADDRESS));
 						in.putExtra(BetterHood.EXTRAS_EVENT_TEMPLATE_NAME,alEvents.get(i).getAttribute(AttributeList.EVENT_TYPE));
 						in.putExtra(BetterHood.EXTRAS_EVENT_NAME, alEvents.get(i).getAttribute(AttributeList.EVENT_NAME));
+						in.putExtra(BetterHood.EXTRAS_EVENT_ID, alEvents.get(i).getAttribute(AttributeList.EVENT_ID));
+						
 						startActivity(in);
 						
 						
@@ -123,6 +130,8 @@ public class EventListScreen extends Activity {
 				
 			}
         });
+        
+        
         buttonCancel.setOnClickListener(new OnClickListener() {
         	
 			public void onClick(View view) {
@@ -177,6 +186,13 @@ public class EventListScreen extends Activity {
 				}
 				
 			}
+			else if (partyTokens[i].startsWith("#")) {
+    							name = partyTokens[i].split("\\#");
+    							if (name[0] != null) {
+    								//Log.i(TAG, "contact email = " + name[1]);
+    								newEvent.setAttribute(AttributeList.EVENT_ID, name[1]);
+    							}
+    						}
 			// EVENT_DESCRIPTION
 			else if(partyTokens[i].startsWith("+")){
 				name = partyTokens[i].split("\\+");
@@ -248,7 +264,7 @@ public class EventListScreen extends Activity {
 			itemsCount++;
 			
 			// if we've reached the end of this event, commit the event and create an empty one
-			if(itemsCount >= 10){  
+			if(itemsCount >= 11){  
 				Log.i(BetterHood.TAG_EVENT_LIST, "Adding event #" + Integer.toString(eventArrayList.size()+1) + ": " + newEvent.getAttribute(AttributeList.EVENT_NAME));
 				eventArrayList.add(newEvent);
 				itemsCount = 0;

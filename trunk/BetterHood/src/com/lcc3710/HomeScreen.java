@@ -147,6 +147,7 @@ public class HomeScreen extends MapActivity {
     	 case BetterHood.REQ_SIMILAR_SCREEN_EVENTS_HAVE:
  	    	Log.i("you ok,", data.getStringExtra(BetterHood.EXTRAS_WEB_RESPONSE));
  		if (resultCode == RESULT_OK) {
+ 			
  			String[] interest = data.getStringExtra(BetterHood.EXTRAS_WEB_RESPONSE).split(delims);
  			//partyTokens.add(2,interest) ;
  			//Log.i("poart=", partyTokens.toString());
@@ -160,6 +161,7 @@ public class HomeScreen extends MapActivity {
  			
  			String [] partyTokensReal = interest;
  			String[] name = interest[0].split("\\|");
+ 			String[] eventID = new String[num/2];
  			int itemsCount = 0;
  			
  			
@@ -187,6 +189,20 @@ public class HomeScreen extends MapActivity {
  					
  						//Log.i(TAG, "name = " + name[1]);
  						itemsName3[itemsNameCount] = name[1];
+ 						itemsNameCount++;
+ 						//items[i+1] = "no";
+ 						 
+ 		
+ 						
+ 					
+ 					
+ 		}
+ 				if(interest[i].startsWith("?")){
+ 					
+ 					name = interest[i].split("\\?");
+ 					
+ 						//Log.i(TAG, "name = " + name[1]);
+ 						eventID[itemsNameCount] = name[1];
  						itemsNameCount++;
  						//items[i+1] = "no";
  						 
@@ -235,9 +251,13 @@ public class HomeScreen extends MapActivity {
 
  			}
  			stringOfNeeds = adapt;
+ 			//final String[] adapter = adapt;
+ 			//final String[] adapterName = adaptName;
+ 			Log.i("what is it", intent.getStringExtra(BetterHood.EXTRAS_USER_LOGGED_IN).toString());
+ 			if(data.getStringExtra(BetterHood.EXTRAS_USER_LOGGED_IN) == null && !intent.getStringExtra(BetterHood.EXTRAS_USER_LOGGED_IN).toString().equals("yes")){
  			buildNoticeDialog().show();
- 			final String[] adapter = adapt;
- 			final String[] adapterName = adaptName;
+ 			}
+ 			
  		}break;
     	case BetterHood.REQ_POPULATE_EVENT_LIST:
     		if (resultCode == RESULT_OK) {
@@ -427,6 +447,7 @@ public class HomeScreen extends MapActivity {
 			in.putExtra(BetterHood.EXTRAS_SESSION_ID, sessionID);
 			in.putExtra(BetterHood.EXTRAS_ACCOUNT_FIRST_NAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_FIRST_NAME));
 			in.putExtra(BetterHood.EXTRAS_REQUEST_CODE, BetterHood.REQ_SIMILAR_SCREEN_EVENTS_HAVE);
+			
 			startActivityForResult(in, BetterHood.REQ_SIMILAR_SCREEN_EVENTS_HAVE);
 		
         	
@@ -486,6 +507,8 @@ public class HomeScreen extends MapActivity {
   				eventNoticeDialog.dismiss();
   			}
           });
+          
+          
           
           return eventNoticeDialog;
     	
@@ -702,7 +725,7 @@ public class HomeScreen extends MapActivity {
 					Intent inSettings = new Intent(this.getBaseContext(), EventListScreen.class);
 					inSettings.putExtra(BetterHood.EXTRAS_EVENT_LIST, elist);
 					inSettings.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
-					inSettings.putExtra(BetterHood.EXTRAS_SESSION_ID, sessionID);
+					inSettings.putExtra(BetterHood.EXTRAS_SESSION_ID, extras.getString(BetterHood.EXTRAS_SESSION_ID));
 					inSettings.putExtra(BetterHood.EXTRAS_ACCOUNT_FIRST_NAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_FIRST_NAME));
 					startActivityForResult(inSettings, BetterHood.REQ_EVENT_LIST_SCREEN);
 				    //Intent intent = new Intent();;
@@ -719,6 +742,7 @@ public class HomeScreen extends MapActivity {
 					tempQuery += "&sid=" + extras.getString(BetterHood.EXTRAS_SESSION_ID);
 					inSettings.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
 					inSettings.putExtra(BetterHood.EXTRAS_QUERY, tempQuery);
+					inSettings.putExtra(BetterHood.EXTRAS_SESSION_ID, extras.getString(BetterHood.EXTRAS_SESSION_ID));
 	    			inSettings.putExtra(BetterHood.EXTRAS_REQUEST_CODE, BetterHood.REQ_SIMILAR_RESPONSE);
 					startActivityForResult(inSettings, BetterHood.REQ_SIMILAR_RESPONSE);
 				    //Intent intent = new Intent();;
@@ -733,6 +757,7 @@ public class HomeScreen extends MapActivity {
 					inSettings.putExtra(BetterHood.EXTRAS_EVENT_LIST, elist);
 					String tempQuery = "";
 					tempQuery += "&sid=" + extras.getString(BetterHood.EXTRAS_SESSION_ID);
+					inSettings.putExtra(BetterHood.EXTRAS_SESSION_ID, extras.getString(BetterHood.EXTRAS_SESSION_ID));
 					inSettings.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
 					inSettings.putExtra(BetterHood.EXTRAS_QUERY, tempQuery);
 	    			inSettings.putExtra(BetterHood.EXTRAS_REQUEST_CODE, BetterHood.REQ_SIMILAR_SCREEN);

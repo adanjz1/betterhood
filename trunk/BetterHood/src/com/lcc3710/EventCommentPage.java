@@ -61,7 +61,7 @@ public class EventCommentPage extends Activity {
 				}
 				break;
 	    		case BetterHood.REQ_COMMENT_POPULATE:
-	    		Log.i("you ok,", extras.getString(BetterHood.EXTRAS_EVENT_SIMILAR));
+	    		//Log.i("you ok,", extras.getString(BetterHood.EXTRAS_EVENT_SIMILAR));
 	    		
 	    		if (resultCode == RESULT_OK) {
 	    			Log.i("gettin dat info=", data.getStringExtra(BetterHood.EXTRAS_WEB_RESPONSE));
@@ -254,6 +254,7 @@ public class EventCommentPage extends Activity {
 			buttonCancel.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
 						Intent home = new Intent(a, HomeScreen.class);
+						home.putExtra(BetterHood.EXTRAS_USER_LOGGED_IN, "yes");
 				    	home.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
 				    	home.putExtra(BetterHood.EXTRAS_SESSION_ID, sessionID);
 				    	startActivityForResult(home, BetterHood.REQ_HOME_SCREEN);
