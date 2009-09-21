@@ -36,8 +36,8 @@ public class SimilarSub extends Activity{
 
         intent = getIntent();
         extras = intent.getExtras();
-        tName.setText(extras.getString(BetterHood.EXTRAS_EVENT_HOST));
-        tComment.setText(extras.getString(BetterHood.EXTRAS_EVENT_NAME));
+        tComment.setText(extras.getString(BetterHood.EXTRAS_EVENT_HOST));
+        tName.setText(extras.getString(BetterHood.EXTRAS_EVENT_NAME));
         Button back = (Button) findViewById(R.id.back);
         Button sendComment = (Button) findViewById(R.id.post);
         sendComment.setOnClickListener(new OnClickListener() {
