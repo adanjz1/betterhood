@@ -33,9 +33,10 @@ xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_height = "wrap_content"
 		android:layout_alignParentTop = "true"
 		android:layout_centerHorizontal = "true"
-		android:text = "Create a Missing Child emergency\nStep 2 of 2"
+		android:text = "Need a Babysitter\nStep 2 of 2"
 	/>
-		<TextView
+	
+	<TextView
 		android:id = "@+id/textStep2Caption"
 		android:layout_width = "fill_parent"
 		android:layout_height = "wrap_content"

@@ -125,12 +125,22 @@ public class CreateEventScreen2 extends Activity {
         int iLayoutFile = 0;
             
         if ((szTemplateName = extras.getString(BetterHood.EXTRAS_EVENT_TEMPLATE_NAME)) != null) {
-        	if (szTemplateName.equals(BetterHood.TEMPLATE_CARPOOL)) {
+        	if (szTemplateName.equals(BetterHood.TEMPLATE_BABYSITTER)) {
+        		iLayoutFile = R.layout.template_babysitter;
+        	} else if (szTemplateName.equals(BetterHood.TEMPLATE_CAR)) {
+        		iLayoutFile = R.layout.template_car;
+        	} else if (szTemplateName.equals(BetterHood.TEMPLATE_CARPOOL)) {
         		iLayoutFile = R.layout.template_carpool;
+        	} else if (szTemplateName.equals(BetterHood.TEMPLATE_CHARITY)) {
+        		iLayoutFile = R.layout.template_charity;
         	} else if (szTemplateName.equals(BetterHood.TEMPLATE_LAWNMOWER)) {
         		iLayoutFile = R.layout.template_lawnmower;
         	} else if (szTemplateName.equals(BetterHood.TEMPLATE_MISSING_CHILD)) {
         		iLayoutFile = R.layout.template_missing_child;
+        	} else if (szTemplateName.equals(BetterHood.TEMPLATE_PARTY)) {
+        		iLayoutFile = R.layout.template_party;
+        	} else if (szTemplateName.equals(BetterHood.TEMPLATE_PLAYDATE)) {
+        		iLayoutFile = R.layout.template_playdate;
         	} else if (szTemplateName.equals(BetterHood.TEMPLATE_POOL_PARTY)) {
         		iLayoutFile = R.layout.template_pool_party;
         	} else if (szTemplateName.equals(BetterHood.TEMPLATE_POTLUCK)) {
