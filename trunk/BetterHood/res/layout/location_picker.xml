@@ -39,7 +39,7 @@
     	android:layout_toRightOf = "@id/checkBoxAddressLocation"
     	android:layout_marginLeft = "5dip"
     	android:layout_marginRight = "5dip"
-    	android:text = "Street Address"
+    	android:hint = "Street Address"
     	android:inputType = "textPostalAddress"
     />
    	

@@ -65,7 +65,7 @@ public class CreateEventScreen1 extends Activity {
 		
 		if (!editEventTemplate.isPopupShowing()) {
 			if (BetterHood.DEBUG) {
-				editEventTemplate.setText("pool party");
+				//editEventTemplate.setText("pool party");
 			}
 			//editEventTemplate.showDropDown();
 		}

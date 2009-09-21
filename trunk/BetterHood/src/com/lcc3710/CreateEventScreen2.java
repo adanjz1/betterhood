@@ -270,8 +270,8 @@ public class CreateEventScreen2 extends Activity {
 		});
 		
 		if (BetterHood.DEBUG) {
-			editEventName.setText("pool");
-			editEventMessage.setText("Enter a Description");
+			//editEventName.setText("pool");
+			//editEventMessage.setText("Enter a Description");
 		}
     }
     
@@ -287,7 +287,7 @@ public class CreateEventScreen2 extends Activity {
         	return new TimePickerDialog(this,
         				mTimeSetListener,
         				iHour,
-        				iMinute,
+        				0,
         				false);
         case LOCATION_DIALOG_ID:
         	return buildLocationPickerDialog();

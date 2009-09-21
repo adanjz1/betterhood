@@ -255,12 +255,12 @@ public class SimilarScreen extends Activity{
 					
 				}
 				else if(i >= (itemsName.length) && (i-i+count+1 <= itemsName2.length) ){
-					System.out.println(itemsName2[0]);
+					//System.out.println(itemsName2[0]);
 					adapt[i] = "Someone shares an interest in: " + itemsName2[i-i+count];
 					count++;
 				}
 				else if(i >= (itemsName2.length+itemsName.length) && (i-i+count2 <= itemsName3.length) ){
-					System.out.println(itemsName2[0]);
+					//System.out.println(itemsName2[0]);
 					adapt[i] = "Someone Wants: " + itemsName3[i-i+count2];
 					count2++;
 				}
