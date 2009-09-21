@@ -212,8 +212,6 @@ public class EventCommentPage extends Activity {
 	        });
 			
 			
-			
-			
 	       
 			
 	       // Log.i("gettin dat info=", extras.getString(BetterHood.EXTRAS_EVENT_SIMILAR));
@@ -253,11 +251,8 @@ public class EventCommentPage extends Activity {
 			
 			buttonCancel.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
-						Intent home = new Intent(a, HomeScreen.class);
-						home.putExtra(BetterHood.EXTRAS_USER_LOGGED_IN, "yes");
-				    	home.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
-				    	home.putExtra(BetterHood.EXTRAS_SESSION_ID, sessionID);
-				    	startActivityForResult(home, BetterHood.REQ_HOME_SCREEN);
+						setResult(RESULT_CANCELED, intent);
+						finish();
 					}        	
 		        });
 			buttonRespond.setOnClickListener(new OnClickListener() {

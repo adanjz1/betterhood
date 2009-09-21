@@ -123,7 +123,7 @@ public class SettingsScreen extends Activity {
         
         
         
-        ts1.setIndicator("Interest");
+        ts1.setIndicator("Interests");
                   
         myTabHost.addTab(ts1);
         

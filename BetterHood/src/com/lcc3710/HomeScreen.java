@@ -250,7 +250,7 @@ public class HomeScreen extends MapActivity {
  				
  				if(i < itemsName3.length){
  					//System.out.println(itemsName2[0]);
- 					adapt[i] = "Someone Wants: " + itemsName3[i];
+ 					adapt[i] = "Someone Wants: " + "a lawnmower";
  					
  				}
  				
@@ -525,7 +525,7 @@ public class HomeScreen extends MapActivity {
     private Dialog buildNoticeDialog() {
     	eventNoticeDialog = new Dialog(this);
     	eventNoticeDialog.setContentView(R.layout.event_notice_dialog);
-    	eventNoticeDialog.getWindow().setLayout(320, 400);
+    	eventNoticeDialog.getWindow().setLayout(300, 400);
     	eventNoticeDialog.setTitle("Common Events");
     	
     	  Button buttonBack = (Button) eventNoticeDialog.findViewById(R.id.buttonBack);

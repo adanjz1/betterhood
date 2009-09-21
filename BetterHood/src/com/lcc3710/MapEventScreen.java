@@ -26,6 +26,8 @@ public class MapEventScreen extends Activity {
 	private TextView textEventHost;
 	private TextView textEventDescription;
 	
+	private TextView textEventName;
+	
 	private EditText editEventComment;
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -47,38 +49,32 @@ public class MapEventScreen extends Activity {
 		final Activity ac = a;
 
 		this.setContentView(R.layout.event_screen);
-	//	this.getWindow().setLayout(300, 400);
 
 		buttonDialogBack = (Button) this.findViewById(R.id.buttonBack);
 		buttonDialogForward = (Button) this.findViewById(R.id.buttonForward);
-	//	buttonAddComment = (Button) this.findViewById(R.id.buttonAddComment);
 		buttonComments = (Button) this.findViewById(R.id.buttonComments);
 		
+		textEventName = (TextView) this.findViewById(R.id.textEventName);
 		textEventType = (TextView) this.findViewById(R.id.textEventType);
 		textEventDate = (TextView) this.findViewById(R.id.textEventDate);
 		textEventAddress = (TextView) this.findViewById(R.id.textEventAddress);
 		textEventHost = (TextView) this.findViewById(R.id.textEventHost);
 		textEventDescription = (TextView) this.findViewById(R.id.textEventDescription);
 		
-		//editEventComment = (EditText) this.findViewById(R.id.editEventComment);
-		
 		buttonDialogForward.setEnabled(true);
 		buttonComments.setEnabled(true);
 		
+		textEventName.setText(extras.getString(BetterHood.EXTRAS_EVENT_NAME));
 		textEventType.setText(extras.getString(BetterHood.EXTRAS_EVENT_TEMPLATE_NAME));
 		textEventDate.setText(extras.getString(BetterHood.EXTRAS_EVENT_START_DATE));
 		textEventAddress.setText(extras.getString(BetterHood.EXTRAS_EVENT_LOCATION_ADDRESS));
+		textEventHost.setText(extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
 		//textEventHost.setText("John Smith");
+		textEventDescription.setText(extras.getString(BetterHood.EXTRAS_EVENT_MESSAGE));
 		//textEventDescription.setText("My son is loose somewhere in the neighborhood! Please " +
 		//		"help me find him!");
-		textEventHost.setText(extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
-		textEventDescription.setText(extras.getString(BetterHood.EXTRAS_EVENT_MESSAGE));
-		//Log.i("do i have an id yo", extras.getString(BetterHood.EXTRAS_EVENT_ID));
-		this.setTitle( extras.getString(BetterHood.EXTRAS_EVENT_NAME));
 		
-		//editEventComment.setMaxLines(5);
-		
-		  
+		//Log.i(BetterHood.TAG_EVENT_OVERLAY, extras.getString(BetterHood.EXTRAS_EVENT_ID));
 
 		View.OnClickListener buttonListener = new View.OnClickListener() {
 			public void onClick(View v) {
