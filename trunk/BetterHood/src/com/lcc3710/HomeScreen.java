@@ -97,12 +97,15 @@ public class HomeScreen extends MapActivity {
 		Bundle extras;
 		lastRequestCode = requestCode;
 		
-		if ((extras = data.getExtras()) == null) {
-			Log.i(BetterHood.TAG_HOME_SCREEN, BetterHood.ERROR_PREFIX + "onActivityResult recieved a null extras bundle!");
-		}
+		//if ((extras = data.getExtras()) == null) {
+			//Log.i(BetterHood.TAG_HOME_SCREEN, BetterHood.ERROR_PREFIX + "onActivityResult recieved a null extras bundle!");
+//		}
 		
     	switch (requestCode) {
+    	
     	case BetterHood.REQ_SIMILAR_SCREEN:
+    		try{
+    		extras = data.getExtras();
     		final String response = data.getExtras().getString(BetterHood.EXTRAS_WEB_RESPONSE);
     		Log.i("WTF IS HAPPENING", response);
     		
@@ -118,12 +121,19 @@ public class HomeScreen extends MapActivity {
     		if (resultCode == RESULT_CANCELED) {
     			//something went wrong in creating the event
     		}
+    		}
+    		catch(Exception e){
+    			Log.i("error", "error");
+    		}
+    		
     		break;
     	case BetterHood.REQ_SIMILAR_RESPONSE:
-    		final String responseSimilar = data.getExtras().getString(BetterHood.EXTRAS_WEB_RESPONSE);
-    		Log.i("WTF IS  similar HAPPENING", responseSimilar);
     		
+    		try{
+    			final String responseSimilar = data.getExtras().getString(BetterHood.EXTRAS_WEB_RESPONSE);
+        		Log.i("WTF IS  similar HAPPENING", responseSimilar);
     		if (resultCode == RESULT_OK) {
+    			extras = data.getExtras();
     			// event was created, success!
     			Log.i("WTF IS HAPPENING", responseSimilar);
     			String tempUsername = extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME);
@@ -131,20 +141,32 @@ public class HomeScreen extends MapActivity {
     			startResponseScreen(responseSimilar, tempUsername);
 
     		}
+    		}
+    		catch(Exception e){
+    			Log.i("erro", "there was a back error");
+    		}
     		
     		if (resultCode == RESULT_CANCELED) {
     			//something went wrong in creating the event
     		}
     		break;
     	case BetterHood.REQ_SETTINGS_SCREEN:
+    		try{
+    		extras = data.getExtras();
     		if (resultCode == RESULT_OK) {
     			//successfully updated settings
     		}
     		if (resultCode == RESULT_CANCELED) {
     			// somethign went wrong in settings
     		}
+    		}
+    		catch(Exception e){
+    			Log.i("error", "error");
+    		}
     		break;
     	 case BetterHood.REQ_SIMILAR_SCREEN_EVENTS_HAVE:
+    		 try{
+    		 extras = data.getExtras();
  	    	Log.i("you ok,", data.getStringExtra(BetterHood.EXTRAS_WEB_RESPONSE));
  		if (resultCode == RESULT_OK) {
  			
@@ -258,8 +280,15 @@ public class HomeScreen extends MapActivity {
  			buildNoticeDialog().show();
  			}
  			
- 		}break;
+ 		}
+    		 }
+    		 catch(Exception e){
+    			 
+    		 }
+    		 break;
     	case BetterHood.REQ_POPULATE_EVENT_LIST:
+    		try{
+    		extras = data.getExtras();
     		if (resultCode == RESULT_OK) {
     			// event list populated, we better find out whats in the extras
     			if (extras != null) {
@@ -406,6 +435,10 @@ public class HomeScreen extends MapActivity {
     		
     		if (resultCode == RESULT_CANCELED) {
     			//something went wrong in populating the event list
+    		}
+    		}
+    		catch(Exception e){
+    			
     		}
     		
     		break;
