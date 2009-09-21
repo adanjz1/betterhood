@@ -93,11 +93,13 @@ public class BetterHood {
 	public static final String PHP_FILE_POST_EVENT_COMMENT= "post_event_comment.php";
 	// templates
 	public static final String TEMPLATE_BABYSITTER = "Babysitter";
+	public static final String TEMPLATE_CAR = "Car";
 	public static final String TEMPLATE_CARPOOL = "Carpool";
+	public static final String TEMPLATE_CHARITY = "Charity";
 	public static final String TEMPLATE_LAWNMOWER = "Lawnmower";
 	public static final String TEMPLATE_MISSING_CHILD = "Missing Child";
 	public static final String TEMPLATE_PARTY = "Party";
-	public static final String TEMPLATE_PLAYDATE = "Play-date";
+	public static final String TEMPLATE_PLAYDATE = "Playdate";
 	public static final String TEMPLATE_POOL_PARTY = "Pool Party";
 	public static final String TEMPLATE_POTLUCK = "Potluck";
 	
