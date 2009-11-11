@@ -121,7 +121,6 @@ public class ResponseScreen extends Activity{
 	  		int itemsCount = 0;
 	  		
 	  		listSent = (ListView) findViewById(R.id.listSent);
-	  		Event newEvent = new Event();
 	  		
 	  		for (int i = 0; i < partyTokens.length; i++) {
 	  			

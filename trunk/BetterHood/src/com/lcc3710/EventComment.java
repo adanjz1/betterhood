@@ -2,8 +2,6 @@ package com.lcc3710;
 
 import java.util.HashMap;
 
-import com.lcc3710.Event.AttributeList;
-
 public class EventComment {
 	public enum AttributeList {		
 		COMMENT_TEXT,

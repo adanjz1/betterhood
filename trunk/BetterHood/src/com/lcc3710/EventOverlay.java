@@ -78,17 +78,6 @@ public class EventOverlay extends Overlay {
 		if(selectedMapLocation != null){
 			dialogIsHit = true;
 			if(dialogIsHit){	
-				Intent mapIntent = new Intent(this.homeScreen.getBaseContext(), MapEventScreen.class);
-				mapIntent.putExtra(BetterHood.EXTRAS_EVENT_HOST, selectedMapLocation.getHost());
-				mapIntent.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, uname);
-				mapIntent.putExtra(BetterHood.EXTRAS_SESSION_ID, uID);
-				mapIntent.putExtra(BetterHood.EXTRAS_EVENT_MESSAGE, selectedMapLocation.getDescription());
-				mapIntent.putExtra(BetterHood.EXTRAS_EVENT_START_DATE, selectedMapLocation.getTime());
-				mapIntent.putExtra(BetterHood.EXTRAS_EVENT_LOCATION_ADDRESS, selectedMapLocation.getAddress());
-				mapIntent.putExtra(BetterHood.EXTRAS_EVENT_TEMPLATE_NAME, selectedMapLocation.getType());
-				mapIntent.putExtra(BetterHood.EXTRAS_EVENT_NAME, selectedMapLocation.getName());
-				mapIntent.putExtra(BetterHood.EXTRAS_EVENT_ID, selectedMapLocation.getID());
-				this.homeScreen.startActivityForResult(mapIntent, BetterHood.REQ_EVENT_LIST_SCREEN);
 				
 			}
 		}
@@ -158,25 +147,7 @@ public class EventOverlay extends Overlay {
 				//shadowIcon = Bitmap.createScaledBitmap(shadowIcon, iconWidth, tempHeight, true);
 				//canvas.drawBitmap(shadowIcon, screenCoords.x, screenCoords.y - shadowIcon.getHeight(),null);
 			} else {
-				if(location.getType().equals("Carpool")){
-					bubbleIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.car);
-				}
-				else if(location.getType().equals("Lawnmower")){
-					bubbleIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.services);
-				}
-				else if(location.getType().equals("Missing Child")){
-					bubbleIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.alert);
-				}
-				else if(location.getType().equals("Pool Party")) {
-					bubbleIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.balloon);
-				}
-				else if(location.getType().equals("Potluck")){
-					bubbleIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.charity);
-				}
-				//default icon
-				else {
-					bubbleIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.balloon);
-				}
+				bubbleIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.balloon);
 				int zoomLevel = mapView.getZoomLevel();
 				//resize based on zoom level				
 				iconWidth = (zoomLevel * 9) - 88;
@@ -214,16 +185,6 @@ public class EventOverlay extends Overlay {
 	//	editEventComment = (EditText) eventDialog.findViewById(R.id.editEventComment);
 		
 		buttonDialogForward.setEnabled(true);
-		
-		
-		
-		textEventType.setText(selectedMapLocation.getType());
-		textEventDate.setText(selectedMapLocation.getTime());
-		textEventAddress.setText(selectedMapLocation.getAddress());
-		textEventHost.setText(selectedMapLocation.getHost());
-		textEventDescription.setText(selectedMapLocation.getDescription());
-		
-		eventDialog.setTitle(selectedMapLocation.getName());
 		
 		editEventComment.setMaxLines(5);
 		
