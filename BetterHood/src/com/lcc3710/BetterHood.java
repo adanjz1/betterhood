@@ -76,9 +76,11 @@ public class BetterHood {
 	public static final String URL_BASE = "http://lcc3710.lcc.gatech.edu/better_hood/";
 	public static final String PHP_FILE_LOGIN = "user_login.php";
 	public static final String PHP_FILE_CREATE_ACCOUNT = "add_user.php";
-	public static final String PHP_FILE_CREATE_EVENT = "create_event.php";
+	public static final String PHP_FILE_CREATE_EVENT_XML = "create_event_xml.php";
 	public static final String PHP_FILE_CHECK_USERNAME = "check_username.php";
+	public static final String PHP_FILE_POPULATE_TEMPLATES = "populate_templates.php";
 	public static final String PHP_FILE_POPULATE_EVENT_LIST = "populate_event_list.php";
+	public static final String PHP_FILE_POPULATE_EVENT_XML = "populate_event_xml.php";
 	public static final String PHP_FILE_POPULATE_EVENT_COMMENT_LIST = "populate_event_list_comment.php";
 	public static final String PHP_FILE_ADD_TO_IHAVE = "add_to_ihave.php";
 	public static final String PHP_FILE_POPULATE_SIMILAR_LIST = "populate_similar.php";
@@ -91,7 +93,7 @@ public class BetterHood {
 	public static final String PHP_FILE_POPULATE_SIMILAR_EVENTS_HAVE = "populate_similar_events.php";
 	public static final String PHP_FILE_POPULATE_EVENT_COMMENT = "populate_event_comment.php";
 	public static final String PHP_FILE_POST_EVENT_COMMENT= "post_event_comment.php";
-	// templates
+	// templates	
 	public static final String TEMPLATE_BABYSITTER = "Babysitter";
 	public static final String TEMPLATE_CAR = "Car";
 	public static final String TEMPLATE_CARPOOL = "Carpool";

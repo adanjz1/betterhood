@@ -1,9 +1,10 @@
 package com.lcc3710;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -18,21 +19,9 @@ public class CreateEventScreen1 extends Activity {
 	private AutoCompleteTextView editEventTemplate;
 	
 	private ArrayAdapter<String> adapter;
+	private Template[] templates;
 	
 	private Intent intent;
-	
-	static final String[] aszAvailableEvents = {
-		BetterHood.TEMPLATE_BABYSITTER,
-		BetterHood.TEMPLATE_CAR,
-    	BetterHood.TEMPLATE_CARPOOL, 
-    	BetterHood.TEMPLATE_CHARITY,
-    	BetterHood.TEMPLATE_LAWNMOWER, 
-    	BetterHood.TEMPLATE_MISSING_CHILD,
-    	BetterHood.TEMPLATE_PARTY,
-    	BetterHood.TEMPLATE_PLAYDATE,
-    	BetterHood.TEMPLATE_POOL_PARTY,
-    	BetterHood.TEMPLATE_POTLUCK
-    };
 	
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -62,18 +51,23 @@ public class CreateEventScreen1 extends Activity {
 		buttonBack = (Button) findViewById(R.id.buttonBack);
 		buttonForward = (Button) findViewById(R.id.buttonForward);
 		
-		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, aszAvailableEvents);
+		// get templates
+		TemplateFactory tf = new TemplateFactory(intent.getExtras().getString(BetterHood.EXTRAS_SESSION_ID));
+		templates = tf.getTemplates(TemplateFactory.POPULATE_TEMPLATES);
+		
+		// make an array of template titles
+		ArrayList<String> sl = new ArrayList<String>();
+		for (int i = 0; i < templates.length; i++) {
+			sl.add(templates[i].title);
+		}
+		String[] availableEvents = sl.toArray(new String[0]);
+		
+		// set our list of templates for the dropdown edittext thing
+		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, availableEvents);
 		
 		editEventTemplate = (AutoCompleteTextView) findViewById(R.id.editEventTemplate);
 		editEventTemplate.setAdapter(adapter);
 		editEventTemplate.setThreshold(0);
-		
-		if (!editEventTemplate.isPopupShowing()) {
-			if (BetterHood.DEBUG) {
-				//editEventTemplate.setText("pool party");
-			}
-			//editEventTemplate.showDropDown();
-		}
 		
 		buttonBack.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {

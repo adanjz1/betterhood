@@ -2,19 +2,15 @@ package com.lcc3710;
 
 import java.util.ArrayList;
 
-import com.lcc3710.Event.AttributeList;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class SimilarScreen extends Activity{
 	
@@ -87,8 +83,6 @@ public class SimilarScreen extends Activity{
     			String[] name = interest[0].split("\\|");
     			int itemsCount = 0;
     			
-    			
-    			Event newEvent = new Event();
     			
     			for (int i = 0; i < interest.length; i++) {
     				
@@ -197,8 +191,6 @@ public class SimilarScreen extends Activity{
 			String[] name = interest[0].split("\\|");
 			int itemsCount = 0;
 			
-			
-			Event newEvent = new Event();
 			
 			for (int i = 0; i < interest.length; i++) {
 				
@@ -399,8 +391,6 @@ public class SimilarScreen extends Activity{
 		String[] name = partyTokensReal[0].split("\\|");
 		int itemsCount = 0;
 		
-		
-		Event newEvent = new Event();
 		
 		for (int i = 0; i < partyTokensReal.length; i++) {
 			
