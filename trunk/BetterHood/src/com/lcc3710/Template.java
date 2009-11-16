@@ -27,42 +27,57 @@ public class Template {
 			
 			// START ACTUAL PARSING
 			Element topElement = doc.getDocumentElement();
-			// get template title
-			NodeList titleNL = topElement.getElementsByTagName("Title");
-			if (titleNL.getLength() != 0) {
-				this.title = titleNL.item(0).getFirstChild().getNodeValue();
+			// get template attributes
+			NamedNodeMap attr = topElement.getAttributes();
+			if (attr.getLength() > 0) {
+				Node temp;
+				if ((temp = attr.getNamedItem("title")) != null)
+					this.title = temp.getNodeValue();
+				if ((temp = attr.getNamedItem("creator")) != null)
+					this.creator = temp.getNodeValue();
+				if ((temp = attr.getNamedItem("icon")) != null)
+					this.icon = temp.getNodeValue();
 			}
+			
 			// get widgets
 			NodeList widgetNL = topElement.getElementsByTagName("Widget");
 			ArrayList<TemplateWidget> wl = new ArrayList<TemplateWidget>();
 			for (int i = 0; i < widgetNL.getLength(); i++) {
-				TemplateWidget tw = new TemplateWidget();
-				NodeList cl = widgetNL.item(i).getChildNodes();
+				Node w = widgetNL.item(i);
+				attr = w.getAttributes();
+				NodeList cl = w.getChildNodes();
+				
+				TemplateWidget tw = new TemplateWidget();				
 				// parse attributes
+				if (attr.getLength() > 0) {			
+					Node temp;
+					if ((temp = attr.getNamedItem("type")) != null)
+						tw.type = temp.getNodeValue();
+					if ((temp = attr.getNamedItem("label")) != null)
+						tw.label = temp.getNodeValue();
+					if ((temp = attr.getNamedItem("required")) != null) {
+						if (temp.getNodeValue().equals("true")) {
+							tw.required = true;
+						} else {
+							tw.required = false;
+						}
+					}
+				}
+				// parse children
 				for (int j = 0; j < cl.getLength(); j++) {
 					Node c = cl.item(j);
 					String value = c.getFirstChild().getNodeValue();
 					String nodeName = c.getNodeName();
 					// big ass if statement
 					// add stuff if we need more fields for widgets in the xml
-					if (nodeName.equals("type")) {
-						tw.type = value;
-					} else if (nodeName.equals("label")) {
-						tw.label = value;
-					} else if (nodeName.equals("required")) {
-						if (value.equals("true")) {
-							tw.required = true;
-						} else {
-							tw.required = false;
-						}
-					} else if (nodeName.equals("size")) {
+					if (nodeName.equals("size")) {
 						tw.size = value;
 					} else if (nodeName.equals("inputType")) {
 						tw.inputType = value;
 					} else if (nodeName.equals("hint")) {
 						tw.hint = value;
 					} else if (nodeName.equals("value")) {
-						NamedNodeMap attr = c.getAttributes();
+						attr = c.getAttributes();
 						
 						if (tw.type.equals("Location")) {
 							tw.latitude = Double.parseDouble(attr.getNamedItem("latitude").getNodeValue());
@@ -85,5 +100,7 @@ public class Template {
 	}
 	
 	public String title;
+	public String creator;
+	public String icon;
 	public TemplateWidget[] widgets;
 }

@@ -1,10 +1,10 @@
 package com.lcc3710;
 
+import java.net.URL;
 import java.util.Iterator;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -12,13 +12,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.RectF;
 import android.graphics.Paint.Style;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
@@ -26,29 +20,16 @@ import com.google.android.maps.Overlay;
 
 public class EventOverlay extends Overlay {
 
-	private Bitmap bubbleIcon, shadowIcon;
+	private Bitmap bubbleIcon;
 	
 	private int iconWidth;
 
 	private HomeScreen homeScreen;
-
-	private Button buttonDialogBack;
-	private Button buttonDialogForward;
-	private Button buttonAddComment;
-	
-	private TextView textEventType;
-	private TextView textEventDate;
-	private TextView textEventAddress;
-	private TextView textEventHost;
-	private TextView textEventDescription;
-	
-	private EditText editEventComment;
 	
 	public boolean locationHit;
 	boolean dialogIsHit = false;
 	AlertDialog.Builder alert2;
 	Dialog eventDialog;
-	private String uname, uID;
 
 	private Paint	innerPaint, borderPaint, textPaint;
 
@@ -58,10 +39,6 @@ public class EventOverlay extends Overlay {
 
 	public EventOverlay(HomeScreen	map, String name, String ID) {
 		this.homeScreen = map;
-		uname = name;
-		uID = ID;
-		//shadowIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.shadow);
-		bubbleIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.balloon);
 	}
 
 	@Override
@@ -139,15 +116,18 @@ public class EventOverlay extends Overlay {
 			mapView.getProjection().toPixels(location.getPoint(), screenCoords);
 
 			if (shadow) {
-				//there's nothing in shadow.png, so im commenting this stuff out
-				
-				//  Only offset the shadow in the y-axis as the shadow is angled so the base is at x=0; 
-				//shadowIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.shadow);
-				//int tempHeight = (int)(((float)iconWidth / (float)shadowIcon.getWidth()) * (float)shadowIcon.getHeight());
-				//shadowIcon = Bitmap.createScaledBitmap(shadowIcon, iconWidth, tempHeight, true);
-				//canvas.drawBitmap(shadowIcon, screenCoords.x, screenCoords.y - shadowIcon.getHeight(),null);
+				// shadow?
 			} else {
-				bubbleIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.balloon);
+				// download the event icon
+				try {
+					URL iconURL = new URL(BetterHood.URL_BASE + "icons/" + location.getTemplate().icon);
+					bubbleIcon = BitmapFactory.decodeStream(iconURL.openStream());
+					Log.i("EventOverlay", iconURL.toExternalForm() + " downloaded successfully.");
+				} catch (Exception e) {
+					// use the default balloon icon
+					Log.i("EventOverlay", "Icon download failed: " + e.getMessage());
+					bubbleIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.balloon);
+				}
 				int zoomLevel = mapView.getZoomLevel();
 				//resize based on zoom level				
 				iconWidth = (zoomLevel * 9) - 88;
@@ -163,62 +143,6 @@ public class EventOverlay extends Overlay {
 				canvas.drawBitmap(bubbleIcon, screenCoords.x - bubbleIcon.getWidth()/2, screenCoords.y - bubbleIcon.getHeight(),null);
 			}
 		}
-	}
-
-		
-	private Dialog buildEventDisplayDialog() {
-		eventDialog = new Dialog(this.homeScreen);
-
-		eventDialog.setContentView(R.layout.event_screen);
-		eventDialog.getWindow().setLayout(300, 400);
-
-		buttonDialogBack = (Button) eventDialog.findViewById(R.id.buttonBack);
-		buttonDialogForward = (Button) eventDialog.findViewById(R.id.buttonForward);
-		//buttonAddComment = (Button) eventDialog.findViewById(R.id.buttonAddComment);
-		
-		textEventType = (TextView) eventDialog.findViewById(R.id.textEventType);
-		textEventDate = (TextView) eventDialog.findViewById(R.id.textEventDate);
-		textEventAddress = (TextView) eventDialog.findViewById(R.id.textEventAddress);
-		textEventHost = (TextView) eventDialog.findViewById(R.id.textEventHost);
-		textEventDescription = (TextView) eventDialog.findViewById(R.id.textEventDescription);
-		
-	//	editEventComment = (EditText) eventDialog.findViewById(R.id.editEventComment);
-		
-		buttonDialogForward.setEnabled(true);
-		
-		editEventComment.setMaxLines(5);
-		
-		  
-
-		View.OnClickListener buttonListener = new View.OnClickListener() {
-			public void onClick(View v) {
-				switch (v.getId()) {
-				case R.id.buttonBack:
-					eventDialog.dismiss();
-					break;
-				case R.id.buttonForward:
-					if (v.isEnabled()) {
-					eventDialog.dismiss();
-					}
-					break;
-				/*case R.id.buttonAddComment:
-					//posting comments
-					if(editEventComment.getText() != null){
-						Log.i("what'smy Query=" , editEventComment.getText().toString());
-						HandleEventComment commentHandler = new HandleEventComment(homeScreen);
-						commentHandler.postComment(selectedMapLocation.getHost(),editEventComment.getText().toString(), BetterHood.EXTRAS_ACCOUNT_FIRST_NAME + BetterHood.EXTRAS_ACCOUNT_LAST_NAME);
-						
-					}
-					break;*/
-				}
-			}
-		};
-
-		buttonDialogBack.setOnClickListener(buttonListener);
-		buttonDialogForward.setOnClickListener(buttonListener);
-		//buttonAddComment.setOnClickListener(buttonListener);
-
-		return eventDialog;
 	}
 
 	private void drawInfoWindow(Canvas canvas, MapView	mapView, boolean shadow) {
