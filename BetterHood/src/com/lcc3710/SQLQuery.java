@@ -22,7 +22,6 @@ public class SQLQuery {
 	
 	public String textURL(String vars)
 	{
-		//vars = "xml=<NGP>" + vars + "</NGP>";
 		int BUFFER_SIZE = 2000;
 		InputStream in = null;
 		try {

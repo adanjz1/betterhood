@@ -128,7 +128,12 @@ public class CreateEventScreen2 extends Activity {
 		
 		buttonForward.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-				//update values
+				// get our user id
+				SQLQuery grabUserId = new SQLQuery(BetterHood.PHP_FILE_GET_USERID, "sid=" + extras.getString(BetterHood.EXTRAS_SESSION_ID));
+				String uid = grabUserId.submit();
+				template.creator = uid;
+				
+				// update widget values
 				TemplateWidget[] widgets = template.widgets;
 				for (int i = 0; i < widgets.length; i++) {
 					TemplateWidget w = widgets[i];
@@ -145,18 +150,22 @@ public class CreateEventScreen2 extends Activity {
 				}
 				//end value updating
 				//pack up the xml
-				String xml = "<?xml version=\"1.0\"?>";
+				String xml = "";
 				Boolean xmlFail = false;
-				xml += "<Template>";
-				xml += "<Title>" + template.title + "</Title>";
+				xml += "<Template";
+				xml += " title=\"" + template.title + "\"";
+				xml += " icon=\"" + template.icon + "\"";
+				xml += " creator=\"" + template.creator + "\"";
+				xml += ">";
 				//pack the widgets
 				widgets = template.widgets;
 				for (int i = 0; i < widgets.length; i++) {
 					TemplateWidget w = widgets[i];
 					if ((w.value != null) && (!w.value.equals("")) && (!w.value.equals(w.label))) {
-						xml += "<Widget>";
-						xml += "<type>" + w.type + "</type>";
-						xml += "<label>" + w.label + "</label>";
+						xml += "<Widget";
+						xml += " type=\"" + w.type + "\"";
+						xml += " label=\"" + w.label + "\"";
+						xml += ">";
 						if (w.type.equals("Location")) {
 							// location w/ GPS attributes
 							DissectAddress da = new DissectAddress(w.value, view.getContext());

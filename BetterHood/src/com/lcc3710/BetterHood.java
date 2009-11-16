@@ -78,6 +78,7 @@ public class BetterHood {
 	public static final String PHP_FILE_CREATE_ACCOUNT = "add_user.php";
 	public static final String PHP_FILE_CREATE_EVENT_XML = "create_event_xml.php";
 	public static final String PHP_FILE_CHECK_USERNAME = "check_username.php";
+	public static final String PHP_FILE_GET_USERID = "get_userid.php";
 	public static final String PHP_FILE_POPULATE_TEMPLATES = "populate_templates.php";
 	public static final String PHP_FILE_POPULATE_EVENT_LIST = "populate_event_list.php";
 	public static final String PHP_FILE_POPULATE_EVENT_XML = "populate_event_xml.php";
