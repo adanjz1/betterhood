@@ -7,6 +7,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import android.util.Log;
+
 public class SQLQuery {
 	private String target;
 	private String query;
@@ -65,6 +67,7 @@ public class SQLQuery {
 			e.printStackTrace();
 			return "FAILED";
 		}
+		Log.i("SQLQuery", target + " returned " + str);
 		return str;
 	}
 

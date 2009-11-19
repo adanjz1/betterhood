@@ -15,6 +15,7 @@
 		>
 	<RelativeLayout 
         xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/eventLayout"
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content"
         >
@@ -38,6 +39,7 @@
     	android:layout_centerHorizontal = "true"
     	android:background="#FF505050"
 	/>
+	
 	<TextView
 		android:id="@+id/labelEventType"
 		android:text = "Type:"
@@ -45,7 +47,7 @@
 		android:layout_height = "wrap_content"
 		android:layout_alignParentTop = "false"
 		android:layout_below = "@id/viewDivider"
-	android:textColor="#FF227A81"/>
+		android:textColor="#FF227A81"/>
 	<TextView
 		android:id="@+id/textEventType"
 		android:layout_width = "fill_parent"
@@ -56,69 +58,19 @@
 	/>
 	
 	<TextView
-		android:id="@+id/labelEventDate"
-		android:text = "Date/Time:"
-		android:layout_width = "100dip"
-		android:layout_height = "wrap_content"
-		android:layout_below = "@id/textEventType"
-		android:layout_marginTop = "5dip" android:textColor="#FF227A81"/>
-	<TextView
-		android:id="@+id/textEventDate"
-		android:layout_width = "fill_parent"
-		android:layout_height = "wrap_content"
-		android:layout_below = "@id/textEventType"
-		android:layout_toRightOf = "@id/labelEventDate"
-		android:layout_marginTop = "5dip"
-	/>
-	
-	<TextView
-		android:id="@+id/labelEventAddress"
-		android:text = "Address:"
-		android:layout_width = "100dip"
-		android:layout_height = "wrap_content"
-		android:layout_below = "@id/textEventDate"
-		android:layout_marginTop = "5dip"
-	android:textColor="#FF227A81"/>
-	<TextView
-		android:id="@+id/textEventAddress"
-		android:layout_width = "fill_parent"
-		android:layout_height = "wrap_content"
-		android:layout_toRightOf = "@id/labelEventAddress"
-		android:layout_below = "@id/textEventDate"
-		android:layout_marginTop = "5dip"
-	/>	
-	
-	<TextView
 		android:id="@+id/labelEventHost"
 		android:text = "Hosted by:"
 		android:layout_width = "100dip"
 		android:layout_height = "wrap_content"
-		android:layout_below = "@id/textEventAddress"
+		android:layout_below = "@id/textEventType"
 		android:layout_marginTop = "5dip"
-	android:textColor="#FF227A81"/>
+		android:textColor="#FF227A81"/>
 	<TextView
 		android:id="@+id/textEventHost"
 		android:layout_width = "fill_parent"
 		android:layout_height = "wrap_content"
 		android:layout_toRightOf = "@id/labelEventHost"
-		android:layout_below = "@id/textEventAddress"
-		android:layout_marginTop = "5dip"
-	/>
-	
-	<TextView
-		android:id="@+id/labelEventDescription"
-		android:text = "Event\nDescription:"
-		android:layout_width = "100dip"
-		android:layout_height = "wrap_content"
-		android:layout_below = "@id/textEventHost"
-		android:layout_marginTop = "5dip"
-	android:textColor="#FF227A81"/>
-	<TextView
-		android:id="@+id/textEventDescription"
-		android:layout_width = "fill_parent"
-		android:layout_height = "wrap_content"
-		android:layout_toRightOf = "@id/labelEventDescription"
-		android:layout_below = "@id/textEventHost"
+		android:layout_below = "@id/textEventType"
 		android:layout_marginTop = "5dip"
 	/>
 </RelativeLayout>

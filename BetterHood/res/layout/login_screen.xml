@@ -4,6 +4,7 @@ android:id="@+id/linlayoutBase"
 android:layout_width="fill_parent"
 android:layout_height="fill_parent"
 android:orientation="vertical"
+android:background="#FFFFFFFF"
 xmlns:android="http://schemas.android.com/apk/res/android"
 >
 
@@ -40,6 +41,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
    		android:layout_below = "@id/imageHomeBanner"
    		android:layout_toLeftOf = "@id/editUsername"
    		android:text = "Username:"
+   		android:textColor = "#FF000000"
    		android:layout_marginRight = "10dip"
    		android:layout_marginTop = "12dip"
    	/>	
@@ -58,6 +60,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
    		android:layout_below = "@id/editUsername"
    		android:layout_toLeftOf = "@id/editPassword"
    		android:text = "Password:"
+   		android:textColor = "#FF000000"
    		android:layout_marginRight = "10dip"
    		android:layout_marginTop = "12dip"
    	/>	

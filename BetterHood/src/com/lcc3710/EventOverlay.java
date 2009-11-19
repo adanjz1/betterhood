@@ -6,6 +6,7 @@ import java.util.Iterator;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -81,6 +82,12 @@ public class EventOverlay extends Overlay {
 			GeoPoint center = mapView.getProjection().fromPixels(drawX,drawY);
 //			mapView.getController().animateTo(center);
 //			infoBubble.setVisibility(View.VISIBLE);
+			
+			// open info view
+			Intent ev = new Intent(homeScreen, MapEventScreen.class);
+			ev.putExtra(BetterHood.EXTRAS_EVENT_ID, selectedMapLocation.getTemplate().id);
+			ev.putExtra(BetterHood.EXTRAS_SESSION_ID, homeScreen.sessionID);
+			homeScreen.startActivity(ev);
 		} else {
 			infoBubble.setVisibility(View.INVISIBLE);
 		}

@@ -31,7 +31,9 @@ public class TemplateFactory {
 		// process each template into Template objects
 		for (int i = 1; i < raw.length; i++) {
 			Log.i("TemplateFactory", raw[i]);
-			templates.add(new Template(raw[i]));
+			Template temp = new Template(raw[i]);
+			temp.id = i;
+			templates.add(temp);
 		}
 		
 		return templates.toArray(new Template[0]);

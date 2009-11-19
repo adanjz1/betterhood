@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationListener;
@@ -20,13 +21,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
@@ -37,7 +39,7 @@ public class MainScreen extends MapActivity {
 	
 	private Intent intent;
 	private Bundle extras;
-	private String sessionID;
+	public String sessionID;
 	
 	private TableLayout mainLayout;
 	private TableRow contentRow;
@@ -52,7 +54,6 @@ public class MainScreen extends MapActivity {
 	private EventOverlay eventOverlay;
 	
 	// event list stuff
-	private ScrollView eventListScroll;
 	private ListView eventListView;
 	
 	// share view stuff
@@ -68,6 +69,8 @@ public class MainScreen extends MapActivity {
         extras = intent.getExtras();
         // extract session id and username
     	sessionID = extras.getString(BetterHood.EXTRAS_SESSION_ID);
+    	
+    	populateEvents();
         
         initMapView();
         initShareView();
@@ -96,13 +99,16 @@ public class MainScreen extends MapActivity {
     	setContentView(mainLayout);
 	}
 	
-	// called when HomeScreen is shown to user after being paused
-	protected void onResume() {
-		super.onResume();
-		
+	private void populateEvents() {
 		// populate event list
 		TemplateFactory tf = new TemplateFactory(sessionID);
 		eventList = tf.getTemplates(TemplateFactory.POPULATE_EVENTS);
+	}
+	
+	// called when HomeScreen is shown to user after being paused
+	protected void onResume() {
+		super.onResume();
+		populateEvents();
 	}
 	
 	private void initMapView() {
@@ -118,28 +124,81 @@ public class MainScreen extends MapActivity {
 	}
 	
 	private void initShareView() {
+		Display defDisplay = getWindowManager().getDefaultDisplay();
+		int tabHeight = BitmapFactory.decodeResource(this.getResources(), R.drawable.tab_bg).getHeight();
+    	int displayWidth = defDisplay.getWidth();
+    	int displayHeight = defDisplay.getHeight();
+		
 		shareView = new TextView(this);
 		shareView.setText("poop");
+		shareView.setBackgroundColor(Color.WHITE);
+		shareView.setTextColor(Color.BLACK);
+		
+		//shareView.setMinimumWidth(displayWidth);
+		shareView.setMaxWidth(displayWidth);
+		shareView.setHeight(displayHeight-tabHeight);
+		
+		TableRow.LayoutParams params = new TableRow.LayoutParams(
+				TableRow.LayoutParams.FILL_PARENT,
+				TableRow.LayoutParams.FILL_PARENT);
+		params.span = tabTags.length + 2;
+		shareView.setLayoutParams(params);
 	}
 	
 	private void initListView() {
-		eventListScroll = new ScrollView(this);
-		eventListView = new ListView(this);
+		Display defDisplay = getWindowManager().getDefaultDisplay();
+		int tabHeight = BitmapFactory.decodeResource(this.getResources(), R.drawable.tab_bg).getHeight();
+    	int displayWidth = defDisplay.getWidth();
+    	int displayHeight = defDisplay.getHeight();
+    	
+    	TableRow.LayoutParams params = new TableRow.LayoutParams(
+				TableRow.LayoutParams.FILL_PARENT,
+				TableRow.LayoutParams.WRAP_CONTENT);
+		params.span = tabTags.length + 2;
+		params.height = displayHeight - tabHeight;
+		params.width = displayWidth;
+		params.weight = 1;
 		
-		eventListScroll.addView(eventListView);
+		eventListView = new ListView(this);
+		eventListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+		eventListView.setMinimumHeight(params.height);
+		eventListView.setLayoutParams(params);
+		
+		EventListAdapter adapter = new EventListAdapter(this, eventListView, eventList, sessionID);
+		adapter.areAllItemsEnabled();
 	}
 	
-	@Override 
-	  public boolean onCreateOptionsMenu(Menu menu) {
-		  
-		  super.onCreateOptionsMenu(menu);
-		  MenuItem item = menu.add("I Want");
-		  item.setIcon(android.R.drawable.ic_menu_add);
-		    
-		  item = menu.add("I Have");
-		  item.setIcon(android.R.drawable.ic_menu_info_details);
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		super.onCreateOptionsMenu(menu);
+		MenuItem item = menu.add("I Want");
+		item.setIcon(android.R.drawable.ic_menu_add);
+
+		item = menu.add("I Have");
+		item.setIcon(android.R.drawable.ic_menu_info_details);
+		return true;
+	}
+	
+	public boolean onOptionsItemSelected(MenuItem item) {
+		  String id = (String) item.getTitle();
+
+		  if(id == "I Want"){
+			  Intent inWant = new Intent(this.getBaseContext(), CreateEventScreen1.class);
+			  inWant.putExtra(BetterHood.EXTRAS_SESSION_ID, sessionID);
+			  inWant.putExtra(BetterHood.EXTRAS_CURRENT_LOCATION, curLocation);
+			  startActivityForResult(inWant, BetterHood.REQ_CREATE_EVENT);
+		  }
+
+		  else if(id == "I Have"){
+			  if (sessionID != null) {
+				  Intent inSettings = new Intent(this.getBaseContext(), SettingsScreen.class);
+				  inSettings.putExtra(BetterHood.EXTRAS_SESSION_ID, sessionID);
+				  startActivityForResult(inSettings, BetterHood.REQ_SETTINGS_SCREEN);
+			  }
+		  }
 		  return true;
-		}
+	}
  
 	/**
 	 * Initialises the MyLocationOverlay and adds it to the overlays of the map
@@ -227,17 +286,18 @@ public class MainScreen extends MapActivity {
 					tabs[2].setSelected(false);
 					newView = mapView;
 				} else if (tag.equals(tabTags[2])) {
+					initListView();
+					
 					tabs[0].setSelected(false);
 					tabs[1].setSelected(false);
 					tabs[2].setSelected(true);
-					newView = eventListScroll;
+					newView = eventListView;
 				}
 				
-				TableRow rowContent=new TableRow(v.getContext());
 				TableRow.LayoutParams pRowContent=new TableRow.LayoutParams();
 				pRowContent.span=tabTags.length;
 				pRowContent.width=TableRow.LayoutParams.FILL_PARENT;
-				pRowContent.height=TableRow.LayoutParams.WRAP_CONTENT;
+				pRowContent.height=TableRow.LayoutParams.FILL_PARENT;
 				pRowContent.weight=1;
 				
 				if (newView != null) {

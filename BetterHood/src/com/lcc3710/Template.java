@@ -33,10 +33,14 @@ public class Template {
 				Node temp;
 				if ((temp = attr.getNamedItem("title")) != null)
 					this.title = temp.getNodeValue();
-				if ((temp = attr.getNamedItem("creator")) != null)
+				if ((temp = attr.getNamedItem("creator")) != null) {
 					this.creator = temp.getNodeValue();
-				if ((temp = attr.getNamedItem("icon")) != null)
+				}
+				if ((temp = attr.getNamedItem("icon")) != null) {
 					this.icon = temp.getNodeValue();
+				} else {
+					this.icon = "balloon.png";
+				}
 			}
 			
 			// get widgets
@@ -102,5 +106,6 @@ public class Template {
 	public String title;
 	public String creator;
 	public String icon;
+	public int id;
 	public TemplateWidget[] widgets;
 }
