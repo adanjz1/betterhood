@@ -1,16 +1,15 @@
 package com.lcc3710;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.text.method.LinkMovementMethod;
-import android.text.method.MovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.TableLayout.LayoutParams;
 
 public class MapEventScreen extends Activity {
 	private Intent intent;
@@ -18,63 +17,136 @@ public class MapEventScreen extends Activity {
 	private String sessionID;
 	private Button buttonDialogBack;
 	private Button buttonDialogForward;
-	private Button buttonAddComment;
 	private Button buttonComments;
 	private TextView textEventType;
-	private TextView textEventDate;
-	private TextView textEventAddress;
 	private TextView textEventHost;
-	private TextView textEventDescription;
-	
 	private TextView textEventName;
+	private RelativeLayout eventLayout;
 	
-	private EditText editEventComment;
-	
+	private Template[] eventList;
+	private Template event;
+	private int eventID;
+
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO response handling
 	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        setContentView(R.layout.event_screen);
-        
-        intent = getIntent();
-        extras = intent.getExtras();
-        makeScreen(this);
+		setContentView(R.layout.event_screen);
 
-}
-	
-	public void makeScreen(Activity a){
+		intent = getIntent();
+		extras = intent.getExtras();
+		sessionID = extras.getString(BetterHood.EXTRAS_SESSION_ID);
+		eventID = extras.getInt(BetterHood.EXTRAS_EVENT_ID);
 		
-		final Activity ac = a;
+		makeScreen();
 
+	}
+
+	public void makeScreen() {
 		this.setContentView(R.layout.event_screen);
+		
+		eventLayout = (RelativeLayout) this.findViewById(R.id.eventLayout);
 
 		buttonDialogBack = (Button) this.findViewById(R.id.buttonBack);
 		buttonDialogForward = (Button) this.findViewById(R.id.buttonForward);
 		buttonComments = (Button) this.findViewById(R.id.buttonComments);
-		
+
 		textEventName = (TextView) this.findViewById(R.id.textEventName);
-		textEventType = (TextView) this.findViewById(R.id.textEventType);
-		textEventDate = (TextView) this.findViewById(R.id.textEventDate);
-		textEventAddress = (TextView) this.findViewById(R.id.textEventAddress);
 		textEventHost = (TextView) this.findViewById(R.id.textEventHost);
-		textEventDescription = (TextView) this.findViewById(R.id.textEventDescription);
-		
+		textEventType = (TextView) this.findViewById(R.id.textEventType);
+
 		buttonDialogForward.setEnabled(true);
 		buttonComments.setEnabled(true);
 		
-		textEventName.setText(extras.getString(BetterHood.EXTRAS_EVENT_NAME));
-		textEventType.setText(extras.getString(BetterHood.EXTRAS_EVENT_TEMPLATE_NAME));
-		textEventDate.setText(extras.getString(BetterHood.EXTRAS_EVENT_START_DATE));
-		textEventAddress.setText(extras.getString(BetterHood.EXTRAS_EVENT_LOCATION_ADDRESS));
-		textEventHost.setText(extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
-		//textEventHost.setText("John Smith");
-		textEventDescription.setText(extras.getString(BetterHood.EXTRAS_EVENT_MESSAGE));
-		//textEventDescription.setText("My son is loose somewhere in the neighborhood! Please " +
-		//		"help me find him!");
+		// populate fields
+		TemplateFactory tf = new TemplateFactory(sessionID);
+		eventList = tf.getTemplates(TemplateFactory.POPULATE_EVENTS);
 		
-		//Log.i(BetterHood.TAG_EVENT_OVERLAY, extras.getString(BetterHood.EXTRAS_EVENT_ID));
+		for (int i = 0; i < eventList.length; i++) {
+			Template t = eventList[i];
+			if (t.id == eventID) {
+				event = t;
+				break;
+			}
+		}
+		
+		// set basic info
+		textEventType.setText(event.title);
+		textEventHost.setText(event.creator);
+		
+		// go through each template widget and add it to the form
+     	String tag = "Form Population";
+     	Log.i(tag, "-------\nGet ready to populate our form\n-------");
+     	
+     	TemplateWidget w = null;
+     	View previousView = findViewById(R.id.textEventHost);
+     	
+     	int curId = 0;
+     	for (int i = 0; i < eventLayout.getChildCount(); i++) {
+     		int j = eventLayout.getChildAt(i).getId();
+     		Log.i("Form Population", "found id: " + Integer.toString(j));
+     		if (j > curId)
+     			curId = j;
+     	}
+		
+		TemplateWidget[] tw = event.widgets;
+		for (int i = 0; i < tw.length; i++) {
+			w = tw[i];
+			String type = w.type;
+			String label = w.label;
+			
+			Log.i("Form Population", "previousView id: " + Integer.toString(previousView.getId()));
+			
+			TextView tvLabel = new TextView(this);
+			tvLabel.setTextColor(Color.parseColor("#FF227A81"));
+			tvLabel.setId(++curId);
+			TextView tvValue = new TextView(this);
+			tvValue.setId(++curId);
+			
+			RelativeLayout.LayoutParams pLabel = new RelativeLayout.LayoutParams(
+					100, 
+					RelativeLayout.LayoutParams.WRAP_CONTENT);
+			pLabel.addRule(RelativeLayout.BELOW, previousView.getId());
+			pLabel.setMargins(0, 5, 0, 0);
+			RelativeLayout.LayoutParams pValue = new RelativeLayout.LayoutParams(
+					RelativeLayout.LayoutParams.FILL_PARENT, 
+					RelativeLayout.LayoutParams.WRAP_CONTENT);
+			pValue.addRule(RelativeLayout.BELOW, previousView.getId());
+			pValue.addRule(RelativeLayout.RIGHT_OF, tvLabel.getId());
+			pValue.setMargins(0, 5, 0, 0);
+			
+			previousView = tvValue;
+			
+			if (type.equals("EditText")) {
+				if (label.equals("Title")) {
+					textEventName.setText(w.value);
+				} else {
+					tvLabel.setText(w.label + ":");
+					tvValue.setText(w.value);
+					
+					// add the views
+					eventLayout.addView(tvLabel, pLabel);
+					eventLayout.addView(tvValue, pValue);
+				}
+			} else if (type.equals("Location")) {
+				tvLabel.setText(w.label + ":");
+				tvValue.setText(w.value);
+				
+				// add the views
+				eventLayout.addView(tvLabel, pLabel);
+				eventLayout.addView(tvValue, pValue);
+			} else if (type.contains("Date")) {
+				tvLabel.setText(w.label + ":");
+				tvValue.setText(w.value);
+				
+				// add the views
+				eventLayout.addView(tvLabel, pLabel);
+				eventLayout.addView(tvValue, pValue);
+			}
+		}
 
 		View.OnClickListener buttonListener = new View.OnClickListener() {
 			public void onClick(View v) {
@@ -85,13 +157,11 @@ public class MapEventScreen extends Activity {
 					break;
 				case R.id.buttonForward:
 					if (v.isEnabled()) {
-						String query ="";
-						query += "&sid=" + extras.getString(BetterHood.EXTRAS_SESSION_ID);
-						query += "&user_name=" + extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME);
+						String query = "";
+						query += "&sid=" + sessionID;
 						query += "&event_id=" + extras.getString(BetterHood.EXTRAS_EVENT_ID);
-						
-						Log.i("what do i gots =", query);
-						Intent iHaveIntent = new Intent(ac, ConnectionResource.class);
+
+						Intent iHaveIntent = new Intent(v.getContext(), ConnectionResource.class);
 						iHaveIntent.putExtra(BetterHood.EXTRAS_QUERY, query);
 						iHaveIntent.putExtra(BetterHood.EXTRAS_REQUEST_CODE, BetterHood.REQ_JOIN_EVENT);
 						startActivityForResult(iHaveIntent, BetterHood.REQ_JOIN_EVENT);
@@ -100,24 +170,18 @@ public class MapEventScreen extends Activity {
 					}
 					break;
 				case R.id.buttonComments:
-					//posting comments
-					
-						String query = "";
-						query += "&sid=" + extras.getString(BetterHood.EXTRAS_SESSION_ID);
-						//query += "&user_name=" + extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME);
-						query += "&event_id=" + extras.getString(BetterHood.EXTRAS_EVENT_ID);
-						//query += "&comment_text=" + commentTXT.getText().toString();
-						
-						
-						Intent iHaveIntent = new Intent(ac, EventCommentPage.class);
-						iHaveIntent.putExtra(BetterHood.EXTRAS_SESSION_ID, extras.getString(BetterHood.EXTRAS_SESSION_ID));
-						iHaveIntent.putExtra(BetterHood.EXTRAS_QUERY, query);
-						iHaveIntent.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
-						iHaveIntent.putExtra(BetterHood.EXTRAS_REQUEST_CODE, BetterHood.REQ_COMMENT_POPULATE);
-						iHaveIntent.putExtra(BetterHood.EXTRAS_EVENT_ID,extras.getString(BetterHood.EXTRAS_EVENT_ID));
-						startActivityForResult(iHaveIntent, BetterHood.REQ_COMMENT_POPULATE);
-						
-					
+					// posting comments
+					String query = "";
+					query += "&sid=" + extras.getString(BetterHood.EXTRAS_SESSION_ID);
+					query += "&event_id=" + extras.getString(BetterHood.EXTRAS_EVENT_ID);
+
+					Intent iHaveIntent = new Intent(v.getContext(), EventCommentPage.class);
+					iHaveIntent.putExtra(BetterHood.EXTRAS_SESSION_ID, extras.getString(BetterHood.EXTRAS_SESSION_ID));
+					iHaveIntent.putExtra(BetterHood.EXTRAS_QUERY, query);
+					iHaveIntent.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
+					iHaveIntent.putExtra(BetterHood.EXTRAS_REQUEST_CODE, BetterHood.REQ_COMMENT_POPULATE);
+					iHaveIntent.putExtra(BetterHood.EXTRAS_EVENT_ID, extras.getString(BetterHood.EXTRAS_EVENT_ID));
+					startActivityForResult(iHaveIntent, BetterHood.REQ_COMMENT_POPULATE);
 					break;
 				}
 			}
@@ -127,5 +191,4 @@ public class MapEventScreen extends Activity {
 		buttonDialogForward.setOnClickListener(buttonListener);
 		buttonComments.setOnClickListener(buttonListener);
 	}
-	}
-
+}
