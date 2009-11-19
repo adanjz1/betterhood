@@ -8,7 +8,6 @@ import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.view.MotionEvent;
 import android.widget.PopupWindow;
-import android.widget.TextView;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
@@ -16,11 +15,8 @@ import com.google.android.maps.Overlay;
 import com.google.android.maps.Projection;
  
 public class CustomOverlay extends Overlay {
- 
-	
 	
 	public PopupWindow window;
-	private TextView text;
 	private static final int CIRCLERADIUS = 2;
  
 	private GeoPoint geopoint;
@@ -65,21 +61,11 @@ public class CustomOverlay extends Overlay {
     @Override
 
 	public boolean onTouchEvent(MotionEvent event, MapView mapView) 
-    {   
-        //---when user lifts his finger---
-    	//if (event.getAction() == 1) {        
-    	//	PopUp popup = new PopUp("This is your current location"); 
-    		//popup.makeWindow();
-    	//}
-    	//window = new PopupWindow(this.getViewInflate().inflate(R.layout.main1,null,null),0,0); 
-    	
+    {    
         return false;
     }        
     
     public String type(){
     	return "myLocation";
-    }
-
-
-	
-    }
+    }	
+}
