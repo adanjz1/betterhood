@@ -33,7 +33,10 @@
         <activity android:name=".HomeScreen"
         		  android:label="@string/title">
         </activity>
-         <activity android:name=".EventListScreen"
+        <activity android:name=".MainScreen"
+        		  android:label="@string/title">
+        </activity>
+        <activity android:name=".EventListScreen"
         		  android:label="@string/title">
         </activity>
         
@@ -54,6 +57,8 @@
         <activity android:name=".ConnectionResource">
         </activity>
         <activity android:name=".EventCommentPage">
+        </activity>
+        <activity android:name=".ShareScreen">
         </activity>
     </application>
     <uses-sdk android:minSdkVersion="3" />

@@ -227,7 +227,7 @@ public class LoginScreen extends Activity {
     }
     
     private void startHomeScreen(String sessionID, String username) {
-    	Intent home = new Intent(getBaseContext(), HomeScreen.class);
+    	Intent home = new Intent(getBaseContext(), MainScreen.class);
     	home.putExtra(BetterHood.EXTRAS_USER_LOGGED_IN, "no");
     	home.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, username);
     	home.putExtra(BetterHood.EXTRAS_SESSION_ID, sessionID);

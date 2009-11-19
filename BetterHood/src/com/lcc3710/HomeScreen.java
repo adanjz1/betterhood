@@ -15,12 +15,16 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
+import com.gregbugaj.tabwidget.Tab;
+import com.gregbugaj.tabwidget.TabHost;
+import com.gregbugaj.tabwidget.TabHostProvider;
 
 public class HomeScreen extends MapActivity {
 
@@ -64,23 +68,30 @@ public class HomeScreen extends MapActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home_screen);       
-       
+        intent = getIntent();
+        extras = intent.getExtras();
+        // extract session id and username
+    	sessionID = extras.getString(BetterHood.EXTRAS_SESSION_ID);
+    	username = extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME);
+    	
+    	// setup tabs
+        TabHostProvider tabProvider = new BHTabProvider(this);
+        TabHost tabHost = tabProvider.getTabHost(sessionID);
+        
+        tabHost.setCurrentView(R.layout.home_screen);
+        Tab t = tabHost.getTab("Map");
+        t.setSelected(true);
+        
+        //setContentView(R.layout.home_screen); 
+        setContentView(tabHost.render());
+        
         initMap();
         initLocationManager();
-        
-        intent = getIntent();
-        
-        if ((extras = intent.getExtras()) != null) {
-        	// extract session id and username
-        	sessionID = extras.getString(BetterHood.EXTRAS_SESSION_ID);
-        	username = extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME);
-        	
-        	// create map view
-        	overlay = new EventOverlay(this,username, sessionID);
-    		mapView.getOverlays().add(overlay);
-        	mapView.getController().setZoom(16);
-        }    
+    	
+    	// create map view
+    	//overlay = new EventOverlay(this, sessionID);
+		mapView.getOverlays().add(overlay);
+    	mapView.getController().setZoom(16);  
 	}
 	
 	// called when HomeScreen is shown to user after being paused
@@ -102,6 +113,7 @@ public class HomeScreen extends MapActivity {
 	
 	@SuppressWarnings("deprecation")
 	private void initMap() {
+		//mapView = new MapView(this, "0hL9tSrc2xdo-IfbiOtIcX6kBMhJAWcVJv8Y97w");
 		mapView = (MapView) findViewById(R.id.mapview);
 		mapView.setEnabled(true);
 		mapView.setClickable(true);
@@ -111,7 +123,6 @@ public class HomeScreen extends MapActivity {
 		LinearLayout myzoom = (LinearLayout) findViewById(R.id.myzoom);
 		myzoom.addView(zoomView);
 		mapView.displayZoomControls(true);
- 
 	}
  
 	/**
@@ -162,15 +173,14 @@ public class HomeScreen extends MapActivity {
 		CustomOverlay overlay = new CustomOverlay(curLocation);
  
 		mapView.getOverlays().add(overlay);
-		EventOverlay myEvents = new EventOverlay(this,extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME), extras.getString(BetterHood.EXTRAS_SESSION_ID));
-		mapView.getOverlays().add(myEvents);
+		//EventOverlay myEvents = new EventOverlay(this, extras.getString(BetterHood.EXTRAS_SESSION_ID));
+		//mapView.getOverlays().add(myEvents);
  
 		// move to location
 		mapView.getController().animateTo(curLocation);
  
 		// redraw map
 		mapView.postInvalidate();
-		
 	}
 	
 	public List<MapLocation> getMapLocations() {

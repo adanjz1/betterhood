@@ -1,6 +1,7 @@
 package com.lcc3710;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import android.app.AlertDialog;
@@ -13,8 +14,10 @@ import android.graphics.Point;
 import android.graphics.RectF;
 import android.graphics.Paint.Style;
 import android.util.Log;
+import android.view.View;
 
 import com.google.android.maps.GeoPoint;
+import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 
@@ -24,26 +27,37 @@ public class EventOverlay extends Overlay {
 	
 	private int iconWidth;
 
-	private HomeScreen homeScreen;
+	private MainScreen homeScreen;
 	
 	public boolean locationHit;
 	boolean dialogIsHit = false;
 	AlertDialog.Builder alert2;
 	Dialog eventDialog;
+	
+	private HashMap<String, Bitmap> icons;
 
 	private Paint	innerPaint, borderPaint, textPaint;
+	
+	private InfoBubble infoBubble;
 
 	//  The currently selected Map Location...if any is selected.  This tracks whether an information  
 	//  window should be displayed & where...i.e. whether a user 'clicked' on a known map location
 	private MapLocation selectedMapLocation;  
 
-	public EventOverlay(HomeScreen	map, String name, String ID) {
+	public EventOverlay(MainScreen map, String sessionID) {
 		this.homeScreen = map;
+		icons = new HashMap<String, Bitmap>();
 	}
 
 	@Override
 	public boolean onTap(GeoPoint p, MapView	mapView)  {
-
+		// initialize infoBubble
+		if (infoBubble == null) {
+			infoBubble = new InfoBubble(mapView.getContext());
+			mapView.addView(infoBubble);
+			infoBubble.setVisibility(View.INVISIBLE);
+		}
+		
 		//  Store whether prior popup was displayed so we can call invalidate() & remove it if necessary.
 		boolean isRemovePriorPopup = selectedMapLocation != null;  
 
@@ -54,9 +68,21 @@ public class EventOverlay extends Overlay {
 		}		
 		if(selectedMapLocation != null){
 			dialogIsHit = true;
-			if(dialogIsHit){	
-				
-			}
+			Log.i("EventOverlay", "clicked " + selectedMapLocation.getTemplate().title);
+			infoBubble.update(selectedMapLocation.getTemplate());
+			
+			Point clickPoint = new Point();
+			mapView.getProjection().toPixels(selectedMapLocation.getPoint(), clickPoint);
+			Bitmap bubbleGraphic = BitmapFactory.decodeResource(this.homeScreen.getResources(), R.drawable.map_dialogue_bubble);
+			
+			int drawX = clickPoint.x;
+			int drawY = clickPoint.y - bubbleIcon.getHeight() - (bubbleGraphic.getHeight() - mapView.getHeight()/2);
+			
+			GeoPoint center = mapView.getProjection().fromPixels(drawX,drawY);
+//			mapView.getController().animateTo(center);
+//			infoBubble.setVisibility(View.VISIBLE);
+		} else {
+			infoBubble.setVisibility(View.INVISIBLE);
 		}
 
 		//  Lastly return true if we handled this onTap()
@@ -118,16 +144,24 @@ public class EventOverlay extends Overlay {
 			if (shadow) {
 				// shadow?
 			} else {
-				// download the event icon
-				try {
-					URL iconURL = new URL(BetterHood.URL_BASE + "icons/" + location.getTemplate().icon);
-					bubbleIcon = BitmapFactory.decodeStream(iconURL.openStream());
-					Log.i("EventOverlay", iconURL.toExternalForm() + " downloaded successfully.");
-				} catch (Exception e) {
-					// use the default balloon icon
-					Log.i("EventOverlay", "Icon download failed: " + e.getMessage());
-					bubbleIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.balloon);
+				// see if we already have the event icon downloaded
+				String iconName = location.getTemplate().icon;
+				if (icons.containsKey(iconName)) {
+					bubbleIcon = icons.get(iconName);
+				} else {
+					// download the event icon
+					try {
+						URL iconURL = new URL(BetterHood.URL_BASE + "icons/" + iconName);
+						bubbleIcon = BitmapFactory.decodeStream(iconURL.openStream());
+						icons.put(iconName, bubbleIcon);
+						Log.i("EventOverlay", iconURL.toExternalForm() + " downloaded successfully.");
+					} catch (Exception e) {
+						// use the default balloon icon
+						Log.i("EventOverlay", "Icon download failed: " + e.getMessage());
+						bubbleIcon = BitmapFactory.decodeResource(this.homeScreen.getResources(),R.drawable.balloon);
+					}
 				}
+				
 				int zoomLevel = mapView.getZoomLevel();
 				//resize based on zoom level				
 				iconWidth = (zoomLevel * 9) - 88;
@@ -148,8 +182,19 @@ public class EventOverlay extends Overlay {
 	private void drawInfoWindow(Canvas canvas, MapView	mapView, boolean shadow) {
 
 		if ( selectedMapLocation != null) {
-			Point selDestinationOffset = new Point();
-			mapView.getProjection().toPixels(selectedMapLocation.getPoint(), selDestinationOffset);
+			/*
+			Point clickPoint = new Point();
+			mapView.getProjection().toPixels(selectedMapLocation.getPoint(), clickPoint);
+			Bitmap infoBubble = BitmapFactory.decodeResource(this.homeScreen.getResources(), R.drawable.map_dialogue_bubble);
+			
+			int drawX = clickPoint.x - infoBubble.getWidth()/2 + bubbleIcon.getWidth();
+			int drawY = clickPoint.y - infoBubble.getHeight() - bubbleIcon.getHeight()/2;
+			canvas.drawBitmap(infoBubble, drawX, drawY, null);
+			
+			GeoPoint center = mapView.getProjection().fromPixels(drawX + infoBubble.getWidth()/2, drawY + infoBubble.getHeight()/2);
+			mapView.getController().animateTo(center);
+			*/
+			
 		}
 	}
 
