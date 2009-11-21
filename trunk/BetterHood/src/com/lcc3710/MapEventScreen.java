@@ -7,9 +7,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.TableLayout.LayoutParams;
 
 public class MapEventScreen extends Activity {
 	private Intent intent;
@@ -21,7 +21,7 @@ public class MapEventScreen extends Activity {
 	private TextView textEventType;
 	private TextView textEventHost;
 	private TextView textEventName;
-	private RelativeLayout eventLayout;
+	private LinearLayout eventLayout;
 	
 	private Template[] eventList;
 	private Template event;
@@ -48,7 +48,7 @@ public class MapEventScreen extends Activity {
 	public void makeScreen() {
 		this.setContentView(R.layout.event_screen);
 		
-		eventLayout = (RelativeLayout) this.findViewById(R.id.eventLayout);
+		eventLayout = (LinearLayout) this.findViewById(R.id.eventLayout);
 
 		buttonDialogBack = (Button) this.findViewById(R.id.buttonBack);
 		buttonDialogForward = (Button) this.findViewById(R.id.buttonForward);
@@ -75,7 +75,7 @@ public class MapEventScreen extends Activity {
 		
 		// set basic info
 		textEventType.setText(event.title);
-		textEventHost.setText(event.creator);
+		textEventHost.setText(event.creatorName);
 		
 		// go through each template widget and add it to the form
      	String tag = "Form Population";
@@ -100,6 +100,8 @@ public class MapEventScreen extends Activity {
 			
 			Log.i("Form Population", "previousView id: " + Integer.toString(previousView.getId()));
 			
+			RelativeLayout rlRow = new RelativeLayout(this);
+			
 			TextView tvLabel = new TextView(this);
 			tvLabel.setTextColor(Color.parseColor("#FF227A81"));
 			tvLabel.setId(++curId);
@@ -109,12 +111,10 @@ public class MapEventScreen extends Activity {
 			RelativeLayout.LayoutParams pLabel = new RelativeLayout.LayoutParams(
 					100, 
 					RelativeLayout.LayoutParams.WRAP_CONTENT);
-			pLabel.addRule(RelativeLayout.BELOW, previousView.getId());
 			pLabel.setMargins(0, 5, 0, 0);
 			RelativeLayout.LayoutParams pValue = new RelativeLayout.LayoutParams(
 					RelativeLayout.LayoutParams.FILL_PARENT, 
 					RelativeLayout.LayoutParams.WRAP_CONTENT);
-			pValue.addRule(RelativeLayout.BELOW, previousView.getId());
 			pValue.addRule(RelativeLayout.RIGHT_OF, tvLabel.getId());
 			pValue.setMargins(0, 5, 0, 0);
 			
@@ -128,24 +128,26 @@ public class MapEventScreen extends Activity {
 					tvValue.setText(w.value);
 					
 					// add the views
-					eventLayout.addView(tvLabel, pLabel);
-					eventLayout.addView(tvValue, pValue);
+					rlRow.addView(tvLabel, pLabel);
+					rlRow.addView(tvValue, pValue);
 				}
 			} else if (type.equals("Location")) {
 				tvLabel.setText(w.label + ":");
 				tvValue.setText(w.value);
 				
 				// add the views
-				eventLayout.addView(tvLabel, pLabel);
-				eventLayout.addView(tvValue, pValue);
+				rlRow.addView(tvLabel, pLabel);
+				rlRow.addView(tvValue, pValue);
 			} else if (type.contains("Date")) {
 				tvLabel.setText(w.label + ":");
 				tvValue.setText(w.value);
 				
 				// add the views
-				eventLayout.addView(tvLabel, pLabel);
-				eventLayout.addView(tvValue, pValue);
+				rlRow.addView(tvLabel, pLabel);
+				rlRow.addView(tvValue, pValue);
 			}
+			
+			eventLayout.addView(rlRow);
 		}
 
 		View.OnClickListener buttonListener = new View.OnClickListener() {

@@ -2,7 +2,11 @@ package com.lcc3710;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.sql.Date;
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -35,6 +39,17 @@ public class Template {
 					this.title = temp.getNodeValue();
 				if ((temp = attr.getNamedItem("creator")) != null) {
 					this.creator = temp.getNodeValue();
+					
+					SQLQuery getName = new SQLQuery("get_username.php", "uid=" + this.creator);
+					String name = getName.submit();
+					if (!(name == null) && !name.equals(" ")) {
+						this.creatorName = name;
+					} else {
+						if (this.creator == null)
+							this.creatorName = "error: host not found";
+						else
+							this.creatorName = "user id: " + this.creator;
+					}
 				}
 				if ((temp = attr.getNamedItem("icon")) != null) {
 					this.icon = temp.getNodeValue();
@@ -86,6 +101,18 @@ public class Template {
 						if (tw.type.equals("Location")) {
 							tw.latitude = Double.parseDouble(attr.getNamedItem("latitude").getNodeValue());
 							tw.longitude = Double.parseDouble(attr.getNamedItem("longitude").getNodeValue());
+						} else if (tw.type.contains("Date")) {
+							String[] date = attr.getNamedItem("date").getNodeValue().split("-");
+							String[] time = attr.getNamedItem("time").getNodeValue().split(":");
+
+							if ((date.length > 2) && (time.length > 1)) {
+								tw.date = new GregorianCalendar(
+										Integer.parseInt(date[0]),
+										Integer.parseInt(date[1]),
+										Integer.parseInt(date[2]),
+										Integer.parseInt(time[0]),
+										Integer.parseInt(time[1]));
+							}
 						}
 						
 						tw.value = value;
@@ -103,8 +130,22 @@ public class Template {
 		}
 	}
 	
+	public Calendar[] getCalendars() {
+		ArrayList<Calendar> cl = new ArrayList<Calendar>();
+		for (int i = 0; i < widgets.length; i++) {
+			TemplateWidget w = widgets[i];
+			if (w.type.contains("Date")) {
+				if (w.date != null) {
+					cl.add(w.date);
+				}
+			}
+		}
+		return cl.toArray(new Calendar[cl.size()]);
+	}
+	
 	public String title;
 	public String creator;
+	public String creatorName;
 	public String icon;
 	public int id;
 	public TemplateWidget[] widgets;

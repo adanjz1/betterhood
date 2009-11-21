@@ -27,19 +27,9 @@
         <activity android:name=".CreateAccountScreen2"
         		  android:label="@string/title">
         </activity>
-        <activity android:name=".SimilarScreenActivity"
-        		  android:label="@string/title">
-        </activity>
-        <activity android:name=".HomeScreen"
-        		  android:label="@string/title">
-        </activity>
         <activity android:name=".MainScreen"
         		  android:label="@string/title">
         </activity>
-        <activity android:name=".EventListScreen"
-        		  android:label="@string/title">
-        </activity>
-        
         <activity android:name=".CreateEventScreen1"
         		  android:label="@string/title">
         </activity>
@@ -49,16 +39,11 @@
         <activity android:name=".MapEventScreen"
         		  android:label="@string/title">
         </activity>
-        <activity android:name=".SimilarScreen"
-        		  android:label="@string/title">
-        </activity>
         <activity android:name=".SettingsScreen">
         </activity>
         <activity android:name=".ConnectionResource">
         </activity>
         <activity android:name=".EventCommentPage">
-        </activity>
-        <activity android:name=".ShareScreen">
         </activity>
     </application>
     <uses-sdk android:minSdkVersion="3" />

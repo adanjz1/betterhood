@@ -67,7 +67,7 @@ public class SQLQuery {
 			e.printStackTrace();
 			return "FAILED";
 		}
-		Log.i("SQLQuery", target + " returned " + str);
+		Log.i("SQLQuery", target + "?" + query + " returned " + str);
 		return str;
 	}
 

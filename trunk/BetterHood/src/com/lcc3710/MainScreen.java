@@ -21,17 +21,18 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
-import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Toast;
 
+import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
+import com.google.android.maps.Overlay;
 import com.gregbugaj.tabwidget.Tab;
 
 
@@ -52,6 +53,7 @@ public class MainScreen extends MapActivity {
 	// map view stuff
 	private MapView mapView;
 	private EventOverlay eventOverlay;
+	private CustomOverlay locationOverlay;
 	
 	// event list stuff
 	private ListView eventListView;
@@ -71,11 +73,11 @@ public class MainScreen extends MapActivity {
     	sessionID = extras.getString(BetterHood.EXTRAS_SESSION_ID);
     	
     	populateEvents();
+    	initLocationManager();
         
         initMapView();
         initShareView();
         initListView();
-        initLocationManager();
     	
     	// create table layout
     	FrameLayout.LayoutParams pTable = new FrameLayout.LayoutParams(
@@ -116,11 +118,43 @@ public class MainScreen extends MapActivity {
 		mapView.setEnabled(true);
 		mapView.setClickable(true);
 		mapView.setBuiltInZoomControls(true);
-		
-		// create event overlay
-    	eventOverlay = new EventOverlay(this, sessionID);
-		mapView.getOverlays().add(eventOverlay);
+    	
+    	addOverlays();
+    	
     	mapView.getController().setZoom(16);
+	}
+	
+	private void addOverlays() {
+		List<Overlay> o = mapView.getOverlays();
+		for (int i = 0; i < o.size(); i++) {
+			o.remove(i);
+		}
+		
+		eventOverlay = new EventOverlay(this, sessionID);
+		o.add(eventOverlay);
+		
+		if (curLocation != null) {
+			GeoPoint p = new GeoPoint(
+    				(int)(curLocation.getLatitude()* 1e6), 
+    				(int)(curLocation.getLongitude()* 1e6));
+    		locationOverlay = new CustomOverlay(p);
+    		
+    		o.add(locationOverlay);
+    		
+    		mapView.getController().animateTo(p);
+    	} else {
+    		List<MapLocation> ml = getMapLocations();
+    		if (ml.size() > 0) {
+    			GeoPoint p = null;
+    			for (int i = 0; i < ml.size(); i++) {
+    				p = ml.get(i).getPoint();
+    				if (p != null) {
+    					mapView.getController().animateTo(p);
+    					break;
+    				}
+    			}
+    		}
+    	}
 	}
 	
 	private void initShareView() {
@@ -180,6 +214,33 @@ public class MainScreen extends MapActivity {
 		return true;
 	}
 	
+	/**
+	 * Initialises the MyLocationOverlay and adds it to the overlays of the map
+	 */
+	private void initLocationManager() {
+		LocationManager locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		LocationListener locListener = new LocationListener() {
+	
+			public void onLocationChanged(Location newLocation) {
+				curLocation = newLocation;
+				addOverlays();
+			}
+	
+			public void onProviderDisabled(String provider) {
+				showToast("GPS provider is disabled, please enable it.", 5);
+			}
+	
+			public void onProviderEnabled(String provider) {
+			}
+	
+			public void onStatusChanged(String provider, int status, Bundle extras) {
+			}
+		};
+		locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 100,
+				locListener);
+	
+	}
+
 	public boolean onOptionsItemSelected(MenuItem item) {
 		  String id = (String) item.getTitle();
 
@@ -200,29 +261,8 @@ public class MainScreen extends MapActivity {
 		  return true;
 	}
  
-	/**
-	 * Initialises the MyLocationOverlay and adds it to the overlays of the map
-	 */
-	private void initLocationManager() {
-		LocationManager locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		LocationListener locListener = new LocationListener() {
- 
-			public void onLocationChanged(Location newLocation) {
-				curLocation = newLocation;
-			}
- 
-			public void onProviderDisabled(String provider) {
-			}
- 
-			public void onProviderEnabled(String provider) {
-			}
- 
-			public void onStatusChanged(String provider, int status, Bundle extras) {
-			}
-		};
-		locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
-				locListener);
- 
+	private void showToast(String message, int length) {
+		Toast.makeText(this, message, length).show();
 	}
 	
 	public List<MapLocation> getMapLocations() {
