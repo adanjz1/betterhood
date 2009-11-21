@@ -1,5 +1,7 @@
 package com.lcc3710;
 
+import java.util.Calendar;
+
 public class TemplateWidget {
 	public TemplateWidget(String t, String l, Boolean r) {
 		this.type = t;
@@ -36,6 +38,8 @@ public class TemplateWidget {
 	public String value;
 	public double latitude;
 	public double longitude;
+	
+	public Calendar date;
 	
 	public static enum Type {
 		EditText,

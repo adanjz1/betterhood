@@ -1,7 +1,10 @@
 package com.lcc3710;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.sql.Time;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -59,6 +62,9 @@ public class CreateEventScreen2 extends Activity {
 	private int iYear;
 	private int iMinute;
 	private int iHour;
+	
+	private HashMap<String,Date> dates;
+	private HashMap<String,Time> times;
 	
 	private String szEventAddress;
 	private Location lEventLocation;
@@ -174,6 +180,12 @@ public class CreateEventScreen2 extends Activity {
 
 							xml += "<value " + "latitude=\"" + lat + "\" ";
 							xml += "longitude=\"" + lon + "\">";
+							xml += w.value + "</value>";
+						} else if (w.type.contains("Date")) {
+							Date date = dates.get(w.label);
+							Time time = times.get(w.label);
+							xml += "<value " + "date=\"" + date.toString() + "\" ";
+							xml += "time=\"" + time.toString() + "\">";
 							xml += w.value + "</value>";
 						} else {
 							xml += "<value>" + w.value + "</value>";
@@ -335,6 +347,7 @@ public class CreateEventScreen2 extends Activity {
      			
      		} else if (w.type.contains("Date")) {
      			Button date = new Button(this);
+     			date.setTag(w.label);
      			date.setText(w.label);
      			// set id
      			date.setId(curId);
@@ -519,10 +532,19 @@ public class CreateEventScreen2 extends Activity {
         new DatePickerDialog.OnDateSetListener() {
 
             public void onDateSet(DatePicker view, int year, 
-                                  int monthOfYear, int dayOfMonth) {
-                iYear = year;
-                iMonth = monthOfYear;
-                iDay = dayOfMonth;
+                                  int monthOfYear, int dayOfMonth) { 
+            	if (dates == null) {
+            		dates = new HashMap<String,Date>();
+            	}
+            	
+            	String tag = (String) view.getTag();
+            	Date d = dates.get(tag);
+            	
+            	if (d != null) {
+            		dates.remove(tag);
+            	}
+            	d = Date.valueOf(year + "-" + monthOfYear + "-" + dayOfMonth);
+            	dates.put(tag, d);
                 
                 buttonPickDate.setText("On " 
 						+ Integer.toString(iMonth) + "/" 
@@ -535,19 +557,29 @@ public class CreateEventScreen2 extends Activity {
     private TimePickerDialog.OnTimeSetListener mTimeSetListener = 
     	new TimePickerDialog.OnTimeSetListener() {
 			public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-				iMinute = minute;
-				iHour = hourOfDay;
-				int tempHour = iHour;
+				if (times == null) {
+					times = new HashMap<String,Time>();
+				}
+				
+				String tag = (String) view.getTag();
+				Time t = times.get(tag);
+				if (t != null) {
+					times.remove(tag);
+				}
+				t = new Time(hourOfDay, minute, 0);
+				times.put(tag, t);
+				
+				int tempHour = hourOfDay;
 				
 				String tempMinute = Integer.toString(iMinute);
-				if (iMinute < 10) { 
+				if (minute < 10) { 
 					tempMinute = "0" + tempMinute;
 				}
 				
 				String ampm = "AM";
 				
-				if (iHour > 12) {
-					tempHour = iHour - 12;
+				if (hourOfDay > 12) {
+					tempHour = hourOfDay - 12;
 					ampm = "PM";
 				}
 				

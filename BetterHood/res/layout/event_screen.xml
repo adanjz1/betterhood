@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout
-	android:id="@+id/linlayoutBase"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:orientation="vertical"
@@ -15,7 +14,6 @@
 		>
 	<RelativeLayout 
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/eventLayout"
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content"
         >
@@ -73,6 +71,15 @@
 		android:layout_below = "@id/textEventType"
 		android:layout_marginTop = "5dip"
 	/>
+	<LinearLayout
+		android:id="@+id/eventLayout"
+		android:layout_below = "@id/textEventHost"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		xmlns:android="http://schemas.android.com/apk/res/android"
+	>
+	</LinearLayout>
 </RelativeLayout>
 </ScrollView>
 <RelativeLayout 

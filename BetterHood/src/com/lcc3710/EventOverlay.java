@@ -18,7 +18,6 @@ import android.util.Log;
 import android.view.View;
 
 import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 
@@ -80,7 +79,7 @@ public class EventOverlay extends Overlay {
 			int drawY = clickPoint.y - bubbleIcon.getHeight() - (bubbleGraphic.getHeight() - mapView.getHeight()/2);
 			
 			GeoPoint center = mapView.getProjection().fromPixels(drawX,drawY);
-//			mapView.getController().animateTo(center);
+			mapView.getController().animateTo(center);
 //			infoBubble.setVisibility(View.VISIBLE);
 			
 			// open info view
