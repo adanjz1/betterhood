@@ -22,7 +22,7 @@ public class SQLQuery {
 		return textURL(query);
 	}
 	
-	public String textURL(String vars)
+	private String textURL(String vars)
 	{
 		int BUFFER_SIZE = 2000;
 		InputStream in = null;

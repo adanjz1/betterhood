@@ -254,17 +254,7 @@ public class EventCommentPage extends Activity {
 					String comment;
 					for(int i =0; i< lv.getCount(); i++){
 						if(lv.isItemChecked(i)){
-							name = itemsName[i].toString();
-							comment = items[i].toString();
-							Log.i("nammmmme", name);
-							Log.i("whattisit", comment);
-							Intent home = new Intent(a, SimilarSub.class);
-					    	home.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
-					    	home.putExtra(BetterHood.EXTRAS_SESSION_ID, sessionID);
-					    	home.putExtra(BetterHood.EXTRAS_EVENT_NAME, name);
-					    	home.putExtra(BetterHood.EXTRAS_EVENT_HOST, comment);
-					    	
-					    	startActivityForResult(home, BetterHood.REQ_HOME_SCREEN);
+							finish();
 							
 							
 							

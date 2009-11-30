@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationListener;
@@ -26,14 +25,12 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
-import com.gregbugaj.tabwidget.Tab;
 
 
 public class MainScreen extends MapActivity {
@@ -59,7 +56,7 @@ public class MainScreen extends MapActivity {
 	private ListView eventListView;
 	
 	// share view stuff
-	private TextView shareView;
+	private ShareView shareView;
 	
 	// tab stuff
 	final private String[] tabTags = {"SHARE", "MAP", "LIST"};
@@ -163,14 +160,10 @@ public class MainScreen extends MapActivity {
     	int displayWidth = defDisplay.getWidth();
     	int displayHeight = defDisplay.getHeight();
 		
-		shareView = new TextView(this);
-		shareView.setText("poop");
-		shareView.setBackgroundColor(Color.WHITE);
-		shareView.setTextColor(Color.BLACK);
-		
-		//shareView.setMinimumWidth(displayWidth);
-		shareView.setMaxWidth(displayWidth);
-		shareView.setHeight(displayHeight-tabHeight);
+		shareView = new ShareView(this);
+
+		shareView.setMinimumWidth(displayWidth);
+		shareView.setMinimumHeight(displayHeight-tabHeight);
 		
 		TableRow.LayoutParams params = new TableRow.LayoutParams(
 				TableRow.LayoutParams.FILL_PARENT,

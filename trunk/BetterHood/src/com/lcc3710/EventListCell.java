@@ -1,9 +1,6 @@
 package com.lcc3710;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -55,13 +52,34 @@ public class EventListCell extends TableLayout {
 		TemplateWidget[] tw = event.widgets;
 		for (int i = 0; i < tw.length; i++) {
 			String label = tw[i].label;
-			if (label.equals("Title")) {
-				if (eTitle == null)
-					eTitle = tw[i].value;
-			} else if (label.contains("Date")) {
-				if (eDate == null) {
-					Calendar[] c = event.getCalendars();
-					eDate = tw[i].value;
+			if (label != null) {
+				if (label.equals("Title")) {
+					if (eTitle == null)
+						eTitle = tw[i].value;
+				} else if (label.contains("Date")) {
+					if (eDate == null) {
+						Calendar[] c = event.getCalendars();
+						if (c.length > 0) {
+							Calendar temp = c[0];
+							int min = temp.get(Calendar.MINUTE);
+							
+							String date = Integer.toString(temp.get(Calendar.MONTH))
+										+ "/" + Integer.toString(temp.get(Calendar.DAY_OF_MONTH))
+										+ "/" + Integer.toString(temp.get(Calendar.YEAR));
+							String time = Integer.toString(temp.get(Calendar.HOUR))
+										+ ":" + Integer.toString(min);
+							if (min < 10) {
+								time += "0";
+							}
+							if (temp.get(Calendar.AM_PM) == Calendar.AM)
+								time += " AM";
+							else
+								time += " PM";
+							eDate = date + "\n" + "@ " + time;
+						} else {
+							eDate = tw[i].value;
+						}
+					}
 				}
 			}
 		}

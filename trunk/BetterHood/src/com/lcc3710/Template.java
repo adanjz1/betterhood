@@ -102,16 +102,18 @@ public class Template {
 							tw.latitude = Double.parseDouble(attr.getNamedItem("latitude").getNodeValue());
 							tw.longitude = Double.parseDouble(attr.getNamedItem("longitude").getNodeValue());
 						} else if (tw.type.contains("Date")) {
-							String[] date = attr.getNamedItem("date").getNodeValue().split("-");
-							String[] time = attr.getNamedItem("time").getNodeValue().split(":");
-
-							if ((date.length > 2) && (time.length > 1)) {
-								tw.date = new GregorianCalendar(
-										Integer.parseInt(date[0]),
-										Integer.parseInt(date[1]),
-										Integer.parseInt(date[2]),
-										Integer.parseInt(time[0]),
-										Integer.parseInt(time[1]));
+							if (attr.getLength() > 0) {
+								String[] date = attr.getNamedItem("date").getNodeValue().split("-");
+								String[] time = attr.getNamedItem("time").getNodeValue().split(":");
+	
+								if ((date.length > 2) && (time.length > 1)) {
+									tw.date = new GregorianCalendar(
+											Integer.parseInt(date[0]),
+											Integer.parseInt(date[1]),
+											Integer.parseInt(date[2]),
+											Integer.parseInt(time[0]),
+											Integer.parseInt(time[1]));
+								}
 							}
 						}
 						
