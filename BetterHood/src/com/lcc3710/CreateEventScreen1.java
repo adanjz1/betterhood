@@ -6,10 +6,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class CreateEventScreen1 extends Activity {
     /** Called when the activity is first created. */
@@ -17,8 +20,10 @@ public class CreateEventScreen1 extends Activity {
 	private Button buttonForward;
 	
 	private AutoCompleteTextView editEventTemplate;
+	private ListView listEventTemplate;
 	
 	private ArrayAdapter<String> adapter;
+	private ArrayAdapter<String> listAdapter;
 	private Template[] templates;
 	
 	private Intent intent;
@@ -60,14 +65,38 @@ public class CreateEventScreen1 extends Activity {
 		for (int i = 0; i < templates.length; i++) {
 			sl.add(templates[i].title);
 		}
+		
+		/*
+		 // LIST DEBUGGING NONSENSE
+		if (sl.size() < 10) {
+			for (int i = sl.size(); i < 10; i++) {
+				sl.add("testing " + Integer.toString(i));
+			}
+		 }
+		 */
+		
 		String[] availableEvents = sl.toArray(new String[0]);
 		
 		// set our list of templates for the dropdown edittext thing
 		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, availableEvents);
+		listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, availableEvents);
 		
 		editEventTemplate = (AutoCompleteTextView) findViewById(R.id.editEventTemplate);
 		editEventTemplate.setAdapter(adapter);
 		editEventTemplate.setThreshold(0);
+		
+		// set up list view
+		listEventTemplate = (ListView) findViewById(R.id.listEventTemplate);
+		listEventTemplate.setAdapter(listAdapter);
+		
+		listEventTemplate.setOnItemClickListener(new OnItemClickListener() {
+
+			public void onItemClick(AdapterView<?> adapter, View v, int position,
+					long id) {
+				String template = (String) adapter.getItemAtPosition(position);
+				editEventTemplate.setText(template);
+			}
+		});
 		
 		buttonBack.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {

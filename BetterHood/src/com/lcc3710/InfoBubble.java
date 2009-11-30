@@ -59,6 +59,7 @@ public class InfoBubble extends RelativeLayout {
 	}
 	
 	public void update(Template t) {
+		/*
 		// reset the text fields
 		title.setText("");
 		creator.setText("");
@@ -78,6 +79,7 @@ public class InfoBubble extends RelativeLayout {
 			if (w.type.equals("Location")) {
 				address.setText(w.value);
 			}
+			
 			if (w.type.equals("StartDate")) {
 				date.setText(w.value);
 			}
@@ -85,8 +87,10 @@ public class InfoBubble extends RelativeLayout {
 				date.append(w.value);
 			}
 			
+			
 			// hard coding shit
 			distance.setText("1.0 mi");
 		}
+		*/
 	}
 }

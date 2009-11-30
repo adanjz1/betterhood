@@ -84,6 +84,9 @@ public class BetterHood {
 	public static final String PHP_FILE_POPULATE_EVENT_XML = "populate_event_xml.php";
 	public static final String PHP_FILE_POPULATE_EVENT_COMMENT_LIST = "populate_event_list_comment.php";
 	public static final String PHP_FILE_ADD_TO_IHAVE = "add_to_ihave.php";
+	public static final String PHP_FILE_ADD_HAVE = "add_have.php";
+	public static final String PHP_FILE_REMOVE_HAVE = "remove_have.php";
+	public static final String PHP_FILE_GET_HAVE = "get_have.php";
 	public static final String PHP_FILE_POPULATE_SIMILAR_LIST = "populate_similar.php";
 	public static final String PHP_FILE_SIMILAR_SUB_COMMENT = "post_similar_comment.php";
 	public static final String PHP_FILE_POPULATE_RESPONSES = "populate_response.php";

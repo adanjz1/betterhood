@@ -1,17 +1,12 @@
-package com.gregbugaj.tabwidget;
+package com.lcc3710;
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 public class Tab {
 	private static final String TAG = Tab.class.getSimpleName();
@@ -19,17 +14,13 @@ public class Tab {
 	private int resourceIconSelected=0;
 
 	private Activity context;
-	private Intent intent;
 
 	private ImageButton btn;
 	private String tabTag;
 
 	public int preferedHeight=-1;
 	private boolean isSelected;
-	private int transparentResourceID;
-	private Dialog dialog;
-	private int requestCode=-1;
-	
+	private int transparentResourceID;	
 	private View targetView;
 
 	public Tab(Activity context, String tabTag) {
@@ -104,10 +95,4 @@ public class Tab {
 	public void setTransparentResourceID(int transparentResourceID) {
 		this.transparentResourceID = transparentResourceID;
 	}
-
-	public void setDialog(Dialog dialog) {
-		this.dialog=dialog;		
-	}
-
-
 }
