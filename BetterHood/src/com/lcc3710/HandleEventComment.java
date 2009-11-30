@@ -39,7 +39,7 @@ public class HandleEventComment {
 	}
 	
 	ArrayList<String> recieveComments(int id){
-		int eventID = id;
+		//int eventID = id;
 		
 		//todo php stuff to request comments from mysql for an event
 		return null;
