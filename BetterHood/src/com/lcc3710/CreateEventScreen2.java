@@ -204,7 +204,7 @@ public class CreateEventScreen2 extends Activity {
 				//finished packing xml
 				//send it off to the server
 				if (!xmlFail) {
-					String q = "event_xml=" + xml + "&sid=" + extras.getString(BetterHood.EXTRAS_SESSION_ID);
+					String q = "event_xml=" + xml + "&sid=" + extras.getString(BetterHood.EXTRAS_SESSION_ID) + "&template=" + template.title;
 					SQLQuery query = new SQLQuery(BetterHood.PHP_FILE_CREATE_EVENT_XML, q);
 					String result = query.submit();
 					String tag = "Event Creation";
