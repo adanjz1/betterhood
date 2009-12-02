@@ -170,7 +170,7 @@ public class EventOverlay extends Overlay {
 				
 				int zoomLevel = mapView.getZoomLevel();
 				//resize based on zoom level				
-				iconWidth = (zoomLevel * 9) - 88;
+				iconWidth = (zoomLevel * 9) - 96;
 				if (iconWidth < 15) {
 					iconWidth = 15;
 				} 

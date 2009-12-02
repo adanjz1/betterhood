@@ -7,6 +7,7 @@ import android.util.Log;
 public class TemplateFactory {
 	public static final int POPULATE_EVENTS = 0;
 	public static final int POPULATE_TEMPLATES = 1;
+	public static final int POPULATE_INTERESTS = 2;
 	
 	private String sessionID;
 	
@@ -21,8 +22,14 @@ public class TemplateFactory {
 			query = new SQLQuery(BetterHood.PHP_FILE_POPULATE_TEMPLATES, "sid=" + sessionID);
 		} else if (code == POPULATE_EVENTS) {
 			query = new SQLQuery(BetterHood.PHP_FILE_POPULATE_EVENT_XML, "sid=" + sessionID);
+		} else if (code == POPULATE_INTERESTS) {
+			query = new SQLQuery(BetterHood.PHP_FILE_POPULATE_EVENT_INTERESTED, "sid=" + sessionID);
 		}
-		String result = query.submit();
+		String result = query.submit()
+		.replace("\n", "")
+		.replace("\t", "")
+		.replace("\r", "")
+		.replace("\f", "");
 		// split templates by | delimiter
 		String[] raw = result.split("\\|");
 		
