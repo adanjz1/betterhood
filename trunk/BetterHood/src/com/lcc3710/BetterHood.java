@@ -82,6 +82,7 @@ public class BetterHood {
 	public static final String PHP_FILE_POPULATE_TEMPLATES = "populate_templates.php";
 	public static final String PHP_FILE_POPULATE_EVENT_LIST = "populate_event_list.php";
 	public static final String PHP_FILE_POPULATE_EVENT_XML = "populate_event_xml.php";
+	public static final String PHP_FILE_POPULATE_EVENT_INTERESTED = "populate_event_interested.php";
 	public static final String PHP_FILE_POPULATE_EVENT_COMMENT_LIST = "populate_event_list_comment.php";
 	public static final String PHP_FILE_ADD_TO_IHAVE = "add_to_ihave.php";
 	public static final String PHP_FILE_ADD_HAVE = "add_have.php";

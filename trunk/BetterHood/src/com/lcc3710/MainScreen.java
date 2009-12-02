@@ -108,6 +108,7 @@ public class MainScreen extends MapActivity {
 	protected void onResume() {
 		super.onResume();
 		populateEvents();
+		shareView.initViews();
 	}
 	
 	private void initMapView() {
@@ -160,8 +161,8 @@ public class MainScreen extends MapActivity {
     	int displayWidth = defDisplay.getWidth();
     	int displayHeight = defDisplay.getHeight();
 		
-		shareView = new ShareView(this);
-
+		shareView = new ShareView(this, sessionID);
+		
 		shareView.setMinimumWidth(displayWidth);
 		shareView.setMinimumHeight(displayHeight-tabHeight);
 		
@@ -170,6 +171,7 @@ public class MainScreen extends MapActivity {
 				TableRow.LayoutParams.FILL_PARENT);
 		params.span = tabTags.length + 2;
 		shareView.setLayoutParams(params);
+		shareView.setEvents(eventList);
 	}
 	
 	private void initListView() {

@@ -537,7 +537,7 @@ public class CreateEventScreen2 extends Activity {
             		dates = new HashMap<String,Date>();
             	}
             	
-            	String tag = (String) view.getTag();
+            	String tag = (String) buttonPickDate.getTag();
             	Date d = dates.get(tag);
             	
             	if (d != null) {
@@ -547,9 +547,9 @@ public class CreateEventScreen2 extends Activity {
             	dates.put(tag, d);
                 
                 buttonPickDate.setText("On " 
-						+ Integer.toString(iMonth) + "/" 
-						+ Integer.toString(iDay) + "/" 
-						+ Integer.toString(iYear));
+						+ Integer.toString(monthOfYear) + "/" 
+						+ Integer.toString(dayOfMonth) + "/" 
+						+ Integer.toString(year));
                 
                 showDialog(TIME_DIALOG_ID);
             }
@@ -561,7 +561,9 @@ public class CreateEventScreen2 extends Activity {
 					times = new HashMap<String,Time>();
 				}
 				
-				String tag = (String) view.getTag();
+				Log.i("time set", Integer.toString(hourOfDay) + ":" + Integer.toString(minute));
+				
+				String tag = (String) buttonPickDate.getTag();
 				Time t = times.get(tag);
 				if (t != null) {
 					times.remove(tag);
@@ -571,7 +573,7 @@ public class CreateEventScreen2 extends Activity {
 				
 				int tempHour = hourOfDay;
 				
-				String tempMinute = Integer.toString(iMinute);
+				String tempMinute = Integer.toString(minute);
 				if (minute < 10) { 
 					tempMinute = "0" + tempMinute;
 				}
