@@ -60,7 +60,6 @@ public class CreateEventScreen2 extends Activity {
 	private int iDay;
 	private int iMonth;
 	private int iYear;
-	private int iMinute;
 	private int iHour;
 	
 	private HashMap<String,Date> dates;
@@ -118,7 +117,6 @@ public class CreateEventScreen2 extends Activity {
         iMonth = c.get(Calendar.MONTH);
         iDay = c.get(Calendar.DAY_OF_MONTH);
         iHour = c.get(Calendar.HOUR_OF_DAY);
-        iMinute = c.get(Calendar.MINUTE);
         
         // set back and forward button behavior
         buttonBack = (Button) findViewById(R.id.buttonBack);

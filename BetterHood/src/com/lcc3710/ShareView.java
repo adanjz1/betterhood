@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -15,9 +16,11 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.widget.AbsoluteLayout;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.AdapterView.OnItemClickListener;
 
 @SuppressWarnings("deprecation")
 public class ShareView extends AbsoluteLayout {
@@ -173,7 +176,32 @@ public class ShareView extends AbsoluteLayout {
 				android.R.layout.simple_list_item_1, 
 				alEvents.toArray(new String[0]));
 		list.setAdapter(adapter);
-		
+		list.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View v,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				String item = (String) parent.getItemAtPosition(position);
+				Template t = null;
+				for (int i = 0; i < events.length; i++) {
+					Template e = events[i];
+					for (int j = 0; j < e.widgets.length; j++) {
+						TemplateWidget w = e.widgets[j];
+
+						if (w.value.equals(item)) {
+							t = e;
+							break;
+						}
+					}
+				}
+				if (t != null) {
+					Intent in = new Intent(context, MapEventScreen.class);
+					in.putExtra(BetterHood.EXTRAS_EVENT_ID, t.id);
+					in.putExtra(BetterHood.EXTRAS_SESSION_ID, sessionID);
+					context.startActivity(in);
+				}
+			}
+		});
+
 		d.setContentView(list);
 		
 		return d;
