@@ -64,6 +64,7 @@ public class ShareView extends AbsoluteLayout {
 	}
 	
 	public void initViews() {
+		Log.i("ShareView", "initing views!");
 		TemplateFactory tf = new TemplateFactory(sessionID);
 		events = tf.getTemplates(TemplateFactory.POPULATE_INTERESTS);
 		
@@ -102,7 +103,7 @@ public class ShareView extends AbsoluteLayout {
 		Point[] points = getPoints(radius, types.size(), new Point(screenWidth/2,screenHeight/2));
 		
 		// remove existing views
-		this.removeAllViews();
+		this.removeAllViewsInLayout();
 		
 		// draw each icon
 		int baseWidth = 35;
