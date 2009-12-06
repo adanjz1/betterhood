@@ -108,7 +108,7 @@ public class MainScreen extends MapActivity {
 	protected void onResume() {
 		super.onResume();
 		populateEvents();
-		shareView.initViews();
+		initShareView();
 	}
 	
 	private void initMapView() {
