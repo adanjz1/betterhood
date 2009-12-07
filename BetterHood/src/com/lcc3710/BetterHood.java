@@ -79,9 +79,9 @@ public class BetterHood {
 	public static final String PHP_FILE_CREATE_EVENT_XML = "create_event_xml.php";
 	public static final String PHP_FILE_CHECK_USERNAME = "check_username.php";
 	public static final String PHP_FILE_GET_USERID = "get_userid.php";
-	public static final String PHP_FILE_POPULATE_TEMPLATES = "populate_templates.php";
+	public static final String PHP_FILE_POPULATE_TEMPLATES = "populate_templates_android.php";
 	public static final String PHP_FILE_POPULATE_EVENT_LIST = "populate_event_list.php";
-	public static final String PHP_FILE_POPULATE_EVENT_XML = "populate_event_xml.php";
+	public static final String PHP_FILE_POPULATE_EVENT_XML = "populate_event_xml_android.php";
 	public static final String PHP_FILE_POPULATE_EVENT_INTERESTED = "populate_event_interested.php";
 	public static final String PHP_FILE_POPULATE_EVENT_COMMENT_LIST = "populate_event_list_comment.php";
 	public static final String PHP_FILE_ADD_TO_IHAVE = "add_to_ihave.php";
@@ -112,5 +112,5 @@ public class BetterHood {
 	
 	public static final int TOAST_TIME = 5;
 	
-	public static final boolean DEBUG = true;
+	public static final boolean DEBUG = false;
 }

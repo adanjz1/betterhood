@@ -175,14 +175,15 @@ public class MapEventScreen extends Activity {
 					// posting comments
 					String query = "";
 					query += "&sid=" + extras.getString(BetterHood.EXTRAS_SESSION_ID);
-					query += "&event_id=" + extras.getString(BetterHood.EXTRAS_EVENT_ID);
+					query += "&event_id=" + event.id;
+					Log.i("event id", Integer.toString(event.id));
 
 					Intent iHaveIntent = new Intent(v.getContext(), EventCommentPage.class);
 					iHaveIntent.putExtra(BetterHood.EXTRAS_SESSION_ID, extras.getString(BetterHood.EXTRAS_SESSION_ID));
 					iHaveIntent.putExtra(BetterHood.EXTRAS_QUERY, query);
 					iHaveIntent.putExtra(BetterHood.EXTRAS_ACCOUNT_USERNAME, extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME));
 					iHaveIntent.putExtra(BetterHood.EXTRAS_REQUEST_CODE, BetterHood.REQ_COMMENT_POPULATE);
-					iHaveIntent.putExtra(BetterHood.EXTRAS_EVENT_ID, extras.getString(BetterHood.EXTRAS_EVENT_ID));
+					iHaveIntent.putExtra(BetterHood.EXTRAS_EVENT_ID, event.id);
 					startActivityForResult(iHaveIntent, BetterHood.REQ_COMMENT_POPULATE);
 					break;
 				}
