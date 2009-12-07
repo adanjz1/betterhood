@@ -37,9 +37,11 @@ public class TemplateFactory {
 		
 		// process each template into Template objects
 		for (int i = 1; i < raw.length; i++) {
+			int event_id = Integer.parseInt(raw[i]);
+			i++;
 			Log.i("TemplateFactory", raw[i]);
 			Template temp = new Template(raw[i]);
-			temp.id = i;
+			temp.id = event_id;
 			templates.add(temp);
 		}
 		

@@ -127,7 +127,7 @@ public class EventCommentPage extends Activity {
 					}
 
 					countme++;
-					System.out.println(countme);
+					//System.out.println(countme);
 
 				}
 				commentText.setText(comments);
@@ -156,6 +156,8 @@ public class EventCommentPage extends Activity {
 		// extras.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME);
 		query += "&event_id=" + extras.getString(BetterHood.EXTRAS_EVENT_ID);
 		// query += "&comment_text=" + commentTXT.getText().toString();
+		query = extras.getString(BetterHood.EXTRAS_QUERY);
+		Log.i("FUCK", query);
 
 		Intent iHaveIntent = new Intent(a, ConnectionResource.class);
 		iHaveIntent.putExtra(BetterHood.EXTRAS_QUERY, query);
@@ -167,7 +169,7 @@ public class EventCommentPage extends Activity {
 
 		buttonRespond.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				System.out.println("i got here");
+				//System.out.println("i got here");
 				if (commentTXT.getText().toString() != null) {
 					String query = "";
 					query += "&sid="
@@ -177,8 +179,8 @@ public class EventCommentPage extends Activity {
 									.getString(BetterHood.EXTRAS_ACCOUNT_USERNAME);
 					query += "&event_id="
 							+ extras.getString(BetterHood.EXTRAS_EVENT_ID);
-					System.out.println(extras
-							.getString(BetterHood.EXTRAS_EVENT_ID));
+					//System.out.println(extras
+					//		.getString(BetterHood.EXTRAS_EVENT_ID));
 					query += "&comment_text=" + commentTXT.getText().toString();
 					Intent iHaveIntent = new Intent(a, ConnectionResource.class);
 					iHaveIntent.putExtra(BetterHood.EXTRAS_QUERY, query);
