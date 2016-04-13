@@ -1,0 +1,1 @@
+An Android application and website designed to facilitate neighborhood communication and interaction. Developed by three Georgia Tech students for an Intel-sponsored class competition.
